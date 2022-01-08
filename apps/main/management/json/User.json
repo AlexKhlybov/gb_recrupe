@@ -1,0 +1,94 @@
+[
+  {
+    "id": 1,
+    "username": "moderator@mail.ru",
+    "last_name": "Модератор",
+    "first_name": "Иван",
+    "second_name": "Иванович",
+    "phone": "+7(900)000-00-01",
+    "role": 1,
+    "password": "1",
+    "is_staff": true,
+    "is_superuser": true
+  },
+  {
+    "id": 2,
+    "username": "employee@mail.ru",
+    "last_name": "Сотрудник",
+    "first_name": "Иван",
+    "second_name": "Иванович",
+    "phone": "+7(900)000-00-02",
+    "role": 2,
+    "password": "1"
+  },
+  {
+    "id": 3,
+    "username": "ozon@mail.ru",
+    "last_name": "Ozon",
+    "first_name": "Иван",
+    "second_name": "Иванович",
+    "phone": "+7(900)000-00-03",
+    "role": 3,
+    "password": "1"
+  },
+  {
+    "id": 4,
+    "username": "sberbank@mail.ru",
+    "last_name": "sberbank",
+    "first_name": "Иван",
+    "second_name": "Иванович",
+    "phone": "+7(900)000-00-04",
+    "role": 3,
+    "password": "1"
+  },
+  {
+    "id": 5,
+    "username": "beeline@mail.ru",
+    "last_name": "beeline",
+    "first_name": "Иван",
+    "second_name": "Иванович",
+    "phone": "+7(900)000-00-05",
+    "role": 3,
+    "password": "1"
+  },
+  {
+    "id": 6,
+    "username": "yandex@mail.ru",
+    "last_name": "yandex",
+    "first_name": "Иван",
+    "second_name": "Иванович",
+    "phone": "+7(900)000-00-06",
+    "role": 3,
+    "password": "1"
+  },
+  {
+    "id": 7,
+    "username": "lenta@mail.ru",
+    "last_name": "lenta",
+    "first_name": "Иван",
+    "second_name": "Иванович",
+    "phone": "+7(900)000-00-07",
+    "role": 3,
+    "password": "1"
+  },
+  {
+    "id": 8,
+    "username": "domclick@mail.ru",
+    "last_name": "domclick",
+    "first_name": "Иван",
+    "second_name": "Иванович",
+    "phone": "+7(900)000-00-08",
+    "role": 3,
+    "password": "1"
+  },
+  {
+    "id": 9,
+    "username": "tinkoff@mail.ru",
+    "last_name": "tinkoff",
+    "first_name": "Иван",
+    "second_name": "Иванович",
+    "phone": "+7(900)000-00-09",
+    "role": 3,
+    "password": "1"
+  }
+]

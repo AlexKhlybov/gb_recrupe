@@ -1,11 +1,13 @@
 from django.shortcuts import render
 
+from apps.companies.models import Company
 from apps.news.models import News
 
 
 def main_view(request):
     content = {
-        'news': News.objects.all()[:2]
+        'news': News.objects.all()[:2],
+        'partners': Company.objects.all()[:10],
     }
 
     return render(request, 'main/index.html', content)
