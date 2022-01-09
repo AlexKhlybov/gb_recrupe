@@ -19,6 +19,21 @@ source ./venv/bin/activate  # MacOs, Linux
 venv\Scripts\activate  #Windows
 ```
 
+Устанавливаем зависимости
+```
+pip install -r requirements.txt
+```
+
+Выполнение миграций
+```
+python.exe manage.py migrate
+```
+
+Заполнение БД тестовыми данными (у всех созданных пользователей пароль - 1)
+```
+python.exe manage.py dbinit
+```
+
 Запускаем проект и радуемся
 ```
 python manage.py runserver
