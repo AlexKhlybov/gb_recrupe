@@ -1,0 +1,19 @@
+<header class="blog-header py-3">
+    <div class="row flex-nowrap justify-content-between align-items-center">
+        <div class="col-4 pt-1">
+            {#                <a class="link-secondary" href="/">Recrupe</a>#}
+        </div>
+        <div class="col-4 text-center">
+            {#                <a class="blog-header-logo text-dark" href="#">Large</a>#}
+        </div>
+        <div class="col-4 gap-2 d-flex justify-content-end align-items-center">
+            {% if request.user.id %}
+                {{ request.user }}
+                <a class="btn btn-sm btn-outline-secondary" href="{% url 'user:logout' %}">Выйти</a>
+            {% else %}
+                <a class="btn btn-sm btn-outline-secondary" href="{% url 'user:registration' %}">Регистрация</a>
+                <a class="btn btn-sm btn-outline-secondary" href="{% url 'user:login' %}">Войти</a>
+            {% endif %}
+        </div>
+    </div>
+</header>

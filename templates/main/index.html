@@ -16,7 +16,7 @@
                         <a href="{% url 'news:detail_news' item.pk %}" class="stretched-link">Подробнее</a>
                     </div>
                     <div class="col-auto d-none d-lg-block">
-                        <img src="/media/news/{{ item.image }}" style="object-fit: cover" width="200" height="250" alt="Фото">
+                        <img src="/media/news/{{ item.image }}" style="object-fit: cover" width="200" height="250" alt="{{ item.title }}">
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                             <div class="col px-4 py-3 d-flex flex-column position-static">
                                 <h3 class="mb-2">{{ item.name }}</h3>
                                 <p class="card-text mb-auto">{{ item.short_description }}</p>
-                                <a href="#" class="stretched-link">Подробнее</a>
+                                <a href="{% url 'companies:detail' item.pk %}" class="stretched-link">Подробнее</a>
                             </div>
                         </div>
                     </div>
