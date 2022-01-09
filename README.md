@@ -26,15 +26,15 @@ pip install -r requirements.txt
 
 Выполнение миграций
 ```
-python.exe manage.py migrate
+python3 manage.py migrate
 ```
 
 Заполнение БД тестовыми данными (у всех созданных пользователей пароль - 1)
 ```
-python.exe manage.py dbinit
+python3 manage.py dbinit
 ```
 
 Запускаем проект и радуемся
 ```
-python manage.py runserver
+python3 manage.py runserver
 ```
