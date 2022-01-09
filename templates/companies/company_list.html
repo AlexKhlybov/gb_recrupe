@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="mb-5">Наши партнеры</h2>
+    <div class="row mb-2">
+    {% for item in object_list %}
+        <div class="col-md-12">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative">
+                <div class="col-auto d-none d-lg-block">
+                    <img src="/media/companies/{{ item.logo }}" style="object-fit: scale-down" width="200" height="150" alt="{{ item.name }}">
+                </div>
+                <div class="col p-4 d-flex flex-column position-static">
+                    <h3 class="mb-2">{{ item.name }}</h3>
+                    <p class="card-text mb-auto">{{ item.short_description }}</p>
+                    <a href="{% url 'companies:detail' item.pk %}" class="stretched-link">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

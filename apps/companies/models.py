@@ -3,6 +3,11 @@ from django.db import models
 from apps.users.models import User
 
 
+class CompanyManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True)
+
+
 class Company(models.Model):
     class Meta:
         verbose_name_plural = 'Company - Организации'
@@ -17,9 +22,20 @@ class Company(models.Model):
     description = models.TextField(null=True, verbose_name='Описание организации')
     is_active = models.BooleanField(default=False, db_index=True, verbose_name='Активность')
 
+    objects = CompanyManager()
+
+    def vacancy_count(self):
+        """
+        Количество активных вакансий
+        """
+        return 0
+
     def __str__(self):
         return f'{self.name}'
 
     @property
     def short_description(self):
         return ' '.join(self.description.split()[:11]) + '...'
+
+    def split_description_to_lines(self):
+        return self.description.split('\n')

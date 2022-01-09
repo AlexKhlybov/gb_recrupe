@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="row g-5">
+
+        <div class="col-md-3">
+            <div class="position-sticky">
+                <div class="p-0 mb-3 rounded">
+                    <img src="/media/companies/{{ object.logo }}" alt="{{ object.name }}" class="mb-3" style="object-fit: cover; max-width: 100%;">
+                </div>
+
+                <div class="p-0">
+                    <ol class="list-unstyled mb-4">
+                        <li><h6>{{ object.city }}</h6></li>
+                        <li><a href="{{ object.url }}" target="_blank">{{ object.url }}</a></li>
+                    </ol>
+                    <strong class="py-4">Вакансии</strong>
+                    <ol class="list-unstyled mb-4">
+                        <li><a href="#">{{ object.vacancy_count }} активных вакансий</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <article class="blog-post">
+                <h2>{{ object.name }}</h2>
+                {% for p in object.split_description_to_lines %}
+                    <p>{{ p }}</p>
+                {% endfor %}
+            </article>
+        </div>
+    </div>
+
+{% endblock %}
