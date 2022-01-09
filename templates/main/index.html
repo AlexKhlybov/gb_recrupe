@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3 class="pb-4 mb-0 fst-italic">
+        Последние новости портала
+    </h3>
+
+    <div class="row mb-2 border-bottom">
+        {% for item in news %}
+            <div class="col-md-6">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <div class="mb-1 text-muted">{{ item.created|date:'d.m.Y' }}</div>
+                        <h5 class="mb-1">{{ item.title }}</h5>
+                        <p class="card-text mb-auto">{{ item.short_text }}</p>
+                        <a href="{% url 'news:detail_news' item.pk %}" class="stretched-link">Подробнее</a>
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                        <img src="/media/news/{{ item.image }}" style="object-fit: cover" width="200" height="250" alt="Фото">
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="row g-5">
+        <div class="col-md-8">
+            <article class="blog-post">
+                <h2 class="blog-post-title my-4">Наши партнеры</h2>
+                {% for item in partners %}
+                    <div class="col-md-12">
+                        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative">
+                            <div class="col-auto d-none d-lg-block">
+                                <img src="/media/companies/{{ item.logo }}" style="object-fit: scale-down" width="200" height="150" alt="{{ name }}">
+                            </div>
+                            <div class="col px-4 py-3 d-flex flex-column position-static">
+                                <h3 class="mb-2">{{ item.name }}</h3>
+                                <p class="card-text mb-auto">{{ item.short_description }}</p>
+                                <a href="#" class="stretched-link">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </article>
+        </div>
+
+        <div class="col-md-4">
+            <div class="position-sticky" style="top: 2rem;">
+                <div class="p-4 mb-3 bg-light rounded">
+                    <h4 class="fst-italic">О нас</h4>
+                    <p class="mb-0">Рекрутинговое агентство в IT-сфере, оказывающее услуги по поиску и подбору IT-персонала для организаций.</p>
+                </div>
+
+{#                <div class="p-4">#}
+{#                    <h4 class="fst-italic">Archives</h4>#}
+{#                    <ol class="list-unstyled mb-0">#}
+{#                        <li><a href="#">March 2021</a></li>#}
+{#                        <li><a href="#">February 2021</a></li>#}
+{#                        <li><a href="#">January 2021</a></li>#}
+{#                        <li><a href="#">December 2020</a></li>#}
+{#                        <li><a href="#">November 2020</a></li>#}
+{#                        <li><a href="#">October 2020</a></li>#}
+{#                        <li><a href="#">September 2020</a></li>#}
+{#                        <li><a href="#">August 2020</a></li>#}
+{#                        <li><a href="#">July 2020</a></li>#}
+{#                        <li><a href="#">June 2020</a></li>#}
+{#                        <li><a href="#">May 2020</a></li>#}
+{#                        <li><a href="#">April 2020</a></li>#}
+{#                    </ol>#}
+{#                </div>#}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

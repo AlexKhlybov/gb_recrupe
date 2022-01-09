@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="mb-5">Новости портала</h2>
+    <div class="row mb-2">
+    {% for item in news_list %}
+        <div class="col-md-12">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col-auto d-none d-lg-block">
+                    <img src="/media/news/{{ item.image }}" style="object-fit: cover" width="200" height="250">
+                </div>
+                <div class="col p-4 d-flex flex-column position-static">
+                    <div class="mb-1 text-muted">{{ item.created|date:'d.m.Y' }}</div>
+                    <h3 class="mb-2">{{ item.title }}</h3>
+                    <p class="card-text mb-auto">{{ item.short_text }}</p>
+                    <a href="{% url 'news:detail_news' item.pk %}" class="stretched-link">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

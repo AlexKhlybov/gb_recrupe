@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>{{ object.title }}</h2>
+    <div class="mb-1 text-muted">{{ object.created|date:'d.m.Y' }}</div>
+    <strong>{{ object.short_text }}</strong>
+    <img src="/media/news/{{ object.image }}" alt="" class="my-3" style="object-fit: cover; max-width: 100%;">
+    <br>
+    {% for p in object.split_text_to_lines %}
+        <p>{{ p }}</p>
+    {% endfor %}
+{% endblock %}
