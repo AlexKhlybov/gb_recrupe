@@ -28,7 +28,8 @@ class Company(models.Model):
         """
         Количество активных вакансий
         """
-        return 0
+        from apps.vacancies.models import Vacancy
+        return Vacancy.objects.filter(company=self, is_closed=False, is_active=True).count()
 
     def __str__(self):
         return f'{self.name}'

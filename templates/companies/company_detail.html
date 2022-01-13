@@ -17,7 +17,11 @@
                     </ol>
                     <strong class="py-4">Вакансии</strong>
                     <ol class="list-unstyled mb-4">
-                        <li><a href="#">{{ object.vacancy_count }} активных вакансий</a></li>
+                        {% if object.vacancy_count %}
+                            <li><a href="{% url 'companies:vacancies' object.pk %}">{{ object.vacancy_count }} активных вакансий</a></li>
+                        {% else %}
+                            <li><p>Нет активных вакансий</p></li>
+                        {% endif %}
                     </ol>
                 </div>
             </div>

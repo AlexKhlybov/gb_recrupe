@@ -7,6 +7,7 @@ from django.core.management import BaseCommand
 from apps.companies.models import Company
 from apps.news.models import News
 from apps.users.models import User
+from apps.vacancies.models import Vacancy, VacancySkills
 
 
 def load_from_json(file_name):
@@ -36,3 +37,5 @@ class Command(BaseCommand):
         insert_to_model(User)
         insert_to_model(News)
         insert_to_model(Company)
+        insert_to_model(Vacancy)
+        insert_to_model(VacancySkills)
