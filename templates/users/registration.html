@@ -1,84 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <form method="post" action="{% url 'users:login' %}">
+    <form method="post" action="{% url 'users:registration' %}">
         <h1 class="mb-3">Регистрация</h1>
-
-        <div class="row mb-2">
-            <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-            <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail3" required>
-            </div>
-        </div>
-        <div class="row mb-2">
-            <label for="inputPassword" class="col-sm-2 col-form-label">Пароль</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword" required>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <label for="inputPasswordConfirm" class="col-sm-2 col-form-label">Подтверждение пароля</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPasswordConfirm" required>
-            </div>
-        </div>
-
-        <fieldset class="row mb-3">
-            <legend class="col-form-label col-sm-2 pt-0">Я</legend>
-            <div class="col-sm-10">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-                    <label class="form-check-label" for="gridRadios1">
-                        Работник
+        {% csrf_token %}
+        {% for field in register_form %}
+            <div class="row mb-2">
+                {% if field.label != "" %}
+                    <label class="col-sm-2 col-form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                    <div class="col-sm-10">
+                        {{ field }}
+                    </div>
+                {% else %}
+                    <div class="col-sm-10">
+                        {{ field }}
+                    </div>
+                    <label class="form-check-label" for="specification">
+                    Я соглашаюсь с <a href="{% url 'main:specification' %}" target="_blank">правилами портала</a>
                     </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                    <label class="form-check-label" for="gridRadios2">
-                        Работодатель
-                    </label>
-                </div>
-                <div class="form-check disabled">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" disabled>
-                    <label class="form-check-label" for="gridRadios3">
-                        Модератор
-                    </label>
-                </div>
+                {% endif %}
             </div>
-        </fieldset>
-
-        <div class="row mb-2">
-            <label for="inputName1" class="col-sm-2 col-form-label">Фамилия</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputName1" required>
-            </div>
-        </div>
-        <div class="row mb-2">
-            <label for="inputName2" class="col-sm-2 col-form-label">Имя</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputName2" required>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <label for="inputName3" class="col-sm-2 col-form-label">Отчество (необязательно)</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputName3">
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <label for="phone" class="col-sm-2 col-form-label">Номер телефона</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="phone" placeholder="+7(XXX)XXX-XX-XX" pattern="(\+7|8)[\s(]*\d{3}[)\s]*\d{3}[\s-]?\d{2}[\s-]?\d{2}" required>
-            </div>
-        </div>
-
-        <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" value="" id="specification" required>
-            <label class="form-check-label" for="specification">
-                Я соглашаюсь с <a href="{% url 'main:specification' %}" target="_blank">правилами портала</a>
-            </label>
-        </div>
+        {% endfor %}
 
         <div class="col-auto mb-3">
             <button type="submit" class="btn btn-primary">Регистрация</button>
