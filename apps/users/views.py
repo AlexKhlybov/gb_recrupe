@@ -3,6 +3,10 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
+from apps.users.forms import UserRegisterForm
+
+
+
 
 def auth_user_view(request):
     if request.method == 'POST':
@@ -31,7 +35,15 @@ def user_logout(request):
 
 
 def registration(request):
-    content = {
-    }
+    title = 'Регистрация'
+    if request.method == 'POST':
+        register_form = UserRegisterForm(request.POST, request.FILES)
+        if register_form.is_valid():
+            register_form.save()
+            return HttpResponseRedirect(reverse('user:login'))
+    else:
+        register_form = UserRegisterForm()
+
+    content = {'title': title, 'register_form': register_form}
 
     return render(request, 'users/registration.html', content)
