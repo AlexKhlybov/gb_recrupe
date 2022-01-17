@@ -11,7 +11,7 @@ from .models import User
 
 
 class UserRegisterForm(UserCreationForm):
-    username = forms.EmailField(label='Email', required=True)
+    email = forms.EmailField(label='Email', required=True)
     role = forms.ChoiceField(choices=((1, "Работник"), (2, "Работодатель"), (3, "Модератор")), label='Я:', required=True)
     first_name = forms.CharField(label='Фамилия', required=True)
     last_name = forms.CharField(label='Имя', required=True)
@@ -21,7 +21,7 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'password1', 'password2', 'role', 'first_name', 'last_name', 'second_name', 'phone',
+        fields = ('email', 'password1', 'password2', 'role', 'first_name', 'last_name', 'second_name', 'phone',
                   'specification')
 
     def __init__(self, *args, **kwargs):
@@ -42,15 +42,15 @@ class UserRegisterForm(UserCreationForm):
             field.help_text = ''
 
     # Проверка на уникальность имени пользователя
-    def clean_username(self):
+    def clean_email(self):
         try:
-            validate_email(self.cleaned_data['username'])
+            validate_email(self.cleaned_data['email'])
         except forms.ValidationError as e:
             raise forms.ValidationError('Bad email!')
         try:
-            User.objects.get(username__iexact=self.cleaned_data['username'])
+            User.objects.get(email__iexact=self.cleaned_data['email'])
         except User.DoesNotExist:
-            return self.cleaned_data['username']
+            return self.cleaned_data['email']
         raise forms.ValidationError('This username has already existed.')
 
     # Проверка совпадения паролей
@@ -62,11 +62,12 @@ class UserRegisterForm(UserCreationForm):
             raise forms.ValidationError('Passwords do not match.')
         return password2
 
-
-    def save(self):
+    def save(self, commit=True):
         # user = super(UserRegisterForm, self).save()
+        print('save')
         user = super().save()
         user.is_active = False
+        user.username = user.email.split("@")[0]
         user.save()
 
         return user

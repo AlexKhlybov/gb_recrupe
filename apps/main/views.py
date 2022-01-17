@@ -7,7 +7,7 @@ from apps.news.models import News
 def main_view(request):
     content = {
         'news': News.objects.all()[:2],
-        'partners': Company.objects.all()[:10],
+        'partners': Company.objects.filter(is_active=True)[:10],
     }
 
     return render(request, 'main/index.html', content)

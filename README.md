@@ -31,7 +31,7 @@ python3 manage.py migrate
 
 Заполнение БД тестовыми данными (у всех созданных пользователей пароль - 1)
 ```
-python3 manage.py dbinit
+python3 manage.py dbimport
 ```
 
 Запускаем проект и радуемся

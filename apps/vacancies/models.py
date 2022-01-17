@@ -25,7 +25,7 @@ class Vacancy(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='vacancy_company',
                                 verbose_name='Компания')
     name = models.CharField(max_length=128, db_index=True, verbose_name="Название вакансии")
-    description = models.TextField(verbose_name='Описание вакансии')
+    description = models.TextField(max_length=5000, verbose_name='Описание вакансии')
     experience = models.PositiveSmallIntegerField(choices=EXPERIENCE, db_index=True, default=EXPERIENCE_NONE,
                                                   verbose_name="Опыт работы")
     price_min = models.IntegerField(verbose_name="Зарплата от", db_index=True, null=True, blank=True)
@@ -44,7 +44,7 @@ class Vacancy(models.Model):
         value = f'от {self.price_min}' if self.price_min else ''
         if self.price_max:
             value += ' ' if value else ''
-            value += f'до {self.price_min}'
+            value += f'до {self.price_max}'
         if value:
             value += ' руб.'
 

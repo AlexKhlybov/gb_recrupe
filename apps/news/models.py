@@ -6,7 +6,7 @@ class News(models.Model):
     title = models.CharField(max_length=128, verbose_name='Заголовок')
     image = models.CharField(max_length=64, verbose_name='Картинка')
     short_text = models.CharField(max_length=255, verbose_name='Краткое описание')
-    text = models.TextField(verbose_name='Текст новости')
+    text = models.TextField(max_length=10000, verbose_name='Текст новости')
 
     class Meta:
         ordering = ('-created',)
