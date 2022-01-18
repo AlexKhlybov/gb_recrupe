@@ -12,14 +12,18 @@
                         {{ field }}
                     </div>
                 {% else %}
-                    <div class="col-sm-10">
-                        {{ field }}
-                    </div>
-                    <label class="form-check-label" for="specification">
-                    Я соглашаюсь с <a href="{% url 'main:specification' %}" target="_blank">правилами портала</a>
-                    </label>
                 {% endif %}
             </div>
+        {% endfor %}
+
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" value="" id="specification" required>
+            <label class="form-check-label" for="specification">
+                Я соглашаюсь с <a href="{% url 'main:specification' %}" target="_blank">правилами портала</a>
+            </label>
+        </div>
+        {% for message in messages %}
+            <p class="col-auto mb-3 text-danger">{{ message }}</p>
         {% endfor %}
 
         <div class="col-auto mb-3">
