@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="d-flex justify-content-between">
+        <h3><strong>{{ object.name }}</strong></h3>
+        <h3><strong>{% if object.price %} {{ object.price }} руб. {% else %} з/п не указана {% endif %}</strong></h3>
+    </div>
+    <p class="mb-0">{{ object.user.last_name }} {{ object.user.first_name }}</p>
+    <p class="mb-4 text-muted">Был на сайте {{ object.user.last_login|date:'d.m.Y' }}</p>
+    <div class="mb-4">
+        <h3 class="text-muted mb-2"> Опыт работы {{ object.get_experience_text }}</h3>
+        {% for item in object.experience.all %}
+            <div class="row mb-2">
+                <div class="col-2">
+                    <p class="mb-0">{{ item.start_date_text }} — </p>
+                    <p class="mb-0">{{ item.end_date_text }}</p>
+                    <p class="mb-0 text-muted">{{ item.get_experience_text }}</p>
+                </div>
+                <div class="col-10">
+                    <strong>{{ item.organization_name }}</strong>
+                    <p class="mb-1 text-muted">{{ item.position }}</p>
+                    {% for duty in item.duties_lines %}<p class="mb-0">{{ duty }}</p>{% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if object.skills|length %}
+        <h3 class="text-muted mb-2">Ключевые навыки</h3>
+        <div class="mb-5">
+            {% for item in object.skills %}
+                <span class="badge rounded-pill bg-primary">{{ item.name }}</span>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if object.education.all|length %}
+        <div class="mb-4">
+            <h3 class="text-muted mb-2">Образование</h3>
+            {% for item in object.education.all %}
+                <div class="row mb-2">
+                    <div class="col-2">
+                        <p class="mb-0">{{ item.year_of_ending }}</p>
+                        <p class="text-muted">{{ item.get_level_display }}</p>
+                    </div>
+                    <div class="col-10">
+                        <strong>{{ item.educational_institution }}</strong>
+                        <p class="mb-0">{{ item.faculty }}</p>
+                        {% if item.specialization %}<p>{{ item.specialization }}</p>{% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if object.courses.all|length %}
+        <div class="mb-5 mt-4">
+            <h3 class="text-muted mb-2">Повышение квалификации, курсы</h3>
+            {% for item in object.courses.all %}
+                <div class="row mb-2">
+                    <div class="col-2">
+                        <p class="mb-0">{{ item.year_of_ending }}</p>
+                    </div>
+                    <div class="col-10">
+                        <strong>{{ item.educational_institution }}</strong>
+                        <p class="mb-0">{{ item.faculty }}</p>
+                        {% if item.specialization %}<p>{{ item.specialization }}</p>{% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if object.about_me %}
+        <div>
+            <h3 class="text-muted mb-2">Обо мне</h3>
+
+            {% for item in object.about_me_lines %}
+                <p>{{ item }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="mb-5"></div>
+{% endblock %}

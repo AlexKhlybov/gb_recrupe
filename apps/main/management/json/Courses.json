@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "educational_institution": "1c-bitrix.ru",
+        "faculty": "Администратор сервиса Битрикс24",
+        "specialization": "",
+        "year_of_ending": 2017
+    },
+    {
+        "id": 2,
+        "educational_institution": "Центр компьютерного обучения при МГТУ им. Н. Э. Баумана «Специалист»",
+        "faculty": "Центр компьютерного обучения при МГТУ им. Н. Э. Баумана «Специалист»",
+        "specialization": "Программирование на языке C, Программирование на Visual С++, Сервер MySQL 5",
+        "year_of_ending": 2009
+    }
+]

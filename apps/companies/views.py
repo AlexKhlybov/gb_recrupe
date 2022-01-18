@@ -7,7 +7,7 @@ class CompanyListView(ListView):
     model = Company
 
     def get_queryset(self):
-        return Company.objects.all()
+        return Company.objects.filter(is_active=True)
 
 
 class CompanyDetailView(DetailView):

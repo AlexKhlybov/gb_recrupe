@@ -1,3 +1,6 @@
 django < 4
 isort
 flake8
+python-dateutil
+django-import-export
+tablib

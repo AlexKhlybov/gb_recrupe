@@ -24,6 +24,8 @@ urlpatterns = [
     path('users/', include('apps.users.urls', namespace='user')),
     path('news/', include('apps.news.urls', namespace='news')),
     path('companies/', include('apps.companies.urls', namespace='companies')),
+    path('vacancies/', include('apps.vacancies.urls', namespace='vacancies')),
+    path('resume/', include('apps.resume.urls', namespace='resume')),
 ]
 
 if settings.DEBUG:

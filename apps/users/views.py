@@ -1,4 +1,5 @@
 from django.contrib import auth, messages
+from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -6,13 +7,18 @@ from django.urls import reverse
 from apps.users.forms import UserRegisterForm
 
 
-
-
 def auth_user_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = auth.authenticate(username=username, password=password)
+        if not user:
+            user_model = get_user_model()
+            try:
+                find_user = user_model.objects.get(email=username)
+                user = auth.authenticate(username=find_user.username if find_user else None, password=password)
+            except user_model.DoesNotExist:
+                pass
         if user and user.is_active:
             auth.login(request, user)
             if 'next' in request.POST:
