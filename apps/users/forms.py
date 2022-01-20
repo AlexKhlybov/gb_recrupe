@@ -4,9 +4,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 # from .models import ShopUserProfile
 from django.core.validators import validate_email
+from django.contrib.auth.forms import UserChangeForm
+from apps.companies.models import Company
 
 
-from .models import User
+from .models import User, EmployeeProfile
 # import random, hashlib
 
 
@@ -39,7 +41,6 @@ class UserRegisterForm(UserCreationForm):
 
     # Проверка на уникальность имени пользователя
     def clean_email(self):
-        print('email validation')
         try:
             validate_email(self.cleaned_data['email'])
         except forms.ValidationError as _:
@@ -69,3 +70,63 @@ class UserRegisterForm(UserCreationForm):
         user.save()
 
         return user
+
+
+class UserEditForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'second_name', 'phone', 'password')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Настройка полей ввода
+
+        for field_name, field in self.fields.items():
+            if field_name == 'password':
+                field.label = 'Пароль'
+                field.widget = forms.HiddenInput()
+
+            field.widget.attrs['class'] = 'form-control'
+            field.help_text = ''
+
+class EmployeeProfileEditForm(UserChangeForm):
+
+    birthday = forms.DateField(input_formats=('%d.%m.%Y', '%Y-%m-%d'))
+
+    class Meta:
+        model = EmployeeProfile
+        fields = ('skills', 'birthday', 'city', 'gender', 'aboutMe', 'avatar')
+
+    def __init__(self, *args, **kwargs):
+        super(EmployeeProfileEditForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            field.help_text = ''
+
+class CompanyProfileEditForm(UserChangeForm):
+
+    class Meta:
+        model = Company
+        fields = ('name', 'url', 'city', 'address', 'description', 'logo')
+
+    def __init__(self, *args, **kwargs):
+        super(CompanyProfileEditForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            field.help_text = ''
+
+
+
+    #
+    # def clean_age(self):
+    #     data = self.cleaned_data['age']
+    #     if data < 18:
+    #         raise forms.ValidationError("Вы слишком молоды!")
+    #
+    #     return data
+    #
+    # def clean_email(self):
+    #     data = self.cleaned_data['email']
+    #     if "yandex" in data:
+    #         raise forms.ValidationError("Никто не любит яндекс! =(")
+    #     return data
