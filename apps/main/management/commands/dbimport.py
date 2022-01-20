@@ -9,7 +9,7 @@ from django.core.management import BaseCommand
 from apps.companies.models import Company
 from apps.news.models import News
 from apps.resume.models import Education, Resume, Experience, ResumeSkills, Courses
-from apps.users.models import User
+from apps.users.models import User, EmployeeProfile
 from apps.vacancies.models import Vacancy, VacancySkills
 
 
@@ -21,7 +21,7 @@ class Command(BaseCommand):
         self.import_model(User, options)
         self.import_model(News, options)
         self.import_model(Company, options)
-
+        self.import_model(EmployeeProfile, options)
         self.import_model(Vacancy, options)
         self.import_model(VacancySkills, options)
 
