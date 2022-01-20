@@ -64,3 +64,28 @@ class VacancySkills(models.Model):
 
     vacancy = models.ForeignKey(Vacancy, db_index=True, on_delete=models.CASCADE, verbose_name="Вакансия")
     name = models.CharField(max_length=32, db_index=True, verbose_name="Навык")
+
+
+
+class VacancyModeration(models.Model):
+    INDEFINED = "Неизвестно"
+    UPPROVE = "Подтверждено"
+    BAN = "Запрещено"
+
+    STATUS = (
+        (INDEFINED, "Неизвестно"),
+        (UPPROVE, "Подтверждено"),
+        (BAN, "Запрещено"),
+    )
+
+    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE)
+    status = models.CharField(choices=STATUS,max_length=100, null=True, blank=True, verbose_name='Статус')
+    comment = models.TextField(blank=True, verbose_name='Комментрарий модератора')
+    date = models.DateField(null=True, blank=True, verbose_name='Время отпраления комментария')
+
+    class Meta:
+        verbose_name = 'Модерация вакансии '
+        verbose_name_plural = 'Модерация вакансии'
+
+    def __str__(self):
+        return self.vacancy.name

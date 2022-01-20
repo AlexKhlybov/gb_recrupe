@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/bootstrap/blog.css' %}">
+    <script defer src="{% static '/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <link rel="icon" href="{% static '/favicon.ico' %}">
+</head>
+<body>
+<div class="container">
+    {% include 'main/includes/user_block.html' %}
+    {% include 'main/includes/top_menu.html' %}
+</div>
+
+<main class="container">
+
+    <div class="nav-scroller py-1 mb-2">
+    <nav class="nav d-flex justify-content-around">
+        <a class=" link-secondary" href="{% url 'companies:moderation-companies' %}"><h4>Компании</h4></a>
+        <a class="p-2 link-secondary" href="{% url 'resume:moderation-resume' %}"><h4>Резюме</h4></a>
+        <a class="p-2 link-secondary" href="{% url 'vacancies:moderation-vacancy' %}"><h4>Вакансии</h4></a>
+
+    </nav>
+</div>
+
+    {% block content %}{% endblock %}
+</main>
+{% include 'main/includes/footer.html' %}
+</body>
+</html>

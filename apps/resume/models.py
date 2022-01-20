@@ -192,3 +192,27 @@ class Courses(models.Model):
 
     def __str__(self):
         return f'{self.educational_institution} ({self.year_of_ending})'
+
+
+class ResumeModeration(models.Model):
+    INDEFINED = "Неизвестно"
+    UPPROVE = "Подтверждено"
+    BAN = "Запрещено"
+
+    STATUS = (
+        (INDEFINED, "Неизвестно"),
+        (UPPROVE, "Подтверждено"),
+        (BAN, "Запрещено"),
+    )
+
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
+    status = models.CharField(choices=STATUS,max_length=100, null=True, blank=True, verbose_name='Статус')
+    comment = models.TextField(blank=True, verbose_name='Комментрарий модератора')
+    date = models.DateField(null=True, blank=True, verbose_name='Время отпраления комментария')
+
+    class Meta:
+        verbose_name = 'Модерация резюме '
+        verbose_name_plural = 'Модерация резюме'
+
+    def __str__(self):
+        return self.resume.name
