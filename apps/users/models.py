@@ -6,13 +6,14 @@ from django.dispatch import receiver
 
 class User(AbstractUser):
     class Meta:
-        verbose_name_plural = 'User - Пользователи'
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
 
-    USER_TYPE_MODERATOR = 1
-    USER_TYPE_EMPLOYEE = 2
-    USER_TYPE_EMPLOYER = 3
+    USER_TYPE_MODERATOR = 1  # Модератор
+    USER_TYPE_EMPLOYEE = 2   # Сотрудник
+    USER_TYPE_EMPLOYER = 3   # Работодатель
 
     USER_TYPE = (
         (USER_TYPE_EMPLOYEE, 'Сотрудник'),
@@ -35,6 +36,7 @@ class User(AbstractUser):
 
     def __str__(self):
         return f'{self.username}'
+
 
 class EmployeeProfile(models.Model):
     MALE = 'M'
@@ -59,7 +61,7 @@ class EmployeeProfile(models.Model):
         # print(f'sender: {created}')
         # print(f'instance: {instance.__dict__}')
         # print(f'instance: {instance.role}')
-        #User.objects.filter(username=instance)
+        # User.objects.filter(username=instance)
         if created:
             if instance.role == 1:
                 EmployeeProfile.objects.create(user=instance)
