@@ -29,8 +29,7 @@ def auth_user_view(request):
         else:
             messages.add_message(request, messages.INFO, 'Не верное имя пользователя или пароль')
 
-    content = {
-    }
+    content = {}
 
     return render(request, 'users/sign-in.html', content)
 
@@ -51,9 +50,7 @@ def registration(request):
             messages.add_message(request, messages.ERROR, register_form.errors)
     else:
         register_form = UserRegisterForm()
-
     content = {'title': title, 'register_form': register_form}
-
     return render(request, 'users/registration.html', content)
 
 
@@ -78,8 +75,8 @@ def edit_epmloyee(request):
     # print(f'edit_form: {edit_form.__dict__}')
 
     content = {'title': title, 'edit_form': edit_form, 'profile_form': profile_form}
-
     return render(request, 'users/editemployee.html', content)
+
 
 def edit_company(request):
     title = 'Редактирование профиля компании'

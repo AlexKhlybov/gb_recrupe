@@ -4,10 +4,18 @@
     <div class="top__banner  mb-5  d-flex  justify-content-center">
         {% if request.user.role == 1 %} {# Модератор #}
             <div class="container">
-                <h2>Работа есть для всех! РОЛЬ-1</h2>
-                <div class="row  top__banner-content">
-                    <div class="col-6  top__banner-left">Привет</div>
-                    <div class="col-6  top__banner-right">Пока</div>
+                <h1 class="text-dark  mb-4">Приветствую тебя о великиий и могучий!</h1>
+                <div class="row  top__banner-content  justify-content-center  align-items-center">
+                    <div class="col-4  top__banner-left">
+                        <h3 class="mt-3  text-uppercase">Соискатели</h3>
+                        <p class="my-3">Описание вакансии — это первый шаг к сердцу (и знаниям) кандидата. И он важен, как и первое впечатление при знакомстве. Если накосячить, кандидат дальше по воронке уже не пойдет. Поэтому, отнеситесь к составлению текста вакансии с большой ответственностью.</p>
+                        <button class="w-60 btn btn-lg btn-success" type="submit">Проверить резюме</button>
+                    </div>
+                    <div class="col-4  top__banner-right">
+                        <h3 class="mt-3  text-uppercase">Работадатели</h3>
+                        <p class="my-3">Описание вакансии — это первый шаг к сердцу (и знаниям) кандидата. И он важен, как и первое впечатление при знакомстве. Если накосячить, кандидат дальше по воронке уже не пойдет. Поэтому, отнеситесь к составлению текста вакансии с большой ответственностью.</p>
+                        <button class="w-60 btn btn-lg btn-primary" type="submit">Проверить вакансии</button>
+                    </div>
                 </div>
             </div>
         {% elif request.user.role == 2 %} {# Работник #}
