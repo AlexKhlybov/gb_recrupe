@@ -152,5 +152,13 @@ postgress/
 data/
 dumps/
 
+# migrations
+/apps/companies/migrations/*.py
+/apps/main/migrations/*.py
+/apps/news/migrations/*.py
+/apps/resume/migrations/*.py
+/apps/users/migrations/*.py
+/apps/vacancies/migrations/*.py
+
 # Temp file
 tmp/
