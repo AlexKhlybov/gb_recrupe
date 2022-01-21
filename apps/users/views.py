@@ -4,7 +4,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from apps.users.forms import UserRegisterForm, UserEditForm, EmployeeProfileEditForm, CompanyProfileEditForm
+from apps.users.forms import (CompanyProfileEditForm, EmployeeProfileEditForm,
+                              UserEditForm, UserRegisterForm)
 
 
 def auth_user_view(request):
