@@ -1,5 +1,5 @@
-from import_export import resources
 from django.contrib import admin
+from import_export import resources
 
 from apps.news.models import News
 

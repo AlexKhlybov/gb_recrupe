@@ -1,7 +1,7 @@
-from import_export import resources
 from django.contrib import admin
+from import_export import resources
 
-from apps.vacancies.models import Vacancy, VacancySkills, VacancyModeration
+from apps.vacancies.models import Vacancy, VacancyModeration, VacancySkills
 
 admin.site.register(Vacancy)
 admin.site.register(VacancyModeration)

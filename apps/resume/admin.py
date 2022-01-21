@@ -1,7 +1,8 @@
-from import_export import resources
 from django.contrib import admin
+from import_export import resources
 
-from apps.resume.models import Resume, Experience, ResumeSkills, Education, Courses, ResumeModeration
+from apps.resume.models import (Courses, Education, Experience, Resume,
+                                ResumeModeration, ResumeSkills)
 
 admin.site.register(Resume)
 admin.site.register(Experience)

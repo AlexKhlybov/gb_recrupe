@@ -7,8 +7,9 @@ from django.core.management import BaseCommand
 from apps.companies.admin import CompanyResource
 from apps.main.admin import CityResource
 from apps.news.admin import NewsResource
-from apps.resume.admin import EducationResource, ExperienceResource, CoursesResource, ResumeResource, \
-    ResumeSkillsResource
+from apps.resume.admin import (CoursesResource, EducationResource,
+                               ExperienceResource, ResumeResource,
+                               ResumeSkillsResource)
 from apps.users.admin import UserResource
 from apps.vacancies.admin import VacancyResource, VacancySkillsResource
 
