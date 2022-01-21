@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container">
     <div class="row g-5">
         <div class="col-md-9">
             <h3><strong>{{ object.name }}</strong></h3>
@@ -48,4 +49,5 @@
 
     <hr>
     <p class="fst-italic mb-5">Вакансия опубликована {{ object.created_at|date:'d.m.Y' }} в {{ object.company.city }}</p>
+</div>
 {% endblock %}

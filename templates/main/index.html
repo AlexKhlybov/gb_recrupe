@@ -1,67 +1,91 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3 class="pb-4 mb-0 fst-italic">
-        Последние новости портала
-    </h3>
-
-    <div class="row mb-2 border-bottom">
-        {% for item in news %}
-            <div class="col-md-6">
-                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="col p-4 d-flex flex-column position-static">
-                        <div class="mb-1 text-muted">{{ item.created|date:'d.m.Y' }}</div>
-                        <h5 class="mb-1">{{ item.title }}</h5>
-                        <p class="card-text mb-auto">{{ item.short_text }}</p>
-                        <a href="{% url 'news:detail_news' item.pk %}" class="stretched-link">Подробнее</a>
-                    </div>
-                    <div class="col-auto d-none d-lg-block">
-                        <img src="/media/news/{{ item.image }}" style="object-fit: cover" width="200" height="250" alt="{{ item.title }}">
-                    </div>
-                </div>
+    <div class="top__banner  mb-5  d-flex  justify-content-center">
+        {% if request.user.role == 1 %}
+        <div class="container">
+            <h2>Работа есть для всех!</h2>
+            <div class="top__banner-content">
+                <div class="top__banner-left"></div>
+                <div class="top__banner-right"></div>
             </div>
-        {% endfor %}
+        </div>
+            
+        {% elif request.user.role == 2 %}
+            <a class="btn btn-sm btn-outline-secondary" href="{% url 'user:editcompany' %}">
+                {{ request.user }}</a>
+        {% elif request.user.role == 3 %}
+            <a class="btn btn-sm btn-outline-secondary" href="/">
+                {{ request.user }}</a>
+        {% else %}
+            <div class="px-0">
+                <h1 class="banner__header  my-3">Агентство в IT-сфере, оказывающее услуги по поиску и подбору IT-персонала для организаций.</h1>
+            </div>
+        {% endif %}   
     </div>
 
-    <div class="row g-5">
-        <div class="col-md-8">
-            <article class="blog-post">
-                <h2 class="blog-post-title my-4">Наши партнеры</h2>
-                {% for item in partners %}
-                    <div class="col-md-12">
-                        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative">
-                            <div class="col-auto d-none d-lg-block">
-                                <img src="/media/companies/{{ item.logo }}" style="object-fit: scale-down" width="200" height="150" alt="{{ name }}">
-                            </div>
-                            <div class="col px-4 py-3 d-flex flex-column position-static">
-                                <h3 class="mb-2">{{ item.name }}</h3>
-                                <p class="card-text mb-auto">{{ item.short_description }}</p>
-                                <a href="{% url 'companies:detail' item.pk %}" class="stretched-link">Подробнее</a>
-                            </div>
+    <div class="container">
+        <div>
+            
+        </div>
+        <h3 class="pb-4 mb-0">Последние новости портала</h3>
+        <div class="row mb-2 border-bottom">
+            {% for item in news %}
+                <div class="col-md-6">
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <div class="mb-1 text-muted">{{ item.created|date:'d.m.Y' }}</div>
+                            <h5 class="mb-1">{{ item.title }}</h5>
+                            <p class="card-text mb-auto">{{ item.short_text }}</p>
+                            <a href="{% url 'news:detail_news' item.pk %}" class="stretched-link">Подробнее</a>
+                        </div>
+                        <div class="col-auto d-none d-lg-block">
+                            <img src="/media/news/{{ item.image }}" style="object-fit: cover" width="200" height="250" alt="{{ item.title }}">
                         </div>
                     </div>
-                {% endfor %}
-            </article>
-        </div>
-
-        <div class="col-md-4">
-            <div class="position-sticky" style="top: 2rem;">
-                <div class="p-4 mb-3 bg-light rounded">
-                    <h4 class="fst-italic">О нас</h4>
-                    <p class="mb-0">Рекрутинговое агентство в IT-сфере, оказывающее услуги по поиску и подбору IT-персонала для организаций.</p>
                 </div>
-
-                <div class="p-4">
-                    <h4 class="fst-italic">Тест/Отладка</h4>
-                    <ol class="list-unstyled mb-0">
-                        <li><a href="{% url 'vacancies:all' %}">Вакансии</a></li>
-                        <li><a href="{% url 'resume:all' %}">Резюме</a></li>
-                        <li><a href="{% url 'companies:moderation-companies' %}">Модерация</a></li>
-                    </ol>
-                    <p class="my-3">Если вы нашли ошибку - выделите ее мышкой и нажмите Alt + F4</p>
+            {% endfor %}
+        </div>
+    
+        <div class="row g-5">
+            <div class="col-md-8">
+                <article class="blog-post">
+                    <h2 class="blog-post-title my-4">Наши партнеры</h2>
+                    {% for item in partners %}
+                        <div class="col-md-12">
+                            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative">
+                                <div class="col-auto d-none d-lg-block">
+                                    <img src="/media/companies/{{ item.logo }}" style="object-fit: scale-down" width="200" height="150" alt="{{ name }}">
+                                </div>
+                                <div class="col px-4 py-3 d-flex flex-column position-static">
+                                    <h3 class="mb-2">{{ item.name }}</h3>
+                                    <p class="card-text mb-auto">{{ item.short_description }}</p>
+                                    <a href="{% url 'companies:detail' item.pk %}" class="stretched-link">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </article>
+            </div>
+    
+            <div class="col-md-4">
+                <div class="position-sticky" style="top: 2rem;">
+                    <div class="p-4 mb-3 bg-light rounded">
+                        <h4 class="fst-italic">О нас</h4>
+                        <p class="mb-0">Рекрутинговое агентство в IT-сфере, оказывающее услуги по поиску и подбору IT-персонала для организаций.</p>
+                    </div>
+    
+                    <div class="p-4">
+                        <h4 class="fst-italic">Тест/Отладка</h4>
+                        <ol class="list-unstyled mb-0">
+                            <li><a href="{% url 'vacancies:all' %}">Вакансии</a></li>
+                            <li><a href="{% url 'resume:all' %}">Резюме</a></li>
+                            <li><a href="{% url 'companies:moderation-companies' %}">Модерация</a></li>
+                        </ol>
+                        <p class="my-3">Если вы нашли ошибку - выделите ее мышкой и нажмите Alt + F4</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 {% endblock %}

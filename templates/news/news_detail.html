@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container">
     <h2>{{ object.title }}</h2>
     <div class="mb-1 text-muted">{{ object.created|date:'d.m.Y' }}</div>
     <strong>{{ object.short_text }}</strong>
@@ -9,4 +10,5 @@
     {% for p in object.split_text_to_lines %}
         <p>{{ p }}</p>
     {% endfor %}
+</div>
 {% endblock %}

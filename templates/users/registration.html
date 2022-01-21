@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container">
     <form method="post" action="{% url 'users:registration' %}">
         <h1 class="mb-3">Регистрация</h1>
         {% csrf_token %}
@@ -30,4 +31,5 @@
             <button type="submit" class="btn btn-primary">Регистрация</button>
         </div>
     </form>
+</div>
 {% endblock %}

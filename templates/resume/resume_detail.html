@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container">
     <div class="d-flex justify-content-between">
         <h3><strong>{{ object.name }}</strong></h3>
         <h3><strong>{% if object.price %} {{ object.price }} руб. {% else %} з/п не указана {% endif %}</strong></h3>
@@ -93,4 +94,5 @@
     {% endif %}
 
     <div class="mb-5"></div>
+</div>
 {% endblock %}

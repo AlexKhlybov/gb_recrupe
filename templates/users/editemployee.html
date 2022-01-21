@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<div class="container">
     <form method="post" action="{% url 'users:editemployee' %}" enctype="multipart/form-data">
         <h1 class="mb-3">Редактирование профиля сотрудника</h1>
         {% csrf_token %}
@@ -37,8 +39,6 @@
             {% endif %}
         {% endfor %}
 
-
-
         {% for message in messages %}
             <p class="col-auto mb-3 text-danger">{{ message }}</p>
         {% endfor %}
@@ -48,9 +48,7 @@
         </div>
     </form>
     <button class="btn btn-round form-control last">
-        <a href="/" class="">
-            на главную
-        </a>
+        <a href="/" class="">на главную</a>
     </button>
-
+</div>
 {% endblock %}
