@@ -176,6 +176,16 @@ a {
   color: rgb(23, 23, 80);
 }
 
+.top__banner-text--green {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 900;
+  font-size: 4rem;
+  line-height: 3.7rem;
+  color: rgb(14, 75, 16);
+}
+
+
 /* Pagination */
 .blog-pagination {
   margin-bottom: 4rem;
