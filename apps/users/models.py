@@ -12,11 +12,11 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     USER_TYPE_MODERATOR = 1  # Модератор
-    USER_TYPE_EMPLOYEE = 2   # Сотрудник
+    USER_TYPE_EMPLOYEE = 2   # Соискатель
     USER_TYPE_EMPLOYER = 3   # Работодатель
 
     USER_TYPE = (
-        (USER_TYPE_EMPLOYEE, 'Сотрудник'),
+        (USER_TYPE_EMPLOYEE, 'Соискатель'),
         (USER_TYPE_EMPLOYER, 'Работодатель'),
         (USER_TYPE_MODERATOR, 'Модератор'),
     )
