@@ -9,4 +9,3 @@ admin.site.register(News)
 class NewsResource(resources.ModelResource):
     class Meta:
         model = News
-        exclude = ('id', )
