@@ -3,7 +3,7 @@ import datetime
 from dateutil import relativedelta
 from django.conf import settings
 from django.db import models
-from django.db.models import Min, Max
+from django.db.models import Max, Min
 
 
 class Resume(models.Model):

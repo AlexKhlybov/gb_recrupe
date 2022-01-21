@@ -2,14 +2,15 @@ import json
 import os
 
 import tablib
-from import_export import resources
 from django.conf import settings
 from django.core.management import BaseCommand
+from import_export import resources
 
 from apps.companies.models import Company
 from apps.main.models import City
 from apps.news.models import News
-from apps.resume.models import Education, Resume, Experience, ResumeSkills, Courses
+from apps.resume.models import (Courses, Education, Experience, Resume,
+                                ResumeSkills)
 from apps.users.models import User
 from apps.vacancies.models import Vacancy, VacancySkills
 
