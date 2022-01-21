@@ -30,12 +30,12 @@ class Company(models.Model):
     @receiver(post_save, sender=User)
     def create_company_profile(sender, instance, created, **kwargs):
         if created:
-            if instance.role == 2:
+            if instance.role == 3:
                 Company.objects.create(user=instance)
 
     @receiver(post_save, sender=User)
     def save_company_profile(sender, instance, **kwargs):
-        if instance.role == 2:
+        if instance.role == 3:
             # print(f'instance: {instance.company}')
             instance.company.save()
 

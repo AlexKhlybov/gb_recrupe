@@ -14,7 +14,7 @@ from .models import User, EmployeeProfile
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(label='Email', required=True)
-    role = forms.ChoiceField(choices=((1, "Работник"), (2, "Работодатель"), (3, "Модератор")), label='Я:',
+    role = forms.ChoiceField(choices=((2, "Соискатель"), (3, "Работодатель"), (1, "Модератор")), label='Я:',
                              required=True)
     first_name = forms.CharField(label='Фамилия', required=True)
     last_name = forms.CharField(label='Имя', required=True)

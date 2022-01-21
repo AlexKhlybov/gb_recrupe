@@ -61,11 +61,11 @@ class EmployeeProfile(models.Model):
         # print(f'instance: {instance.role}')
         #User.objects.filter(username=instance)
         if created:
-            if instance.role == 1:
+            if instance.role == 2:
                 EmployeeProfile.objects.create(user=instance)
 
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
-        if instance.role == 1:
+        if instance.role == 2:
             # print(f'instance_1111: {instance.employeeprofile}')
             instance.employeeprofile.save()
