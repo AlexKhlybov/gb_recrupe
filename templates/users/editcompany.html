@@ -29,9 +29,11 @@
             </div>
             {% if field.name == "logo"%}
                 {% if user.company.logo %}
-                        <div class=""><img width = "200" height = "160" src="/media/{{ user.company.logo }}"></div>
+                        <div class=""><img width = "200" height = "160"
+                                       src="/media/{{ user.company.logo }}"></div>
                 {% else %}
-                        <div class=""><img width = "200" height = "160" src="/media/companies/def_img.jpg"></div>
+                        <div class=""><img width = "200" height = "160"
+                                       src="/media/companies/def_img.jpg"></div>
                 {% endif %}
             {% endif %}
         {% endfor %}

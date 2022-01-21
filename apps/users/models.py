@@ -37,7 +37,7 @@ class User(AbstractUser):
     def __str__(self):
         return f'{self.username}'
 
-
+      
 class EmployeeProfile(models.Model):
     MALE = 'M'
     FEMALE = 'W'
@@ -61,13 +61,13 @@ class EmployeeProfile(models.Model):
         # print(f'sender: {created}')
         # print(f'instance: {instance.__dict__}')
         # print(f'instance: {instance.role}')
-        # User.objects.filter(username=instance)
+        #User.objects.filter(username=instance)
         if created:
-            if instance.role == 1:
+            if instance.role == 2:
                 EmployeeProfile.objects.create(user=instance)
 
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
-        if instance.role == 1:
+        if instance.role == 2:
             # print(f'instance_1111: {instance.employeeprofile}')
             instance.employeeprofile.save()

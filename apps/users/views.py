@@ -4,8 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from apps.users.forms import (CompanyProfileEditForm, EmployeeProfileEditForm,
-                              UserEditForm, UserRegisterForm)
+from apps.users.forms import UserRegisterForm, UserEditForm, EmployeeProfileEditForm, CompanyProfileEditForm
 
 
 def auth_user_view(request):
@@ -76,8 +75,8 @@ def edit_epmloyee(request):
     # print(f'edit_form: {edit_form.__dict__}')
 
     content = {'title': title, 'edit_form': edit_form, 'profile_form': profile_form}
-    return render(request, 'users/editemployee.html', content)
 
+    return render(request, 'users/editemployee.html', content)
 
 def edit_company(request):
     title = 'Редактирование профиля компании'

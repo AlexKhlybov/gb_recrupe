@@ -4,17 +4,20 @@ from django import forms
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 # from .models import ShopUserProfile
 from django.core.validators import validate_email
+from django.contrib.auth.forms import UserChangeForm
+from apps.companies.models import Company
 
 from apps.companies.models import Company
 
 from .models import EmployeeProfile, User
 
+from .models import User, EmployeeProfile
 # import random, hashlib
 
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(label='Email', required=True)
-    role = forms.ChoiceField(choices=((1, "Работник"), (2, "Работодатель"), (3, "Модератор")), label='Я:',
+    role = forms.ChoiceField(choices=((2, "Соискатель"), (3, "Работодатель"), (1, "Модератор")), label='Я:',
                              required=True)
     first_name = forms.CharField(label='Фамилия', required=True)
     last_name = forms.CharField(label='Имя', required=True)

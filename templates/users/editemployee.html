@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
 <div class="container">
     <form method="post" action="{% url 'users:editemployee' %}" enctype="multipart/form-data">
         <h1 class="mb-3">Редактирование профиля сотрудника</h1>
@@ -31,7 +30,7 @@
             {% if field.name == "avatar"%}
                 {% if user.employeeprofile.avatar %}
                         <div class=""><img width = "200" height = "160"
-                                       src="/media/{{ user.company.logo }}"></div>
+                                       src="/media/{{ user.employeeprofile.avatar }}"></div>
                 {% else %}
                         <div class=""><img width = "200" height = "160"
                                        src="/media/users/def_img.png"></div>
