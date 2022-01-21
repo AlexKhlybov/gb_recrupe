@@ -5,9 +5,11 @@ from django.conf import settings
 from django.core.management import BaseCommand
 
 from apps.companies.admin import CompanyResource
+from apps.main.admin import CityResource
 from apps.news.admin import NewsResource
-from apps.resume.admin import EducationResource, ExperienceResource, CoursesResource, ResumeResource, \
-    ResumeSkillsResource
+from apps.resume.admin import (CoursesResource, EducationResource,
+                               ExperienceResource, ResumeResource,
+                               ResumeSkillsResource)
 from apps.users.admin import UserResource
 from apps.vacancies.admin import VacancyResource, VacancySkillsResource
 
@@ -17,19 +19,12 @@ class Command(BaseCommand):
         parser.add_argument('-m', '--models', nargs='+', type=str, default=[])
 
     def handle(self, *args, **options):
-        self.export_model(UserResource, options)
-        self.export_model(NewsResource, options)
-        self.export_model(CompanyResource, options)
+        resource = [CityResource, UserResource, NewsResource]
+        resource += [CompanyResource, VacancyResource, VacancySkillsResource]
+        resource += [EducationResource, ExperienceResource, CoursesResource, ResumeResource, ResumeSkillsResource]
 
-        self.export_model(VacancyResource, options)
-        self.export_model(VacancySkillsResource, options)
-
-        self.export_model(EducationResource, options)
-        self.export_model(ExperienceResource, options)
-        self.export_model(CoursesResource, options)
-
-        self.export_model(ResumeResource, options)
-        self.export_model(ResumeSkillsResource, options)
+        for i in resource:
+            self.export_model(i, options)
 
     @staticmethod
     def export_model(resource_class, options):
@@ -41,7 +36,7 @@ class Command(BaseCommand):
 
         dataset = resource_class().export()
         data = json.loads(dataset.json)
-        print(f'export {name}... ', end='')
+        print(f'export {name}... ', end='', flush=True)
         with open(full_file_name, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
         print('OK', f'exported {len(data)} rows')

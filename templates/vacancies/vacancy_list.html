@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container">
     <h2 class="mb-3">Вакансии</h2>
     <div class="mb-5">
     {% for item in object_list %}
@@ -31,4 +32,5 @@
         <strong class="mb-3">Нет активных вакансий</strong>
     {% endif %}
     </div>
+</div>
 {% endblock %}

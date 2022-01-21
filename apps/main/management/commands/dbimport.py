@@ -2,13 +2,15 @@ import json
 import os
 
 import tablib
-from import_export import resources
 from django.conf import settings
 from django.core.management import BaseCommand
+from import_export import resources
 
 from apps.companies.models import Company
+from apps.main.models import City
 from apps.news.models import News
-from apps.resume.models import Education, Resume, Experience, ResumeSkills, Courses
+from apps.resume.models import (Courses, Education, Experience, Resume,
+                                ResumeSkills)
 from apps.users.models import User
 from apps.vacancies.models import Vacancy, VacancySkills
 
@@ -18,18 +20,12 @@ class Command(BaseCommand):
         parser.add_argument('-m', '--models', nargs='+', type=str, default=[])
 
     def handle(self, *args, **options):
-        self.import_model(User, options)
-        self.import_model(News, options)
-        self.import_model(Company, options)
+        models = [City, User, News]
+        models += [Company, Vacancy, VacancySkills]
+        models += [Education, Experience, Courses, Resume, ResumeSkills]
 
-        self.import_model(Vacancy, options)
-        self.import_model(VacancySkills, options)
-
-        self.import_model(Education, options)
-        self.import_model(Experience, options)
-        self.import_model(Courses, options)
-        self.import_model(Resume, options)
-        self.import_model(ResumeSkills, options)
+        for i in models:
+            self.import_model(i, options)
 
     @staticmethod
     def import_model(model, options):
@@ -38,7 +34,7 @@ class Command(BaseCommand):
         if options.get('models') and name.lower() not in options.get('models', []):
             return
 
-        print(f'import {name}... ', end='')
+        print(f'import {name}... ', end='', flush=True)
         with open(full_file_name, 'r', encoding='utf-8') as f:
             data = json.load(f)
             for i in data:

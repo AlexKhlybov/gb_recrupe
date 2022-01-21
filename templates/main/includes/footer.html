@@ -1,6 +1,23 @@
 <footer class="blog-footer">
-    <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-    <p>
-        <a href="#">Back to top</a>
-    </p>
+    <div class="container">
+        <div class="footer__memu  d-flex">
+            <ul class="d-flex  flex-column  align-items-start">
+                <li><a class="link-secondary  link__footer-menu" href="/">Главная</a></li>
+                <li><a class="link-secondary  link__footer-menu" href="{% url 'companies:all' %}">Наши партнеры</a></li>
+                <li><a class="link-secondary  link__footer-menu" href="{% url 'news:all' %}">Новости</a></li>
+                <li><a class="link-secondary  link__footer-menu" href="{% url 'main:specification' %}">Правила портала</a></li>
+                <li><a class="link-secondary  link__footer-menu" href="{% url 'main:posting_rules' %}">Правила размещения вакансий</a></li>
+            </ul>
+        </div>
+        <p class="text-end"><a href="#">Back to top</a></p>
+
+        <hr class="footer__line">
+        <p class="text-start">АО «Команда №4» использует файлы «cookie», с целью персонализации сервисов и повышения удобства пользования веб-сайтом. «Cookie» представляют собой небольшие файлы, содержащие информацию о предыдущих посещениях веб-сайта. Если вы не хотите использовать файлы «cookie», измените настройки браузера.</p>
+        <hr class="footer__line">
+
+        <div class="footer__bottom">
+            <p class="footer__copy">Все права защищены © Москва 2021 - 2022 гг.</p>
+            <p class="footer__parent">Команад №4</p>
+        </div>
+    </div>
 </footer>

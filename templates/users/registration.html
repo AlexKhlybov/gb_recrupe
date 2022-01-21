@@ -1,33 +1,37 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <form method="post" action="{% url 'users:registration' %}">
-        <h1 class="mb-3">Регистрация</h1>
-        {% csrf_token %}
-        {% for field in register_form %}
-            <div class="row mb-2">
-                {% if field.label != "" %}
-                    <label class="col-sm-2 col-form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
-                    <div class="col-sm-10">
-                        {{ field }}
-                    </div>
-                {% else %}
-                {% endif %}
+<div class="container">
+    <div class="registration-form  mb-5">
+        <form method="post" action="{% url 'users:registration' %}">
+            <h1 class="mt-5  mb-3">Регистрация</h1>
+            {% csrf_token %}
+            {% for field in register_form %}
+                <div class="row mb-2">
+                    {% if field.label != "" %}
+                        <label class="col-sm-4 col-form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                        <div class="col-sm-8">
+                            {{ field }}
+                        </div>
+                    {% else %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+    
+            <div class="form-check  mb-3  mt-5">
+                <input class="form-check-input" type="checkbox" value="" id="specification" required>
+                <label class="form-check-label" for="specification">
+                    Я соглашаюсь с <a href="{% url 'main:specification' %}" target="_blank">правилами портала</a>
+                </label>
             </div>
-        {% endfor %}
-
-        <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" value="" id="specification" required>
-            <label class="form-check-label" for="specification">
-                Я соглашаюсь с <a href="{% url 'main:specification' %}" target="_blank">правилами портала</a>
-            </label>
-        </div>
-        {% for message in messages %}
-            <p class="col-auto mb-3 text-danger">{{ message }}</p>
-        {% endfor %}
-
-        <div class="col-auto mb-3">
-            <button type="submit" class="btn btn-primary">Регистрация</button>
-        </div>
-    </form>
+            {% for message in messages %}
+                <p class="col-auto mb-3 text-danger">{{ message }}</p>
+            {% endfor %}
+    
+            <div class="col-auto mb-3">
+                <button type="submit" class="btn btn-primary">Регистрация</button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

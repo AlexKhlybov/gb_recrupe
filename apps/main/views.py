@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 
 from apps.companies.models import Company
@@ -19,3 +20,5 @@ def specification(request):
 
 def posting_rules(request):
     return render(request, 'main/posting_rules.html')
+
+

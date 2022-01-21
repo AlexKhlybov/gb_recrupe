@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container">
     <div class="row g-5">
         <div class="col-md-9">
             <h3><strong>{{ object.name }}</strong></h3>
@@ -33,8 +34,20 @@
             <span class="badge rounded-pill bg-primary">{{ item.name }}</span>
         {% endfor %}
     </div>
-    <div>
+    <div class="mb-5">
         <button onclick="void(0)" class="btn btn-success">Откликнуться</button>
     </div>
-    <p class="fst-italic my-5">Вакансия опубликована {{ object.created_at|date:'d.m.Y' }} в {{ object.company.city }}</p>
+    {% if object.company.user.email or object.company.user.phone %}
+        <div class="mb-4">
+            <h3 class="mb-2">Контакты</h3>
+            <ol class="list-unstyled mb-4">
+                {% if object.company.user.email %}<li>e-mail: <a href="mailto:{{ object.company.user.email }}" target="_blank">{{ object.company.user.email }}</a></li> {% endif %}
+                {% if object.company.user.phone %}<li>Телефон: <a href="tel:{{ object.company.user.phone }}" target="_blank">{{ object.company.user.phone }}</a></li> {% endif %}
+            </ol>
+        </div>
+    {% endif %}
+
+    <hr>
+    <p class="fst-italic mb-5">Вакансия опубликована {{ object.created_at|date:'d.m.Y' }} в {{ object.company.city }}</p>
+</div>
 {% endblock %}
