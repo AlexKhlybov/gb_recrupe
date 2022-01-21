@@ -8,6 +8,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" type="text/css" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static '/bootstrap/blog.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/bootstrap/signin.css' %}">
 
     <link rel="icon" href="{% static '/favicon.ico' %}">
 </head>
@@ -17,16 +18,9 @@
     {% include 'main/includes/top_menu.html' %}
 </div>
 
-<main class="container">
-    <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
-        <div class="px-0">
-            <h1 class="display-4 fst-italic">Recrupe - Работа найдется для каждого</h1>
-            <p class="lead my-3">Агентство в IT-сфере, оказывающее услуги по поиску и подбору IT-персонала для организаций.</p>
-        </div>
-    </div>
-
+<main class="content">
     {% block content %}{% endblock %}
 </main>
-{% include 'main/includes/footer.html' %}
+    {% include 'main/includes/footer.html' %}
 </body>
 </html>

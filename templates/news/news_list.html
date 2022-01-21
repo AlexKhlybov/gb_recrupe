@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container">
     <h2 class="mb-5">Новости портала</h2>
     <div class="row mb-2">
     {% for item in news_list %}
@@ -19,4 +20,5 @@
         </div>
     {% endfor %}
     </div>
+</div>
 {% endblock %}
