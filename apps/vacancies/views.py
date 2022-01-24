@@ -1,3 +1,4 @@
+from tempfile import template
 from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -27,6 +28,17 @@ class VacancyCompanyListView(ListView):
     def get_queryset(self):
         company_id = self.kwargs['company_id']
         return Vacancy.objects.filter(company_id=company_id, is_closed=False, is_active=True)
+    
+    
+class MyVacancyCompanyListView(VacancyCompanyListView):
+    template_name = "vacancies/my_vacancy.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["template"] = "Recrupe | Мои вакансии"
+        return context
+    
+
 
 def vacancy_moderation(request):
     if request.GET.get('find'):

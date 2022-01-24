@@ -2,10 +2,15 @@
     <nav class="nav d-flex justify-content-start">
         <a class="p-3 link-secondary  link__top-menu" href="/">Главная</a>
         {% if request.user and request.user.pk %}
-            {% if request.user.role == 1 or request.user.role == 2 %}
+
+            {% if request.user.role == 1 %}
                 <a class="p-3 link-secondary  link__top-menu" href="{% url 'vacancies:all' %}">Вакансии</a>
-            {% endif %}
-            {% if request.user.role == 1 or request.user.role == 3 %}
+                <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:all' %}">Резюме</a>
+            {% elif request.user.role == 2 %}
+                <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:my-resume' request.user.id %}">Мои резюме</a>
+                <a class="p-3 link-secondary  link__top-menu" href="{% url 'vacancies:all' %}">Вакансии</a>
+            {% elif  request.user.role == 3 %}
+                <a class="p-3 link-secondary  link__top-menu" href="{% url 'companies:my-vacancies' request.user.company.id %}">Мои вакансии</a>
                 <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:all' %}">Резюме</a>
             {% endif %}
         {% endif %}
