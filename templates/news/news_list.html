@@ -3,6 +3,10 @@
 {% block content %}
 <div class="container">
     <h2 class="mb-5">Новости портала</h2>
+
+    <div class="create_news  mt-3  mb-5">
+        <a class="btn btn-primary" href="{% url 'news:create_news' %}" role="button">Добавить новость</a>
+    </div>
     <div class="row mb-2">
     {% for item in news_list %}
         <div class="col-md-12">
@@ -15,8 +19,8 @@
                     <h3 class="mb-2">{{ item.title }}</h3>
                     <p class="card-text mb-auto">{{ item.short_text }}</p>
                     <div class="d-flex">
-                        <a class="mx-3" href="{% url 'news:detail_news' item.pk %}" class="stretched-link">Подробнее</a>
-                        <a href="{% url 'news:update_news' item.pk %}" class="stretched-link">Редактировать</a>
+                        <div><a href="{% url 'news:detail_news' item.pk %}" class="mx-3">Подробнее</a></div>
+                        <div><a href="{% url 'news:update_news' item.pk %}" class="mx-3">Редактировать</a></div>
                     </div>
                 </div>
             </div>
