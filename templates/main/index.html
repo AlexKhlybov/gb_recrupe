@@ -1,67 +1,208 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3 class="pb-4 mb-0 fst-italic">
-        Последние новости портала
-    </h3>
-
-    <div class="row mb-2 border-bottom">
-        {% for item in news %}
-            <div class="col-md-6">
-                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="col p-4 d-flex flex-column position-static">
-                        <div class="mb-1 text-muted">{{ item.created|date:'d.m.Y' }}</div>
-                        <h5 class="mb-1">{{ item.title }}</h5>
-                        <p class="card-text mb-auto">{{ item.short_text }}</p>
-                        <a href="{% url 'news:detail_news' item.pk %}" class="stretched-link">Подробнее</a>
+    <div class="top__banner  mb-5  d-flex  justify-content-center">
+        {% if request.user.role == 1 %} {# Модератор #}
+            <div class="container">
+                <h1 class="text-dark  mb-4">Приветствую тебя о великиий и могучий!</h1>
+                <div class="row  top__banner-content  justify-content-center  align-items-center">
+                    <div class="col-4  top__banner-left">
+                        <h3 class="mt-3  text-uppercase">Соискатели</h3>
+                        <p class="my-3">Описание вакансии — это первый шаг к сердцу (и знаниям) кандидата. И он важен, как и первое впечатление при знакомстве. Если накосячить, кандидат дальше по воронке уже не пойдет. Поэтому, отнеситесь к составлению текста вакансии с большой ответственностью.</p>
+                        <a class="w-60 btn btn-lg btn-success" href="{% url 'resume:moderation-resume' %}" role="button">Проверить резюме</a>
                     </div>
-                    <div class="col-auto d-none d-lg-block">
-                        <img src="/media/news/{{ item.image }}" style="object-fit: cover" width="200" height="250" alt="{{ item.title }}">
+                    <div class="col-4  top__banner-right">
+                        <h3 class="mt-3  text-uppercase">Работадатели</h3>
+                        <p class="my-3">Описание вакансии — это первый шаг к сердцу (и знаниям) кандидата. И он важен, как и первое впечатление при знакомстве. Если накосячить, кандидат дальше по воронке уже не пойдет. Поэтому, отнеситесь к составлению текста вакансии с большой ответственностью.</p>
+                        <a class="w-60 btn btn-lg btn-primary" href="{% url 'companies:moderation-companies' %}" role="button">Проверить вакансии</a>
                     </div>
                 </div>
             </div>
-        {% endfor %}
+        {% elif request.user.role == 2 %} {# Работник #}
+            <div class="container">
+                <div class="row  top__banner-content  justify-content-center  align-items-center">
+                    <div class="col-4  top__banner-left  text-start">
+                        <h3 class="mt-3  text-dark  text-uppercase">Сделай первый шаг!</h3>
+                        <p class="my-3">Описание вакансии — это первый шаг к сердцу (и знаниям) кандидата. И он важен, как и первое впечатление при знакомстве. Если накосячить, кандидат дальше по воронке уже не пойдет. Поэтому, отнеситесь к составлению текста вакансии с большой ответственностью.</p>
+                        <button class="w-50 btn btn-lg btn-success" type="submit">Создать резюме</button>
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-4  top__banner-right  top__banner-text--green">Работа есть для всех!</div>
+                </div>
+            </div>
+        {% elif request.user.role == 3 %}  {# Компания #}
+            <div class="container">
+                <div class="row  top__banner-content  justify-content-center  align-items-center">
+                    <div class="col-4  top__banner-left  text-start">
+                        <h3 class="mt-3  text-dark  text-uppercase">Сделай первый шаг!</h3>
+                        <p class="my-3">Описание вакансии — это первый шаг к сердцу (и знаниям) кандидата. И он важен, как и первое впечатление при знакомстве. Если накосячить, кандидат дальше по воронке уже не пойдет. Поэтому, отнеситесь к составлению текста вакансии с большой ответственностью.</p>
+                        <button class="w-50 btn btn-lg btn-primary" type="submit">Создать вакансию</button>
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-4  top__banner-right  top__banner-text--blue">Работники есть для всех!</div>
+                </div>
+            </div>
+        {% else %}
+            <div class="px-0">
+                <h1 class="banner__header  my-3">Агентство в IT-сфере, оказывающее услуги по поиску и подбору IT-персонала для организаций.</h1>
+            </div>
+        {% endif %}   
     </div>
 
-    <div class="row g-5">
-        <div class="col-md-8">
-            <article class="blog-post">
-                <h2 class="blog-post-title my-4">Наши партнеры</h2>
-                {% for item in partners %}
-                    <div class="col-md-12">
-                        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative">
-                            <div class="col-auto d-none d-lg-block">
-                                <img src="/media/companies/{{ item.logo }}" style="object-fit: scale-down" width="200" height="150" alt="{{ name }}">
-                            </div>
-                            <div class="col px-4 py-3 d-flex flex-column position-static">
-                                <h3 class="mb-2">{{ item.name }}</h3>
-                                <p class="card-text mb-auto">{{ item.short_description }}</p>
-                                <a href="{% url 'companies:detail' item.pk %}" class="stretched-link">Подробнее</a>
-                            </div>
+    <div class="container">
+
+        <!-- Раздел новостей -->
+        <h2 class="blog-post-title pb-4 mb-0">Последние новости портала</h2>
+        <div class="row mb-2 border-bottom">
+            {% for item in news %}
+                <div class="col-md-6">
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <div class="mb-1 text-muted">{{ item.created|date:'d.m.Y' }}</div>
+                            <h5 class="mb-1">{{ item.title }}</h5>
+                            <p class="card-text mb-auto">{{ item.short_text }}</p>
+                            <a href="{% url 'news:detail_news' item.pk %}" class="stretched-link">Подробнее</a>
+                        </div>
+                        <div class="col-auto d-none d-lg-block">
+                            <img src="/media/news/{{ item.image }}" style="object-fit: cover" width="200" height="250" alt="{{ item.title }}">
                         </div>
                     </div>
-                {% endfor %}
-            </article>
+                </div>
+            {% endfor %}
         </div>
 
-        <div class="col-md-4">
-            <div class="position-sticky" style="top: 2rem;">
-                <div class="p-4 mb-3 bg-light rounded">
-                    <h4 class="fst-italic">О нас</h4>
-                    <p class="mb-0">Рекрутинговое агентство в IT-сфере, оказывающее услуги по поиску и подбору IT-персонала для организаций.</p>
+        <!-- Раздел рекомендаций -->
+        <div class="row g-5">
+            {% if request.user.role == 1 %}  {# Модератор #}
+                <div class="col-md-8">
+                    <article class="blog-post">
+                        <h2 class="blog-post-title my-4">Новые вакансии</h2>
+                        {% for item in job_recomendations %}
+                            <div class="col-md-12 p-3">
+                                <div class="d-flex justify-content-between">
+                                    <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
+                                        <h5 class="mb-0">{{ item.name }}</h5>
+                                        <p class="fs-5 mb-0">
+                                            {% if item.price_min %}от {{ item.price_min }} руб. {% else %}{% endif %}
+                                            {% if item.price_max %}до {{ item.price_max }} руб.{% endif %}
+                                            {% if not item.price_min and not item.price_max %} з/п не указана{% endif %}
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="mb-1">
+                                    <a href="{% url 'companies:detail' item.company.pk %}" class="mb-auto text-muted text-decoration-none">
+                                        <p>{{ item.company }}{% if item.company.city %}, {{ item.company.city }}{% endif %} </p>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </article>
                 </div>
-
-                <div class="p-4">
-                    <h4 class="fst-italic">Тест/Отладка</h4>
-                    <ol class="list-unstyled mb-0">
-                        <li><a href="{% url 'vacancies:all' %}">Вакансии</a></li>
-                        <li><a href="{% url 'resume:all' %}">Резюме</a></li>
-                        <li><a href="{% url 'companies:moderation-companies' %}">Модерация</a></li>
-                    </ol>
-                    <p class="my-3">Если вы нашли ошибку - выделите ее мышкой и нажмите Alt + F4</p>
+            {% elif request.user.role == 2 %}  {# Соискатель #}
+                <div class="col-md-8">
+                    <article class="blog-post">
+                        <h2 class="blog-post-title my-4">Рекомендации для вас</h2>
+                        {% for item in job_recomendations %}
+                            <div class="col-md-12 p-3">
+                                <div class="d-flex justify-content-between">
+                                    <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
+                                        <h5 class="mb-0">{{ item.name }}</h5>
+                                        <p class="fs-5 mb-0">
+                                            {% if item.price_min %}от {{ item.price_min }} руб. {% else %}{% endif %}
+                                            {% if item.price_max %}до {{ item.price_max }} руб.{% endif %}
+                                            {% if not item.price_min and not item.price_max %} з/п не указана{% endif %}
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="mb-1">
+                                    <a href="{% url 'companies:detail' item.company.pk %}" class="mb-auto text-muted text-decoration-none">
+                                        <p>{{ item.company }}{% if item.company.city %}, {{ item.company.city }}{% endif %} </p>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </article>
+                </div>
+            {% elif request.user.role == 3 %}  {# Компания #}
+                <div class="col-md-8">
+                    <article class="blog-post">
+                        <h2 class="blog-post-title my-4">Рекомендации для вас</h2>
+                        {% for item in resume_recomendations %}
+                            <div class="col-md-12 p-3">
+                                <div class="d-flex justify-content-between">
+                                    <a href="{% url 'resume:detail' item.pk %}" class="text-decoration-none">
+                                        <h5 class="mb-0">{{ item.name }}</h5>
+                                        <p class="fs-5 mb-0">
+                                            {% if item.price %}{{ item.price }} руб.
+                                            {% else %} з/п не указана{% endif %}
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="mb-1">
+                                    <p>Москва</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </article>
+                </div>
+            {% else %}
+                <div class="col-md-8">
+                    <article class="blog-post">
+                        <h2 class="blog-post-title my-4">Вакансии дня</h2>
+                        {% for item in job_recomendations %}
+                            <div class="col-md-12 p-3">
+                                <div class="d-flex justify-content-between">
+                                    <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
+                                        <h5 class="mb-0">{{ item.name }}</h5>
+                                        <p class="fs-5 mb-0">
+                                            {% if item.price_min %}от {{ item.price_min }} руб. {% else %}{% endif %}
+                                            {% if item.price_max %}до {{ item.price_max }} руб.{% endif %}
+                                            {% if not item.price_min and not item.price_max %} з/п не указана{% endif %}
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="mb-1">
+                                    <a href="{% url 'companies:detail' item.company.pk %}" class="mb-auto text-muted text-decoration-none">
+                                        <p>{{ item.company }}{% if item.company.city %}, {{ item.company.city }}{% endif %} </p>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </article>
+                </div>
+            {% endif %}
+    
+            <div class="col-md-4">
+                <div class="position-sticky" style="top: 2rem;">
+                    <div class="p-4 mb-3 bg-light rounded">
+                        <h4 class="fst-italic">О нас</h4>
+                        <p class="mb-0">Рекрутинговое агентство в IT-сфере, оказывающее услуги по поиску и подбору IT-персонала для организаций.</p>
+                    </div>
+    
+                    <div class="p-4">
+                        <h4 class="fst-italic">Тест/Отладка</h4>
+                        <ol class="list-unstyled mb-0">
+                            <li><a href="{% url 'vacancies:all' %}">Вакансии</a></li>
+                            <li><a href="{% url 'resume:all' %}">Резюме</a></li>
+                            <li><a href="{% url 'companies:moderation-companies' %}">Модерация</a></li>
+                        </ol>
+                        <p class="my-3">Если вы нашли ошибку - выделите ее мышкой и нажмите Alt + F4</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
+        <!-- Раздел доверия -->
+        <div class="">
+            <h2 class="blog-post-title pb-4 mb-0">Нам доверяют</h2>
+            <div class="confidence">
+                    <div class="row  d-flex  align-items-center  justify-content-evenly">
+                    {% for item in partners %}
+                        <div class="col-3"><img class="img" src="/media/companies/{{ item.logo }}" alt="{{ item.name }}"></div>
+                    {% endfor %}
+                    </div>
+            </div>
+        </div>
+
+    </div>
 {% endblock %}

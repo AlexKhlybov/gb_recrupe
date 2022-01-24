@@ -1,9 +1,19 @@
-<div class="nav-scroller py-1 mb-2">
-    <nav class="nav d-flex justify-content-between">
-        <a class="p-2 link-secondary" href="/">Главная</a>
-        <a class="p-2 link-secondary" href="{% url 'companies:all' %}">Наши партнеры</a>
-        <a class="p-2 link-secondary" href="{% url 'news:all' %}">Новости</a>
-        <a class="p-2 link-secondary" href="{% url 'main:specification' %}">Правила портала</a>
-        <a class="p-2 link-secondary" href="{% url 'main:posting_rules' %}">Правила размещения вакансий</a>
+<div class="py-1">
+    <nav class="nav d-flex justify-content-start">
+        <a class="p-3 link-secondary  link__top-menu" href="/">Главная</a>
+        {% if request.user and request.user.pk %}
+            {% if request.user.role == 1 %}
+                <a class="p-3 link-secondary  link__top-menu" href="{% url 'vacancies:all' %}">Вакансии</a>
+                <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:all' %}">Резюме</a>
+            {% elif request.user.role == 2 %}
+                <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:my-resume' request.user.id %}">Мои резюме</a>
+                <a class="p-3 link-secondary  link__top-menu" href="{% url 'vacancies:all' %}">Вакансии</a>
+            {% elif  request.user.role == 3 %}
+                <a class="p-3 link-secondary  link__top-menu" href="{% url 'companies:my-vacancies' request.user.company.id %}">Мои вакансии</a>
+                <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:all' %}">Резюме</a>
+            {% endif %}
+        {% endif %}
+        <a class="p-3  link-secondary  link__top-menu" href="{% url 'companies:all' %}">Партнеры</a>
+        <a class="p-3  link-secondary  link__top-menu" href="{% url 'news:all' %}">Новости</a>
     </nav>
 </div>

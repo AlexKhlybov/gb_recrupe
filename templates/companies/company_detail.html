@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<div class="container">
     <div class="row g-5">
-
         <div class="col-md-3">
             <div class="position-sticky">
                 <div class="p-0 mb-3 rounded">
@@ -14,6 +13,11 @@
                     <ol class="list-unstyled mb-4">
                         <li><h6>{{ object.city }}</h6></li>
                         <li><a href="{{ object.url }}" target="_blank">{{ object.url }}</a></li>
+                    </ol>
+                    <ol class="list-unstyled mb-4">
+                        <li><h6>Контакты</h6></li>
+                        {% if object.user.email %}<li>e-mail: <a href="mailto:{{ object.user.email }}" target="_blank">{{ object.user.email }}</a></li> {% endif %}
+                        {% if object.user.phone %}<li>Телефон: <a href="tel:{{ object.user.phone }}" target="_blank">{{ object.user.phone }}</a></li> {% endif %}
                     </ol>
                     <strong class="py-4">Вакансии</strong>
                     <ol class="list-unstyled mb-4">
@@ -35,5 +39,5 @@
             </article>
         </div>
     </div>
-
+</div>
 {% endblock %}

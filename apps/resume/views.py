@@ -1,17 +1,30 @@
+from re import template
+
 from django.db.models import Q
 from django.shortcuts import render
-
-from django.views.generic import ListView, DetailView
+from django.views.generic import DetailView, ListView
 
 from apps.resume.models import Resume, ResumeModeration
 
 
 class ResumeListView(ListView):
     model = Resume
+    
+
+class MyResumeListView(ListView):
+    model = Resume
+    template_name = "resume/my_resume.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Recrupe | Мои резюме"
+        context["my_resume"] = Resume.objects.filter(user__pk=self.kwargs["pk"]).order_by("name")
+        return context
 
 
 class ResumeDetailView(DetailView):
     model = Resume
+    template_name = "resume/resume_detail.html"
 
 
 def resume_moderation(request):

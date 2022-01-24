@@ -3,7 +3,7 @@ import datetime
 from dateutil import relativedelta
 from django.conf import settings
 from django.db import models
-from django.db.models import Min, Max
+from django.db.models import Max, Min
 
 
 class Resume(models.Model):
@@ -12,7 +12,7 @@ class Resume(models.Model):
         verbose_name_plural = 'Резюме'
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=True, on_delete=models.CASCADE,
-                             verbose_name='Сотрудник')
+                             verbose_name='Соискатель')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Изменен')
     name = models.CharField(max_length=128, db_index=True, verbose_name="Название резюме")
