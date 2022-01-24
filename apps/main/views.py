@@ -1,12 +1,11 @@
 
 from django.shortcuts import render
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from apps.companies.models import Company
-from apps.vacancies.models import Vacancy
-from apps.resume.models import Resume
 from apps.news.models import News
-
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from apps.resume.models import Resume
+from apps.vacancies.models import Vacancy
 
 
 class HomePageList(ListView):

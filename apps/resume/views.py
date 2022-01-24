@@ -1,4 +1,5 @@
 from re import template
+
 from django.db.models import Q
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView

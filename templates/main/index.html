@@ -74,8 +74,30 @@
         <!-- Раздел рекомендаций -->
         <div class="row g-5">
             {% if request.user.role == 1 %}  {# Модератор #}
-                <a class="btn btn-sm btn-outline-secondary" href="{% url 'user:editemployee' %}">
-                    {{ request.user }}</a>
+                <div class="col-md-8">
+                    <article class="blog-post">
+                        <h2 class="blog-post-title my-4">Новые вакансии</h2>
+                        {% for item in job_recomendations %}
+                            <div class="col-md-12 p-3">
+                                <div class="d-flex justify-content-between">
+                                    <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
+                                        <h5 class="mb-0">{{ item.name }}</h5>
+                                        <p class="fs-5 mb-0">
+                                            {% if item.price_min %}от {{ item.price_min }} руб. {% else %}{% endif %}
+                                            {% if item.price_max %}до {{ item.price_max }} руб.{% endif %}
+                                            {% if not item.price_min and not item.price_max %} з/п не указана{% endif %}
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="mb-1">
+                                    <a href="{% url 'companies:detail' item.company.pk %}" class="mb-auto text-muted text-decoration-none">
+                                        <p>{{ item.company }}{% if item.company.city %}, {{ item.company.city }}{% endif %} </p>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </article>
+                </div>
             {% elif request.user.role == 2 %}  {# Соискатель #}
                 <div class="col-md-8">
                     <article class="blog-post">
