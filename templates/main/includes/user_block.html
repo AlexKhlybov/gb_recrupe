@@ -7,17 +7,16 @@
         </div>
         <div class="col-6 gap-2 d-flex justify-content-end align-items-center">
             {% if request.user.id %}
-                {% if request.user.role == 2 %}
+                {% if request.user.role == 1 %}  {# Модератор #}
                     <a class="btn btn-sm btn-outline-secondary" href="{% url 'user:editemployee' %}">
                         {{ request.user }}</a>
-                {% elif request.user.role == 3 %}
+                {% elif request.user.role == 2 %}  {# Соискатель #}
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'user:editemployee' %}">
+                        {{ request.user }}</a>
+                {% elif request.user.role == 3 %}  {# Компания #}
                     <a class="btn btn-sm btn-outline-secondary" href="{% url 'user:editcompany' %}">
                         {{ request.user }}</a>
-                {% elif request.user.role == 1 %}
-                    <a class="btn btn-sm btn-outline-secondary" href="/">
-                        {{ request.user }}</a>
                 {% endif %}
-
                 <a class="btn btn-sm btn-outline-secondary" href="{% url 'user:logout' %}">Выйти</a>
             {% else %}
                 <a class="btn btn-sm btn-outline-secondary" href="{% url 'user:registration' %}">Регистрация</a>

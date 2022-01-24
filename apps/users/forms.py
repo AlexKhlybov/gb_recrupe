@@ -4,14 +4,11 @@ from django import forms
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 # from .models import ShopUserProfile
 from django.core.validators import validate_email
-from django.contrib.auth.forms import UserChangeForm
-from apps.companies.models import Company
 
 from apps.companies.models import Company
 
 from .models import EmployeeProfile, User
 
-from .models import User, EmployeeProfile
 # import random, hashlib
 
 

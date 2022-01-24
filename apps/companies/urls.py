@@ -9,7 +9,7 @@ urlpatterns = [
     path('', companies.CompanyListView.as_view(), name='all'),
     path('<int:pk>/', companies.CompanyDetailView.as_view(), name='detail'),
     path('<int:company_id>/vacancies/', vacancies.VacancyCompanyListView.as_view(), name='vacancies'),
+    path('<int:company_id>/my-vacancies/', vacancies.MyVacancyCompanyListView.as_view(), name='my-vacancies'),
     path('moderation-companies/', companies.company_moderation, name='moderation-companies'),
     path('<int:pk>/moderation-company/', companies.CompanyModarationUpdateView.as_view(), name='moderation-company'),
-
 ]
