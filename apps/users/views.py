@@ -32,6 +32,7 @@ def auth_user_view(request):
 
     content = {}  #TODO - title = 'Вход'
 
+
     return render(request, 'users/sign-in.html', content)
 
 

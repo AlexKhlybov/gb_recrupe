@@ -12,11 +12,11 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     USER_TYPE_MODERATOR = 1  # Модератор
-    USER_TYPE_EMPLOYEE = 2   # Сотрудник
+    USER_TYPE_EMPLOYEE = 2   # Соискатель
     USER_TYPE_EMPLOYER = 3   # Работодатель
 
     USER_TYPE = (
-        (USER_TYPE_EMPLOYEE, 'Сотрудник'),
+        (USER_TYPE_EMPLOYEE, 'Соискатель'),
         (USER_TYPE_EMPLOYER, 'Работодатель'),
         (USER_TYPE_MODERATOR, 'Модератор'),
     )
@@ -37,7 +37,7 @@ class User(AbstractUser):
     def __str__(self):
         return f'{self.username}'
 
-
+      
 class EmployeeProfile(models.Model):
     MALE = 'M'
     FEMALE = 'W'
@@ -61,13 +61,13 @@ class EmployeeProfile(models.Model):
         # print(f'sender: {created}')
         # print(f'instance: {instance.__dict__}')
         # print(f'instance: {instance.role}')
-        # User.objects.filter(username=instance)
+        #User.objects.filter(username=instance)
         if created:
-            if instance.role == 1:
+            if instance.role == 2:
                 EmployeeProfile.objects.create(user=instance)
 
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
-        if instance.role == 1:
+        if instance.role == 2:
             # print(f'instance_1111: {instance.employeeprofile}')
             instance.employeeprofile.save()
