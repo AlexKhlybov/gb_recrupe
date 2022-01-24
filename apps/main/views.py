@@ -2,6 +2,8 @@
 from django.shortcuts import render
 
 from apps.companies.models import Company
+from apps.vacancies.models import Vacancy
+from apps.resume.models import Resume
 from apps.news.models import News
 
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
@@ -15,6 +17,8 @@ class HomePageList(ListView):
         context = super().get_context_data(**kwargs)
         context["news"] = News.objects.all()[:2]
         context["partners"] = Company.objects.filter(is_active=True)[:10]
+        context["job_recomendations"] = Vacancy.objects.filter(is_active=True)[:5]
+        context["resume_recomendations"] = Resume.objects.filter(is_active=True)[:5]
         context["title"] = "Recrupe | Главная"
         return context
 

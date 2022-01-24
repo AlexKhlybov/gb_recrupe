@@ -11,5 +11,4 @@ urlpatterns = [
     path('<int:company_id>/vacancies/', vacancies.VacancyCompanyListView.as_view(), name='vacancies'),
     path('moderation-companies/', companies.company_moderation, name='moderation-companies'),
     path('<int:pk>/moderation-company/', companies.CompanyModarationUpdateView.as_view(), name='moderation-company'),
-
 ]

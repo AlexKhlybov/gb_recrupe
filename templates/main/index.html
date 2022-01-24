@@ -9,12 +9,12 @@
                     <div class="col-4  top__banner-left">
                         <h3 class="mt-3  text-uppercase">Соискатели</h3>
                         <p class="my-3">Описание вакансии — это первый шаг к сердцу (и знаниям) кандидата. И он важен, как и первое впечатление при знакомстве. Если накосячить, кандидат дальше по воронке уже не пойдет. Поэтому, отнеситесь к составлению текста вакансии с большой ответственностью.</p>
-                        <button class="w-60 btn btn-lg btn-success" type="submit">Проверить резюме</button>
+                        <a class="w-60 btn btn-lg btn-success" href="{% url 'resume:moderation-resume' %}" role="button">Проверить резюме</a>
                     </div>
                     <div class="col-4  top__banner-right">
                         <h3 class="mt-3  text-uppercase">Работадатели</h3>
                         <p class="my-3">Описание вакансии — это первый шаг к сердцу (и знаниям) кандидата. И он важен, как и первое впечатление при знакомстве. Если накосячить, кандидат дальше по воронке уже не пойдет. Поэтому, отнеситесь к составлению текста вакансии с большой ответственностью.</p>
-                        <button class="w-60 btn btn-lg btn-primary" type="submit">Проверить вакансии</button>
+                        <a class="w-60 btn btn-lg btn-primary" href="{% url 'companies:moderation-companies' %}" role="button">Проверить вакансии</a>
                     </div>
                 </div>
             </div>
@@ -50,10 +50,9 @@
     </div>
 
     <div class="container">
-        <div>
-            
-        </div>
-        <h3 class="pb-4 mb-0">Последние новости портала</h3>
+
+        <!-- Раздел новостей -->
+        <h2 class="blog-post-title pb-4 mb-0">Последние новости портала</h2>
         <div class="row mb-2 border-bottom">
             {% for item in news %}
                 <div class="col-md-6">
@@ -71,27 +70,85 @@
                 </div>
             {% endfor %}
         </div>
-    
+
+        <!-- Раздел рекомендаций -->
         <div class="row g-5">
-            <div class="col-md-8">
-                <article class="blog-post">
-                    <h2 class="blog-post-title my-4">Наши партнеры</h2>
-                    {% for item in partners %}
-                        <div class="col-md-12">
-                            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative">
-                                <div class="col-auto d-none d-lg-block">
-                                    <img src="/media/companies/{{ item.logo }}" style="object-fit: scale-down" width="200" height="150" alt="{{ name }}">
+            {% if request.user.role == 1 %}  {# Модератор #}
+                <a class="btn btn-sm btn-outline-secondary" href="{% url 'user:editemployee' %}">
+                    {{ request.user }}</a>
+            {% elif request.user.role == 2 %}  {# Соискатель #}
+                <div class="col-md-8">
+                    <article class="blog-post">
+                        <h2 class="blog-post-title my-4">Рекомендации для вас</h2>
+                        {% for item in job_recomendations %}
+                            <div class="col-md-12 p-3">
+                                <div class="d-flex justify-content-between">
+                                    <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
+                                        <h5 class="mb-0">{{ item.name }}</h5>
+                                        <p class="fs-5 mb-0">
+                                            {% if item.price_min %}от {{ item.price_min }} руб. {% else %}{% endif %}
+                                            {% if item.price_max %}до {{ item.price_max }} руб.{% endif %}
+                                            {% if not item.price_min and not item.price_max %} з/п не указана{% endif %}
+                                        </p>
+                                    </a>
                                 </div>
-                                <div class="col px-4 py-3 d-flex flex-column position-static">
-                                    <h3 class="mb-2">{{ item.name }}</h3>
-                                    <p class="card-text mb-auto">{{ item.short_description }}</p>
-                                    <a href="{% url 'companies:detail' item.pk %}" class="stretched-link">Подробнее</a>
+                                <div class="mb-1">
+                                    <a href="{% url 'companies:detail' item.company.pk %}" class="mb-auto text-muted text-decoration-none">
+                                        <p>{{ item.company }}{% if item.company.city %}, {{ item.company.city }}{% endif %} </p>
+                                    </a>
                                 </div>
                             </div>
-                        </div>
-                    {% endfor %}
-                </article>
-            </div>
+                        {% endfor %}
+                    </article>
+                </div>
+            {% elif request.user.role == 3 %}  {# Компания #}
+                <div class="col-md-8">
+                    <article class="blog-post">
+                        <h2 class="blog-post-title my-4">Рекомендации для вас</h2>
+                        {% for item in resume_recomendations %}
+                            <div class="col-md-12 p-3">
+                                <div class="d-flex justify-content-between">
+                                    <a href="{% url 'resume:detail' item.pk %}" class="text-decoration-none">
+                                        <h5 class="mb-0">{{ item.name }}</h5>
+                                        <p class="fs-5 mb-0">
+                                            {% if item.price %}{{ item.price }} руб.
+                                            {% else %} з/п не указана{% endif %}
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="mb-1">
+                                    <p>Москва</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </article>
+                </div>
+            {% else %}
+                <div class="col-md-8">
+                    <article class="blog-post">
+                        <h2 class="blog-post-title my-4">Вакансии дня</h2>
+                        {% for item in job_recomendations %}
+                            <div class="col-md-12 p-3">
+                                <div class="d-flex justify-content-between">
+                                    <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
+                                        <h5 class="mb-0">{{ item.name }}</h5>
+                                        <p class="fs-5 mb-0">
+                                            {% if item.price_min %}от {{ item.price_min }} руб. {% else %}{% endif %}
+                                            {% if item.price_max %}до {{ item.price_max }} руб.{% endif %}
+                                            {% if not item.price_min and not item.price_max %} з/п не указана{% endif %}
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="mb-1">
+                                    <a href="{% url 'companies:detail' item.company.pk %}" class="mb-auto text-muted text-decoration-none">
+                                        <p>{{ item.company }}{% if item.company.city %}, {{ item.company.city }}{% endif %} </p>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </article>
+                </div>
+            {% endif %}
     
             <div class="col-md-4">
                 <div class="position-sticky" style="top: 2rem;">
@@ -112,5 +169,18 @@
                 </div>
             </div>
         </div>
+
+        <!-- Раздел доверия -->
+        <div class="">
+            <h2 class="blog-post-title pb-4 mb-0">Нам доверяют</h2>
+            <div class="confidence">
+                    <div class="row  d-flex  align-items-center  justify-content-evenly">
+                    {% for item in partners %}
+                        <div class="col-3"><img class="img" src="/media/companies/{{ item.logo }}" alt="{{ item.name }}"></div>
+                    {% endfor %}
+                    </div>
+            </div>
+        </div>
+
     </div>
 {% endblock %}
