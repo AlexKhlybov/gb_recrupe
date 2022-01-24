@@ -1,6 +1,9 @@
-from django.views.generic import DetailView, ListView
+from pyexpat import model
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, ListView, UpdateView
 
 from apps.news.models import News
+from apps.news.forms import NewsEditForm
 
 
 class NewsListView(ListView):
@@ -22,4 +25,15 @@ class NewsDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Детали новости"
+        return context
+    
+
+class NewsUpdateView(UpdateView):
+    model = News
+    success_url = reverse_lazy("news:all")
+    form_class = NewsEditForm
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Новость/редактирование"
         return context

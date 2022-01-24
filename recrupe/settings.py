@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     'apps.companies',
     'apps.vacancies',
     'apps.resume',
+    
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -42,6 +44,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'recrupe.urls'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 TEMPLATES = [
     {
