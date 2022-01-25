@@ -5,6 +5,8 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Max, Min
 
+from apps.users.models import User
+
 
 class Resume(models.Model):
     class Meta:
@@ -22,6 +24,8 @@ class Resume(models.Model):
     education = models.ManyToManyField('Education', db_index=True, blank=True, verbose_name='Образование')
     experience = models.ManyToManyField('Experience', db_index=True, blank=True, verbose_name='Опыт работы')
     courses = models.ManyToManyField('Courses', db_index=True, blank=True, verbose_name='Курсы')
+    
+    favorites = models.ManyToManyField(User, related_name="favorites_resume", through="ResumeFavorites", through_fields=("resume", "user"))
 
     is_draft = models.BooleanField(default=True, db_index=True, verbose_name='Черновик')
     is_active = models.BooleanField(default=False, db_index=True, verbose_name='Активен')
@@ -55,6 +59,12 @@ class Resume(models.Model):
     @property
     def skills(self):
         return ResumeSkills.objects.filter(resume=self)
+    
+    @staticmethod
+    def get_favorite_resume(user):
+        """Возвращает через пользователя (м2м) все избранные им резюме"""
+        user = User.objects.get(id=user)
+        return user.favorites_resume.all()
 
     @property
     def about_me_lines(self):
@@ -221,3 +231,28 @@ class ResumeModeration(models.Model):
 
     def __str__(self):
         return self.resume.name
+
+      
+class ResumeFavorites(models.Model):
+    user = models.ForeignKey(User, related_name="my_favor_resume", verbose_name='Работадатель', on_delete=models.CASCADE)
+    resume = models.ForeignKey(Resume, related_name="favorites_resume",  verbose_name='Резюме', on_delete=models.CASCADE)
+    
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Изменен')
+    
+    class Meta:
+        verbose_name = 'Избранное резюме'
+        verbose_name_plural = 'Избранные резюме'
+    
+    def __str__(self):
+        return f'{self.vacancy.name} ({self.user.get_full_name})'
+    
+    @staticmethod
+    def get_favorite_resume_from_user(user_id):
+        return ResumeFavorites.objects.filter(user=user_id)
+    
+    @staticmethod
+    def get_favorite_vacancy_list(user_id):
+        """Возвращает список id вакансий добавленных в избранное"""
+        # TODO сделать фильтрацию под юзера
+        return ResumeFavorites.objects.values_list('resume', flat=True).order_by('id')

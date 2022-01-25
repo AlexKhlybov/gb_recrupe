@@ -1,9 +1,9 @@
-from pyexpat import model
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, ListView, UpdateView, CreateView
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from pyexpat import model
 
-from apps.news.models import News
 from apps.news.forms import NewsEditForm
+from apps.news.models import News
 
 
 class NewsListView(ListView):

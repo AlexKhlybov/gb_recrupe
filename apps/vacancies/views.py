@@ -2,12 +2,13 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, UpdateView
 
 from apps.users.models import User
 from apps.vacancies.forms import VacancyForm
-from apps.vacancies.models import Vacancy, VacancyModeration
+from apps.vacancies.models import Vacancy, VacancyFavorites, VacancyModeration
 
 
 class VacancyListView(ListView):
@@ -15,6 +16,11 @@ class VacancyListView(ListView):
 
     def get_queryset(self):
         return Vacancy.objects.all()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["my_favorites"] = VacancyFavorites.get_favorite_vacancy_list(self.request.user.id)
+        return context
 
 
 class VacancyDetailView(DetailView):
@@ -39,6 +45,16 @@ class MyVacancyCompanyListView(VacancyCompanyListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["template"] = "Recrupe | Мои вакансии"
+        return context
+    
+    
+class FavoritesVacancyListView(ListView):
+    model = VacancyFavorites
+    template_name = "vacancies/favorites_vacancy.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["favorites"] = Vacancy.get_favorite_vacancy(self.request.user.id)
         return context
     
 
@@ -75,6 +91,18 @@ def edit(request, pk=None):
     }
     return render(request, 'vacancies/vacancy_edit.html', content)
 
+  
+def favorites_edit(request, vacancy):
+    user = User.objects.get(id=request.user.id)
+    vacancy = Vacancy.objects.get(id=vacancy)
+    obj, created = VacancyFavorites.objects.get_or_create(
+        user=user,
+        vacancy=vacancy,)
+    if not created:
+        obj.delete()
+        return JsonResponse({"delete": True}, status=200)
+    return JsonResponse({"delete": False}, status=200)
+    
 
 def vacancy_moderation(request):
     if request.GET.get('find'):
