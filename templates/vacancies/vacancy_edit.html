@@ -18,6 +18,7 @@
 {% block content %}
     <div class="container">
         {% if request.user and request.user.company %}
+        <h2 class="mb-3">Ваша вакансия</h2>
             <div class="row g-5">
                 <div class="col-md-10">
                     <h3><strong>{{ request.user.company.name }}</strong></h3>
