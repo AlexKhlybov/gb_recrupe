@@ -1,6 +1,9 @@
+from ast import mod
+
 from django.db import models
 
 from apps.companies.models import Company
+from apps.users.models import User
 
 
 class Vacancy(models.Model):
@@ -31,6 +34,8 @@ class Vacancy(models.Model):
     price_min = models.IntegerField(verbose_name="Зарплата от", db_index=True, null=True, blank=True)
     price_max = models.IntegerField(verbose_name="Зарплата до", db_index=True, null=True, blank=True)
     # skills = models.ManyToManyField(VacancySkills)
+    
+    favorites = models.ManyToManyField(User, related_name="favorites_vacancy", through="VacancyFavorites", through_fields=("vacancy", "user"))
 
     is_closed = models.BooleanField(default=False, db_index=True, verbose_name='Признак снятия вакансии')
     is_active = models.BooleanField(default=False, db_index=True, verbose_name='Активен')
@@ -53,6 +58,12 @@ class Vacancy(models.Model):
     @property
     def skills(self):
         return VacancySkills.objects.filter(vacancy=self)
+    
+    @staticmethod
+    def get_favorite_vacancy(user):
+        """Возвращает через пользователя (м2м) все избранные им вакансии"""
+        user = User.objects.get(id=user)
+        return user.favorites_vacancy.all()
 
     def __str__(self):
         return f"{self.name}"
@@ -64,7 +75,6 @@ class VacancySkills(models.Model):
 
     vacancy = models.ForeignKey(Vacancy, db_index=True, on_delete=models.CASCADE, verbose_name="Вакансия")
     name = models.CharField(max_length=32, db_index=True, verbose_name="Навык")
-
 
 
 class VacancyModeration(models.Model):
@@ -89,3 +99,28 @@ class VacancyModeration(models.Model):
 
     def __str__(self):
         return self.vacancy.name
+    
+
+class VacancyFavorites(models.Model):
+    user = models.ForeignKey(User, related_name="my_favor_vacancy", verbose_name='Соискатель', on_delete=models.CASCADE)
+    vacancy = models.ForeignKey(Vacancy, related_name="favorites_vacancy", verbose_name='Вакансия', on_delete=models.CASCADE)
+    
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Изменен')
+    
+    class Meta:
+        verbose_name = 'Избранная вакансия'
+        verbose_name_plural = 'Избранные вакансии'
+    
+    def __str__(self):
+        return f'{self.vacancy.name} ({self.user.get_full_name})'
+
+    @staticmethod
+    def get_favorite_vacancy_from_user(user_id):
+        return VacancyFavorites.objects.filter(user=user_id)
+    
+    @staticmethod
+    def get_favorite_vacancy_list(user_id):
+        """Возвращает список id вакансий добавленных в избранное"""
+        # TODO сделать фильтрацию под юзера
+        return VacancyFavorites.objects.values_list('vacancy', flat=True).order_by('id')

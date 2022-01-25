@@ -2,9 +2,9 @@
 
 {% block content %}
 <div class="container">
-    <h2 class="mb-3">Резюме</h2>
+    <h2 class="mb-3">Избранные резюме</h2>
     <div class="mb-5">
-    {% for item in object_list %}
+    {% for item in favorites %}
         <div class="col-md-12 border p-3">
             <div class="d-flex justify-content-between">
                 <a href="{% url 'resume:detail' item.pk %}" class="text-decoration-none">
@@ -29,19 +29,16 @@
             {% endif %}
             <div class="d-flex justify-content-between mt-3">
                 <div>
-                    <button onclick="void(0)" class="btn btn-primary">Откликнуться</button>
-                    {% if item.id in my_favorites_list_id %}
-                        <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-success">В избранном</button>
-                    {% else %}
-                        <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-primary">В избранное</button>
-                    {% endif %}
+                    <button onclick="void(0)" class="btn btn-primary">Пригласить</button>
+                    <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-success">В избранном</button>
                 </div>
                 <div class="mb-1 text-muted">Обновлено {{ item.updated_at|date:'d.m.Y' }}</div>
             </div>
         </div>
-    {% empty %}
-        <strong class="mb-3">Нет подходящих резюме</strong>
     {% endfor %}
+    {% if object_list|length == 0 %}
+        <strong class="mb-3">Нет избранных резюме</strong>
+    {% endif %}
     </div>
 </div>
 {% endblock %}
