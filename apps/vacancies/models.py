@@ -65,6 +65,8 @@ class VacancySkills(models.Model):
     vacancy = models.ForeignKey(Vacancy, db_index=True, on_delete=models.CASCADE, verbose_name="Вакансия")
     name = models.CharField(max_length=32, db_index=True, verbose_name="Навык")
 
+    def __str__(self):
+        return f'{self.name} ({self.vacancy})'
 
 
 class VacancyModeration(models.Model):

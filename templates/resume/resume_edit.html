@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '/tagify/tagify.css' %}">
+    <style>
+        /* В blog.css почему-то объявлено для textarea max-height: 5em; */
+        textarea {
+            max-height: none;
+        }
+    </style>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static '/tagify/tagify.min.js' %}"></script>
+    <script src="{% static '/js/csrf.js' %}"></script>
+    <script src="{% static '/js/resume/modal_experience.js' %}" defer></script>
+    <script src="{% static '/js/resume/modal_education.js' %}" defer></script>
+    <script src="{% static '/js/resume/modal_courses.js' %}" defer></script>
+    <script src="{% static '/js/resume/edit.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="mb-3">
+            Ваше резюме
+            {% if form.is_draft.value %} (черновик) {% endif %}
+        </h2>
+        <h4 class="mb-2 text-muted"><strong>{{ user.last_name }} {{ user.first_name }}</strong></h4>
+
+        {% if user.email or user.phone %}
+            <div class="mb-4">
+                <h5 class="text-muted mb-2">Контактные данные</h5>
+                <ol class="list-unstyled mb-4">
+                    {% if user.email %}<li>e-mail: <a href="mailto:{{ user.email }}" target="_blank">{{ user.email }}</a></li> {% endif %}
+                    {% if user.phone %}<li>Телефон: <a href="tel:{{ user.phone }}" target="_blank">{{ user.phone }}</a></li> {% endif %}
+                </ol>
+            </div>
+        {% endif %}
+
+        <div class="text-center spinner-loading">
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div class="alert alert-danger" role="alert" style="display: none"></div>
+        <form method="post" style="display: none" id="resume-form">
+            {% csrf_token %}
+            <h5 class="mb-2">Специальность</h5>
+            <div class="row g-2 align-items-center mb-2">
+                <div class="col-sm-2">
+                    <label for="{{ form.name.id_for_label }}" class="col-form-label">Желаемая должность</label>
+                </div>
+                <div class="col">
+                    {# <input type="text" id="position_name" class="form-control" maxlength="128">#}
+                    {{ form.name }}
+                </div>
+            </div>
+            <div class="row g-3 align-items-center mb-4">
+                <div class="col-sm-2">
+                    <label for="{{ form.price.id_for_label }}" class="col-form-label">{{ form.price.label }}</label>
+                </div>
+                <div class="col-auto">
+                    {# <input type="number" id="inputPassword6" class="form-control" min="0" max="99999999">#}
+                    {{ form.price }}
+                </div>
+                <div class="col-auto">
+                <span id="passwordHelpInline" class="form-text">
+                    руб.
+                </span>
+                </div>
+            </div>
+
+            <h5 class="mb-2">Опыт работы</h5>
+            <div class="row g-2 mb-4">
+                <div class="col-sm-2">
+                    <p>Места работы</p>
+                </div>
+                <div class="col">
+                    <div id="experience-container">
+                    </div>
+                    {# <button class="btn btn-primary">Добавить место работы</button>#}
+                    <button type="button" class="btn btn-primary" id="btnAppendExperience">Добавить место работы</button>
+                </div>
+            </div>
+
+            <h5 class="mb-2">Образование</h5>
+            <div class="row g-2 mb-4">
+                <div class="col-sm-2">
+                    <p>Места обучения</p>
+                </div>
+                <div class="col">
+                    <div class="mb-4" id="education-container">
+                    </div>
+                    <button type="button" class="btn btn-primary" id="btnAppendEducation">Добавить место обучения</button>
+                </div>
+            </div>
+
+            <h5 class="mb-2">Повышение квалификации, курсы</h5>
+            <div class="row g-2 mb-4">
+                <div class="col-sm-2">
+                    <p>Пройденные курсы</p>
+                </div>
+                <div class="col">
+                    <div class="mb-4" id="courses-container">
+                    </div>
+                    <button type="button" class="btn btn-primary" id="btnAppendCourses">Добавить пройденные курсы</button>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <label class="col-sm-2 col-form-label" for="{{ form.skills.id_for_label }}">{{ form.skills.label }}</label>
+                <div class="col-sm-10">
+                    {{ form.skills }}
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <label class="col-sm-2 col-form-label" for="{{ form.about_me.id_for_label }}">{{ form.about_me.label }}</label>
+                <div class="col-sm-10">
+                    {# <textarea name="aboutMe" rows="4" maxlength="500" class="form-control" id="id_aboutMe"></textarea>#}
+                    {{ form.about_me }}
+                </div>
+            </div>
+
+            <div class="d-flex flex-row-reverse gap-2 mb-5">
+                <button type="submit" class="btn btn-primary" id="saveResume">Сохранить и опубликовать</button>
+                <button type="submit" class="btn btn-success" id="saveResumeAsDraft">Сохранить как черновик</button>
+            </div>
+        </form>
+    </div>
+    {% include 'resume/includes/modal_experience.html' %}
+    {% include 'resume/includes/modal_education.html' %}
+    {% include 'resume/includes/modal_courses.html' %}
+
+    <script>
+        const input_skills = document.querySelector('textarea[name=skills]')
+        new Tagify(input_skills)
+    </script>
+{% endblock %}

@@ -125,6 +125,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Пользователи/Авторизация
 AUTH_USER_MODEL = 'users.User'
 LOGIN_ERROR_URL = '/'
+LOGIN_URL = '/users/login/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

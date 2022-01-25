@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '/tagify/tagify.css' %}">
+    <style>
+        /* В blog.css почему-то объявлено для textarea max-height: 5em; */
+        textarea {
+            max-height: none;
+        }
+    </style>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static '/tagify/tagify.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% if request.user and request.user.company %}
+            <div class="row g-5">
+                <div class="col-md-10">
+                    <h3><strong>{{ request.user.company.name }}</strong></h3>
+                    <p class="mb-2">{{ request.user.company.address }}</p>
+                    {% if request.user.email or request.user.phone %}
+                        <h3 class="mb-2">Контакты</h3>
+                        <ol class="list-unstyled mb-4">
+                            {% if request.user.email %}<li>e-mail: <a href="mailto:{{ request.user.email }}" target="_blank">{{ request.user.email }}</a></li> {% endif %}
+                            {% if request.user.phone %}<li>Телефон: <a href="tel:{{ request.user.phone }}" target="_blank">{{ request.user.phone }}</a></li> {% endif %}
+                        </ol>
+                    {% endif %}
+                </div>
+                <div class="col-md-2">
+                    <div class="col-auto d-none d-lg-block">
+                        <img src="/media/companies/{{ request.user.company.logo }}" style="object-fit: scale-down" width="100%" alt="{{ object.name }}">
+                    </div>
+                </div>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+{#                {% for i in form %}{% if i.widget_type == 'hidden' %}{{ i }}{% endif %}{% endfor %}#}
+                <div class="mb-4">
+                    <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }}</label>
+                    {{ form.name }}
+                </div>
+
+                <p>Размер заработной платы (необязательно)</p>
+                <div class="row gx-2 align-items-center mb-4 w-50">
+                    <div class="col">
+                        <div class="row">
+                            <label for="{{ form.price_min.id_for_label }}" class="col-auto col-form-label">{{ form.price_min.label }}</label>
+                            <div class="col">
+                                {{ form.price_min }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col ms-5">
+                        <div class="row">
+                            <label for="{{ form.price_max.id_for_label }}" class="col-auto col-form-label">{{ form.price_max.label }}</label>
+                            <div class="col">
+                                {{ form.price_max }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4 w-50">
+                    <label for="{{ form.experience.id_for_label }}" class="form-label">{{ form.experience.label }}</label>
+                    <div class="col-auto">
+                        {{ form.experience }}
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="{{ form.skills.id_for_label }}" class="form-label">{{ form.skills.label }}</label>
+                    <div class="col-auto">
+                        {{ form.skills }}
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="{{ form.description.id_for_label }}" class="form-label">{{ form.description.label }}</label>
+                    {{ form.description }}
+                </div>
+
+                <div class="mt-3 mb-5">
+                    <input class="btn btn-primary" type="submit" value="Сохранить">
+                </div>
+            </form>
+        {% else %}
+            <h3><strong>У пользователя нет организации. Создать вакансию невозможно.</strong></h3>
+        {% endif %}
+    </div>
+
+    <script>
+        const input_skills = document.querySelector('textarea[name=skills]')
+        new Tagify(input_skills)
+    </script>
+{% endblock %}
