@@ -19,7 +19,7 @@ class Resume(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Изменен')
     name = models.CharField(max_length=128, db_index=True, verbose_name="Название резюме")
     price = models.IntegerField(db_index=True, null=True, blank=True, verbose_name="Зарплата")
-    about_me = models.TextField(max_length=500, null=True, blank=True, verbose_name='Обо мне')
+    about_me = models.TextField(max_length=500, null=True, blank=True, verbose_name='О себе')
 
     education = models.ManyToManyField('Education', db_index=True, blank=True, verbose_name='Образование')
     experience = models.ManyToManyField('Experience', db_index=True, blank=True, verbose_name='Опыт работы')
@@ -56,6 +56,7 @@ class Resume(models.Model):
             return delta_days
         return 'отсутствует'
 
+    @property
     def skills(self):
         return ResumeSkills.objects.filter(resume=self)
     
@@ -68,6 +69,10 @@ class Resume(models.Model):
     @property
     def about_me_lines(self):
         return self.about_me.split('\n')
+
+    def delete(self, using=None, keep_parents=False):
+        ResumeSkills.objects.filter(resume=self).delete()
+        super().delete(using, keep_parents)
 
     def __str__(self):
         return self.name
@@ -216,7 +221,7 @@ class ResumeModeration(models.Model):
     )
 
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
-    status = models.CharField(choices=STATUS,max_length=100, null=True, blank=True, verbose_name='Статус')
+    status = models.CharField(choices=STATUS, max_length=100, null=True, blank=True, verbose_name='Статус')
     comment = models.TextField(blank=True, verbose_name='Комментрарий модератора')
     date = models.DateField(null=True, blank=True, verbose_name='Время отпраления комментария')
 
@@ -226,8 +231,8 @@ class ResumeModeration(models.Model):
 
     def __str__(self):
         return self.resume.name
-    
 
+      
 class ResumeFavorites(models.Model):
     user = models.ForeignKey(User, related_name="my_favor_resume", verbose_name='Работадатель', on_delete=models.CASCADE)
     resume = models.ForeignKey(Resume, related_name="favorites_resume",  verbose_name='Резюме', on_delete=models.CASCADE)

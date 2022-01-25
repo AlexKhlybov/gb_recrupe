@@ -1,0 +1,40 @@
+<!-- Модальное окно образования -->
+<div class="modal fade" id="coursesModal" tabindex="-1" aria-hidden="true">
+    <form class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Место обучения</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <strong><label for="modalCoursesInstitution" class="form-label">Учебное заведение</label></strong>
+                    <input type="text" class="form-control" id="modalCoursesInstitution" placeholder="Название или аббревиатура" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="modalCoursesFaculty" class="form-label">Факультет</label>
+                    <input type="text" class="form-control" id="modalCoursesFaculty">
+                </div>
+
+                <div class="mb-3">
+                    <label for="modalCoursesSpecialization" class="form-label">Специализация</label>
+                    <input type="text" class="form-control" id="modalCoursesSpecialization">
+                </div>
+
+                <div class="input-group mb-3">
+                        <label for="modalCoursesYearOfEnding" class="form-label"><strong>Год окончания</strong></label>
+                        <div class="input-group row">
+                            <input type="number" id="modalCoursesYearOfEnding" class="form-control  col-lg-2" placeholder="Год" min="1900" max="2100" required>
+                            <p class="text-muted col-sm-10 m-0 align-self-center">Если учитесь в настоящее время — укажите год предполагаемого окончания</p>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+{#                <button type="button" class="btn btn-primary" id="CoursesModalSave">Сохранить</button>#}
+                <button type="submit" class="btn btn-primary" id="coursesModalSave">Сохранить</button>
+            </div>
+        </div>
+    </form>
+</div>

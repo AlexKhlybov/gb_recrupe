@@ -31,7 +31,7 @@
     {% if object.skills|length %}<h3 class="mt-5">Ключевые навыки</h3>{% endif %}
     <div class="mb-4">
         {% for item in object.skills %}
-            <span class="badge rounded-pill bg-primary">{{ item.name }}</span>
+            <span class="badge bg-secondary">{{ item.name }}</span>
         {% endfor %}
     </div>
     <div class="mb-5">

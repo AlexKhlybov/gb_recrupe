@@ -2,14 +2,23 @@
 
 {% block content %}
 <div class="container">
-    <h2 class="mb-3">Мои резюме</h2>
+    <div class="d-flex justify-content-between">
+        <h2 class="mb-3">Мои резюме</h2>
+        <a href="{% url 'resume:create' %}"><button class="btn btn-primary">Создать резюме</button></a>
+    </div>
+
     <div class="mb-5">
     {% for item in my_resume %}
         <div class="col-md-12 border p-3">
             <div class="d-flex justify-content-between">
-                <a href="{% url 'resume:detail' item.pk %}" class="text-decoration-none">
-                    <h5 class="mb-0">{{ item.name }}</h5>
-                </a>
+                <div class="d-flex">
+                    <a href="{% url 'resume:detail' item.pk %}" class="text-decoration-none">
+                        <h5 class="mb-0">{{ item.name }}</h5>
+                    </a>
+                    {% if item.is_draft %}
+                        <span class="text-muted mx-2">(черновик)</span>
+                    {% endif %}
+                </div>
                 <p class="fs-5 mb-0">{% if item.price %}{{ item.price }} руб. {% else %} з/п не указана {% endif %}</p>
             </div>
             <div class="mb-2">
@@ -27,8 +36,7 @@
             {% endif %}
             <div class="d-flex justify-content-between mt-3">
                 <div>
-                    <a class="btn btn-primary" href="#" role="button">Изменить видимость</a>
-                    <a class="btn btn-link" href="#" role="button">Редактировать</a>
+                    <a class="btn btn-primary" href="{% url 'resume:edit' item.pk %}" role="button">Изменить</a>
                 </div>
                 <div class="mb-1 text-muted">Обновлено {{ item.updated_at|date:'d.m.Y' }}</div>
             </div>

@@ -38,7 +38,7 @@ class Vacancy(models.Model):
     favorites = models.ManyToManyField(User, related_name="favorites_vacancy", through="VacancyFavorites", through_fields=("vacancy", "user"))
 
     is_closed = models.BooleanField(default=False, db_index=True, verbose_name='Признак снятия вакансии')
-    is_active = models.BooleanField(default=False, db_index=True, verbose_name='Активен')
+    is_active = models.BooleanField(default=True, db_index=True, verbose_name='Активен')
 
     @property
     def split_description_to_lines(self):
@@ -65,6 +65,10 @@ class Vacancy(models.Model):
         user = User.objects.get(id=user)
         return user.favorites_vacancy.all()
 
+    def delete(self, using=None, keep_parents=False):
+        VacancySkills.objects.filter(vacancy=self).delete()
+        super().delete(using, keep_parents)
+
     def __str__(self):
         return f"{self.name}"
 
@@ -76,6 +80,8 @@ class VacancySkills(models.Model):
     vacancy = models.ForeignKey(Vacancy, db_index=True, on_delete=models.CASCADE, verbose_name="Вакансия")
     name = models.CharField(max_length=32, db_index=True, verbose_name="Навык")
 
+    def __str__(self):
+        return f'{self.name} ({self.vacancy})'
 
 class VacancyModeration(models.Model):
     INDEFINED = "Неизвестно"
@@ -89,7 +95,7 @@ class VacancyModeration(models.Model):
     )
 
     vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE)
-    status = models.CharField(choices=STATUS,max_length=100, null=True, blank=True, verbose_name='Статус')
+    status = models.CharField(choices=STATUS, max_length=100, null=True, blank=True, verbose_name='Статус')
     comment = models.TextField(blank=True, verbose_name='Комментрарий модератора')
     date = models.DateField(null=True, blank=True, verbose_name='Время отпраления комментария')
 
@@ -99,8 +105,8 @@ class VacancyModeration(models.Model):
 
     def __str__(self):
         return self.vacancy.name
-    
 
+      
 class VacancyFavorites(models.Model):
     user = models.ForeignKey(User, related_name="my_favor_vacancy", verbose_name='Соискатель', on_delete=models.CASCADE)
     vacancy = models.ForeignKey(Vacancy, related_name="favorites_vacancy", verbose_name='Вакансия', on_delete=models.CASCADE)
