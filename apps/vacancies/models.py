@@ -33,7 +33,7 @@ class Vacancy(models.Model):
     # skills = models.ManyToManyField(VacancySkills)
 
     is_closed = models.BooleanField(default=False, db_index=True, verbose_name='Признак снятия вакансии')
-    is_active = models.BooleanField(default=False, db_index=True, verbose_name='Активен')
+    is_active = models.BooleanField(default=True, db_index=True, verbose_name='Активен')
 
     @property
     def split_description_to_lines(self):
@@ -53,6 +53,10 @@ class Vacancy(models.Model):
     @property
     def skills(self):
         return VacancySkills.objects.filter(vacancy=self)
+
+    def delete(self, using=None, keep_parents=False):
+        VacancySkills.objects.filter(vacancy=self).delete()
+        super().delete(using, keep_parents)
 
     def __str__(self):
         return f"{self.name}"
@@ -81,7 +85,7 @@ class VacancyModeration(models.Model):
     )
 
     vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE)
-    status = models.CharField(choices=STATUS,max_length=100, null=True, blank=True, verbose_name='Статус')
+    status = models.CharField(choices=STATUS, max_length=100, null=True, blank=True, verbose_name='Статус')
     comment = models.TextField(blank=True, verbose_name='Комментрарий модератора')
     date = models.DateField(null=True, blank=True, verbose_name='Время отпраления комментария')
 

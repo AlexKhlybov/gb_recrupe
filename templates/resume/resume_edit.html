@@ -24,7 +24,7 @@
     <div class="container">
         <h2 class="mb-3">
             Ваше резюме
-            {% if form.is_draft.value %} (черновик) {% endif %}
+            {% if form.is_draft.value %} <span class="text-muted">(черновик)</span> {% endif %}
         </h2>
         <h4 class="mb-2 text-muted"><strong>{{ user.last_name }} {{ user.first_name }}</strong></h4>
 

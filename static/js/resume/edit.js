@@ -80,7 +80,7 @@ async function saveResume(event, draft) {
             let json = await response.json();
             //let json = await response.text()
             // console.log(JSON.stringify(json))
-            window.location.href = '/resume'
+            window.location.href = '/resume/my/'
         } else {
             let text = ''
             try {

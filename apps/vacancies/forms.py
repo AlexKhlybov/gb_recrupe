@@ -54,7 +54,7 @@ class VacancyForm(forms.ModelForm):
 
                 # Закидываем ключевые навыки
                 VacancySkills.objects.filter(vacancy=vacancy).delete()
-                for i in json.loads(self.cleaned_data['skills']):
+                for i in json.loads(self.cleaned_data['skills'] or '[]'):
                     VacancySkills.objects.create(vacancy=vacancy, name=i['value'])
             return vacancy
         except Exception as e:

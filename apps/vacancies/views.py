@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, UpdateView
 
@@ -31,7 +31,16 @@ class VacancyCompanyListView(ListView):
     def get_queryset(self):
         company_id = self.kwargs['company_id']
         return Vacancy.objects.filter(company_id=company_id, is_closed=False, is_active=True)
-
+    
+    
+class MyVacancyCompanyListView(VacancyCompanyListView):
+    template_name = "vacancies/my_vacancy.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["template"] = "Recrupe | Мои вакансии"
+        return context
+    
 
 @login_required
 def create(request):
@@ -51,8 +60,10 @@ def edit(request, pk=None):
         if form.is_valid():
             try:
                 form.save(company=request.user.company)
+                return redirect(f'/companies/{request.user.company.pk}/my-vacancies/')
             except Exception as e:
-                form.add_error(None, str(e))
+                raise e
+                # form.add_error(None, str(e))
         else:
             print(form.errors)
 

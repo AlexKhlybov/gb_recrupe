@@ -8,6 +8,7 @@ urlpatterns = [
     path('', resume.ResumeListView.as_view(), name='all'),
     path('create/', resume.create, name='create'),
     path('edit/<int:pk>/', resume.edit, name='edit'),
+    path('my/', resume.MyResumeListView.as_view(), name='my'),
     path('<int:pk>/', resume.ResumeDetailView.as_view(), name='detail'),
     path('moderation-resume/', resume.resume_moderation, name='moderation-resume'),
 ]

@@ -60,6 +60,10 @@ class Resume(models.Model):
     def about_me_lines(self):
         return self.about_me.split('\n')
 
+    def delete(self, using=None, keep_parents=False):
+        ResumeSkills.objects.filter(resume=self).delete()
+        super().delete(using, keep_parents)
+
     def __str__(self):
         return self.name
 
