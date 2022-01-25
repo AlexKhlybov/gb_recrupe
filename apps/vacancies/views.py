@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, UpdateView
 
-from apps.vacancies.models import Vacancy, VacancyModeration
+from apps.vacancies.models import Vacancy, VacancyModeration, VacancyFavorites
 
 
 class VacancyListView(ListView):
@@ -39,7 +39,16 @@ class MyVacancyCompanyListView(VacancyCompanyListView):
         context["template"] = "Recrupe | Мои вакансии"
         return context
     
-
+    
+class FavoritesVacancyListView(ListView):
+    model = VacancyFavorites
+    template_name = "vacancies/favorites_vacancy.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["my_favorites"] = VacancyFavorites.get_favorite_vacancy_from_user(self.request.user.id)
+        return context
+    
 
 def vacancy_moderation(request):
     if request.GET.get('find'):

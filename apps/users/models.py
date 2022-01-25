@@ -5,9 +5,7 @@ from django.dispatch import receiver
 
 
 class User(AbstractUser):
-    class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
+    
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
 
@@ -28,6 +26,10 @@ class User(AbstractUser):
     phone = models.CharField(max_length=16, blank=True, verbose_name='Номер телефона')
     role = models.PositiveSmallIntegerField(choices=USER_TYPE, default=USER_TYPE_MODERATOR, verbose_name='Роль')
 
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
     def get_role_name(self):
         for item in self.USER_TYPE:
             if item[0] == self.role:
@@ -36,6 +38,10 @@ class User(AbstractUser):
 
     def __str__(self):
         return f'{self.username}'
+    
+    @property
+    def get_full_name(self):
+        return f'{self.first_name} {self.last_name} {self.second_name}'
 
       
 class EmployeeProfile(models.Model):

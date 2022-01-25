@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView
 
-from apps.resume.models import Resume, ResumeModeration
+from apps.resume.models import Resume, ResumeModeration, ResumeFavorites
 
 
 class ResumeListView(ListView):
@@ -19,6 +19,16 @@ class MyResumeListView(ListView):
         context = super().get_context_data(**kwargs)
         context["title"] = "Recrupe | Мои резюме"
         context["my_resume"] = Resume.objects.filter(user__pk=self.kwargs["pk"]).order_by("name")
+        return context
+    
+
+class FavoritesResumeListView(ListView):
+    model = ResumeFavorites
+    template_name = "resume/favorites_resume.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["my_favorites"] = ResumeFavorites.get_favorite_resume_from_user(self.request.user.id)
         return context
 
 
