@@ -57,6 +57,11 @@ class Vacancy(models.Model):
     @property
     def skills(self):
         return VacancySkills.objects.filter(vacancy=self)
+    
+    @staticmethod
+    def get_favorite_vacancy(user):
+        user = User.objects.get(id=user)
+        return user.favorites_vacancy.all()
 
     def __str__(self):
         return f"{self.name}"
@@ -111,3 +116,7 @@ class VacancyFavorites(models.Model):
     @staticmethod
     def get_favorite_vacancy_from_user(user_id):
         return VacancyFavorites.objects.filter(user=user_id)
+    
+    @staticmethod
+    def get_favorite_vacancy_list(key):
+        return VacancyFavorites.objects.values_list('vacancy', flat=True).order_by('id')

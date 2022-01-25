@@ -11,6 +11,11 @@
     <link rel="stylesheet" type="text/css" href="{% static '/bootstrap/signin.css' %}">
 
     <link rel="icon" href="{% static '/favicon.ico' %}">
+
+    {% block js %}
+        <script src="{% static '/js_favorites/app.js' %}"></script>
+    {% endblock %}
+
 </head>
 <body>
 <div class="container">

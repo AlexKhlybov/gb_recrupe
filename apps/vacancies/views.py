@@ -3,9 +3,11 @@ from tempfile import template
 from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.http import JsonResponse
 from django.views.generic import DetailView, ListView, UpdateView
 
 from apps.vacancies.models import Vacancy, VacancyModeration, VacancyFavorites
+from apps.users.models import User
 
 
 class VacancyListView(ListView):
@@ -13,6 +15,11 @@ class VacancyListView(ListView):
 
     def get_queryset(self):
         return Vacancy.objects.all()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["my_favorites"] = VacancyFavorites.get_favorite_vacancy_list(self.request.user.id)
+        return context
 
 
 class VacancyDetailView(DetailView):
@@ -46,8 +53,20 @@ class FavoritesVacancyListView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["my_favorites"] = VacancyFavorites.get_favorite_vacancy_from_user(self.request.user.id)
+        context["my_favorites"] = Vacancy.get_favorite_vacancy(self.request.user.id)
         return context
+    
+
+def favorites_edit(request, vacancy):
+    user = User.objects.get(id=request.user.id)
+    vacancy = Vacancy.objects.get(id=vacancy)
+    obj, created = VacancyFavorites.objects.get_or_create(
+        user=user,
+        vacancy=vacancy,)
+    if not created:
+        obj.delete()
+        return JsonResponse({"delete": True}, status=200)
+    return JsonResponse({"delete": False}, status=200)
     
 
 def vacancy_moderation(request):
