@@ -1,13 +1,13 @@
 from tempfile import template
 
 from django.db.models import Q
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.http import JsonResponse
 from django.views.generic import DetailView, ListView, UpdateView
 
-from apps.vacancies.models import Vacancy, VacancyModeration, VacancyFavorites
 from apps.users.models import User
+from apps.vacancies.models import Vacancy, VacancyFavorites, VacancyModeration
 
 
 class VacancyListView(ListView):
@@ -53,7 +53,7 @@ class FavoritesVacancyListView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["my_favorites"] = Vacancy.get_favorite_vacancy(self.request.user.id)
+        context["favorites"] = Vacancy.get_favorite_vacancy(self.request.user.id)
         return context
     
 

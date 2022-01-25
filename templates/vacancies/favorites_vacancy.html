@@ -4,7 +4,7 @@
 <div class="container">
     <h2 class="mb-3">Избранные вакансии</h2>
     <div class="mb-5">
-    {% for item in my_favorites %}
+    {% for item in favorites %}
         <div class="col-md-12 border p-3">
             <div class="d-flex justify-content-between">
                 <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">

@@ -13,7 +13,6 @@
                 <p class="fs-5 mb-0">{% if item.price %}{{ item.price }} руб. {% else %} з/п не указана {% endif %}</p>
             </div>
             <div class="mb-2">
-{#                <a href="{% url 'companies:detail' item.company.pk %}" class="mb-auto text-muted text-decoration-none">{{ item.company }}</a>#}
                 <p class="mb-auto text-muted">Был на сайте {{ item.user.last_login|date:'d.m.Y' }}</p>
                 <p class="mb-auto text-muted">{{ item.user.last_name }} {{ item.user.first_name }}</p>
                 <p class="mb-auto"> Опыт работы {{ item.get_experience_text }}</p>
@@ -31,15 +30,18 @@
             <div class="d-flex justify-content-between mt-3">
                 <div>
                     <button onclick="void(0)" class="btn btn-primary">Откликнуться</button>
-                    <button class="btn btn-link  btn--resume" id="{{ item.id }}">В избранное</button>
+                    {% if item.id in my_favorites_list_id %}
+                        <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-success">В избранном</button>
+                    {% else %}
+                        <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-primary">В избранное</button>
+                    {% endif %}
                 </div>
                 <div class="mb-1 text-muted">Обновлено {{ item.updated_at|date:'d.m.Y' }}</div>
             </div>
         </div>
-    {% endfor %}
-    {% if object_list|length == 0 %}
+    {% empty %}
         <strong class="mb-3">Нет подходящих резюме</strong>
-    {% endif %}
+    {% endfor %}
     </div>
 </div>
 {% endblock %}

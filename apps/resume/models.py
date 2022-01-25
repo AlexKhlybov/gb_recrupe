@@ -58,6 +58,12 @@ class Resume(models.Model):
 
     def skills(self):
         return ResumeSkills.objects.filter(resume=self)
+    
+    @staticmethod
+    def get_favorite_resume(user):
+        """Возвращает через пользователя (м2м) все избранные им резюме"""
+        user = User.objects.get(id=user)
+        return user.favorites_resume.all()
 
     @property
     def about_me_lines(self):
@@ -239,3 +245,9 @@ class ResumeFavorites(models.Model):
     @staticmethod
     def get_favorite_resume_from_user(user_id):
         return ResumeFavorites.objects.filter(user=user_id)
+    
+    @staticmethod
+    def get_favorite_vacancy_list(user_id):
+        """Возвращает список id вакансий добавленных в избранное"""
+        # TODO сделать фильтрацию под юзера
+        return ResumeFavorites.objects.values_list('resume', flat=True).order_by('id')

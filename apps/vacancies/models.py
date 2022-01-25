@@ -1,4 +1,5 @@
 from ast import mod
+
 from django.db import models
 
 from apps.companies.models import Company
@@ -60,6 +61,7 @@ class Vacancy(models.Model):
     
     @staticmethod
     def get_favorite_vacancy(user):
+        """Возвращает через пользователя (м2м) все избранные им вакансии"""
         user = User.objects.get(id=user)
         return user.favorites_vacancy.all()
 
@@ -118,5 +120,7 @@ class VacancyFavorites(models.Model):
         return VacancyFavorites.objects.filter(user=user_id)
     
     @staticmethod
-    def get_favorite_vacancy_list(key):
+    def get_favorite_vacancy_list(user_id):
+        """Возвращает список id вакансий добавленных в избранное"""
+        # TODO сделать фильтрацию под юзера
         return VacancyFavorites.objects.values_list('vacancy', flat=True).order_by('id')
