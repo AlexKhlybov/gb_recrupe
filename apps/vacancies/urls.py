@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.urls import re_path
 
 from apps.vacancies import views as vacancies
@@ -13,4 +14,7 @@ urlpatterns = [
     
     re_path(r'^moderation-vacancy/$', vacancies.vacancy_moderation, name='moderation-vacancy'),
     re_path(r'^(?P<pk>\d+)/moderation-vacancy/$', vacancies.VacancyModarationUpdateView.as_view(), name='moderation-vacancy'),
+    
+    re_path(r'^create/$', vacancies.create, name="create"),
+    re_path(r'^edit/(?P<pk>\d+)/$', vacancies.edit, name="edit"),
 ]

@@ -5,10 +5,11 @@ from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import JsonResponse
 
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView, ListView
+from apps.resume.forms import ResumeForm, get_resume_data, save_resume_data
 
-from apps.resume.models import Resume, ResumeFavorites, ResumeModeration
+from apps.resume.models import Education, Resume, ResumeFavorites, ResumeModeration
 from apps.users.models import User
 
 

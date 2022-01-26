@@ -14,4 +14,6 @@ urlpatterns = [
     
     re_path(r'^moderation-resume/$', resume.resume_moderation, name='moderation-resume'),
     
+    re_path(r'^create/$', resume.create, name="create"),
+    re_path(r'^edit/(?P<pk>\d+)/$', resume.edit, name="edit"),
 ]
