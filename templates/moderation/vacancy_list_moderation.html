@@ -12,23 +12,19 @@
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative">
 
                 <div class="col p-4 d-flex flex-column position-static">
-                    <h4 class="mb-2">{{ item.vacancy.name }}</h4>
-                    <a href="{% url 'companies:detail' item.vacancy.company.pk %}" class="">Подробнее</a>
+                    <h5 class="mb-2">{{ item.vacancy.name }}</h5>
+                    <a href="{% url 'vacancies:detail' item.vacancy.pk %}" class="">Подробнее</a>
                 </div>
                 <div class="col p-4 d-flex flex-column position-static">
-                    <h4 class="mb-2">Комментарий</h4>
+                    <h5 class="mb-2">Комментарий</h5>
                     <p class="mb-2">{{ item.comment }}</p>
                 </div>
                 <div class="col p-4 d-flex flex-column ">
-                     <h5 class="mb-2">Статус:</h5>
-                    <h4 class="mb-2">{{ item.status }}</h4>
+                     <h6 class="mb-2">Статус:</h6>
+                    <h5 class="mb-2">{{ item.status }}</h5>
                   <a href="{% url 'vacancies:moderation-vacancy' item.pk %}">  <label  class="btn btn-success">Редактирование</label></a>
                 </div>
 
-
-<!--                <div>-->
-<!--                  {{item.status}}-->
-<!--                </div>-->
 
             </div>
 

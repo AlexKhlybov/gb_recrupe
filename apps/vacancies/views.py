@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, UpdateView
 
+from apps.main.models import City
 from apps.users.models import User
 from apps.vacancies.forms import VacancyForm
 from apps.vacancies.models import Vacancy, VacancyFavorites, VacancyModeration
@@ -14,13 +15,63 @@ from apps.vacancies.models import Vacancy, VacancyFavorites, VacancyModeration
 class VacancyListView(ListView):
     model = Vacancy
 
-    def get_queryset(self):
-        return Vacancy.objects.all()
-    
+
+class VacancyListView(ListView):
+    model = Vacancy
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        cities = City.objects.all().order_by('city')
+        context['cities'] = cities
+        find = self.request.GET.get('find')
+        zero_salary = self.request.GET.get('zerosalary')
+        from_salary = self.request.GET.get('fromsalary')
+        cityselected = self.request.GET.get('city')
+        company_id = self.request.GET.get('company_id')
+        citysearch = self.request.GET.get('citysearch')
+        if cityselected != None and cityselected != '':
+            context['cityselected'] = int(cityselected)
+        if zero_salary != None:
+            context['zero_salary'] = zero_salary
+        if from_salary != None and from_salary != '':
+            context['from_salary'] = int(from_salary)
+        if find != None and find != '':
+            context['find'] = find
+        if company_id != None and company_id != '':
+            context['company_id'] = company_id
+        if citysearch != None and citysearch != '':
+            context['citysearch'] = citysearch
         context["my_favorites"] = VacancyFavorites.get_favorite_vacancy_list(self.request.user.id)
         return context
+
+    def get_queryset(self):
+        result = [i.id for i in Vacancy.objects.all()]
+        find = self.request.GET.get('find')
+        zero_salary = self.request.GET.get('zerosalary')
+        city = self.request.GET.get('city')
+        from_salary = self.request.GET.get('fromsalary')
+        company_id = self.request.GET.get('company_id')
+        if find != None and find != "":
+            find_list = Vacancy.objects.filter(name__icontains=find)
+            result = [i.id for i in find_list]
+
+        if city != None and city != "":
+            city_list = [i.id for i in Vacancy.objects.filter(company__city=city)]
+            result = list(set(city_list) & set(result))
+
+        if zero_salary != None:
+            zero_list = [i.id for i in Vacancy.objects.filter(price_min=None, price_max=None)]
+            result = list(set(zero_list) & set(result))
+
+        if from_salary != None and from_salary != '':
+            from_list = [i.id for i in Vacancy.objects.filter(price_min__gte=int(from_salary))]
+            result = list(set(from_list) & set(result))
+
+        if company_id != None and company_id != '':
+            company_list = [i.id for i in Vacancy.objects.filter(company__name__icontains=company_id)]
+            result = list(set(company_list) & set(result))
+
+        return Vacancy.objects.filter(pk__in=result)
 
 
 class VacancyDetailView(DetailView):
@@ -37,11 +88,11 @@ class VacancyCompanyListView(ListView):
     def get_queryset(self):
         company_id = self.kwargs['company_id']
         return Vacancy.objects.filter(company_id=company_id, is_closed=False, is_active=True)
-    
-    
+
+
 class MyVacancyCompanyListView(VacancyCompanyListView):
     template_name = "vacancies/my_vacancy.html"
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["template"] = "Recrupe | Мои вакансии"
@@ -82,7 +133,6 @@ def edit(request, pk=None):
                 # form.add_error(None, str(e))
         else:
             print(form.errors)
-
     skills = [x.name for x in vacancy.skills] if vacancy else []
     instance = get_object_or_404(Vacancy, pk=pk) if pk else None
     form = VacancyForm(instance=instance, initial={'skills': ','.join(skills)})

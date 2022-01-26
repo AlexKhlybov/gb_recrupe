@@ -8,3 +8,7 @@ class City(models.Model):
 
     region = models.CharField(max_length=64, null=False, db_index=True, verbose_name='Регион')
     city = models.CharField(max_length=32, null=False, db_index=True, verbose_name='Город')
+
+
+    def __str__(self):
+        return self.city

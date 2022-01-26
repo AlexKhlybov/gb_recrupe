@@ -69,6 +69,7 @@ class Vacancy(models.Model):
         VacancySkills.objects.filter(vacancy=self).delete()
         super().delete(using, keep_parents)
 
+
     def __str__(self):
         return f"{self.name}"
 
