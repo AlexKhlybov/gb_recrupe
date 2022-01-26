@@ -54,6 +54,7 @@ class Vacancy(models.Model):
     def skills(self):
         return VacancySkills.objects.filter(vacancy=self)
 
+
     def __str__(self):
         return f"{self.name}"
 

@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from apps.main.models import City
 from apps.users.models import User
 
 
@@ -22,7 +23,7 @@ class Company(models.Model):
     name = models.CharField(max_length=255, db_index=True, verbose_name='Имя организации', blank=True)
     logo = models.FileField(max_length=64, null=True, verbose_name='Логотип организации', blank=True)
     url = models.URLField(max_length=64, null=True, verbose_name='Сайт компании', blank=True)
-    city = models.CharField(max_length=64, null=True, db_index=True, verbose_name='Город', blank=True)
+    city = models.ForeignKey(City, null=True, db_index=True, verbose_name='Город', blank=True , on_delete=models.CASCADE)
     address = models.CharField(max_length=64, null=True, verbose_name='Адрес организации', blank=True)
     description = models.TextField(max_length=5000, null=True, verbose_name='Описание организации', blank=True)
     is_active = models.BooleanField(default=False, db_index=True, verbose_name='Активность')

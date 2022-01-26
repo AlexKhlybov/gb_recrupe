@@ -3,10 +3,10 @@
 {% block content %}
 
 
-<form method="post">
+<form class="lign-items-center" method="post">
     {% csrf_token %}
     {{ form.as_p }}
 
-    <input class="btn btn-success" type="submit" value="Обновить">
+    <input class="btn btn-success " type="submit" value="Обновить">
 </form>
 {% endblock %}
