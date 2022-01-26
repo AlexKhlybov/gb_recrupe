@@ -59,6 +59,11 @@ class Favoretes {
     
     fethFavorites(url) {
         fetch(`${url}`)
+        // fetch(
+        //     url = `${url}`,
+        //     headers = {
+        //         "X-Requested-With": "XMLHttpRequest"
+        //     })
         .then((response) => {
             return response.json();
         })
