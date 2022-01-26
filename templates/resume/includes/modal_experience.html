@@ -1,0 +1,62 @@
+<!-- Модальное окно редактирования опыта работы -->
+<div class="modal fade" id="experienceModal" tabindex="-1" aria-hidden="true">
+    <form class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Опыт работы</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3 row">
+                    <div class="col-lg-4">
+                        <strong><label for="modalExperienceStartYear" class="form-label">Начало работы</label></strong>
+                        <div class="input-group">
+                            <select class="form-select select-month" id="modalExperienceStartMonth" required>
+{#                                <option selected></option>#}
+                            </select>
+                            <input type="number" id="modalExperienceStartYear" class="form-control" placeholder="Год" min="1900" max="2100" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3 row">
+                    <div class="col-lg-4">
+                        <strong><label for="modalExperienceEndYear" class="form-label">Окончание</label></strong>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="modalExperienceCheckedCurrentDate">
+                            <label class="form-check-label" for="modalExperienceCheckedCurrentDate">
+                                По настоящее время
+                            </label>
+                        </div>
+
+                        <div class="input-group" id="modalDivExperienceEnd">
+                            <select class="form-select select-month" id="modalExperienceEndMonth">
+{#                                <option selected></option>#}
+                            </select>
+                            <input type="number" id="modalExperienceEndYear" class="form-control" placeholder="Год" min="1900" max="2100">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <strong><label for="modalExperienceCompanyName" class="form-label">Организация</label></strong>
+                    <input type="text" class="form-control" id="modalExperienceCompanyName" placeholder="Название компании" required>
+                </div>
+
+                <div class="mb-3">
+                    <strong><label for="modalExperiencePositionName" class="form-label">Должность</label></strong>
+                    <input type="text" class="form-control" id="modalExperiencePositionName" placeholder="Должность" required>
+                </div>
+
+                <div class="mb-3">
+                    <strong><label for="modalExperienceDuties" class="col-form-label">Обязанности на рабочем месте:</label></strong>
+                    <textarea class="form-control" id="modalExperienceDuties" placeholder="Опишите, что вы делали на работе. Работодатели часто ищут резюме по ключевым навыкам, например, «работа в торговом зале», «работа с документами», «сопровождение первых лиц», «управление коллективом» и т.д." required></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+{#                <button type="button" class="btn btn-primary" id="experienceModalSave">Сохранить</button>#}
+                <button type="submit" class="btn btn-primary" id="experienceModalSave">Сохранить</button>
+            </div>
+        </div>
+    </form>
+</div>

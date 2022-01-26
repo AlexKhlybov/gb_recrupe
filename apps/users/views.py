@@ -30,7 +30,8 @@ def auth_user_view(request):
         else:
             messages.add_message(request, messages.INFO, 'Не верное имя пользователя или пароль')
 
-    content = {}
+    content = {}  #TODO - title = 'Вход'
+
 
     return render(request, 'users/sign-in.html', content)
 

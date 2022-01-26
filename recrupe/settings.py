@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     'apps.companies',
     'apps.vacancies',
     'apps.resume',
+    
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -42,6 +44,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'recrupe.urls'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 TEMPLATES = [
     {
@@ -97,7 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'UTC'
 
@@ -125,6 +129,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Пользователи/Авторизация
 AUTH_USER_MODEL = 'users.User'
 LOGIN_ERROR_URL = '/'
+LOGIN_URL = '/users/login/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

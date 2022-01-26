@@ -2,35 +2,92 @@
 
 {% block content %}
 <div class="container">
-    <h2 class="mb-3">Вакансии</h2>
+    <h5 class="mb-3">Найдено {{object_list.count}} вакансий</h5>
     <div class="mb-5">
-    {% for item in object_list %}
-        <div class="col-md-12 border p-3">
-            <div class="d-flex justify-content-between">
-                <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
-                    <h5 class="mb-0">{{ item.name }}</h5>
-                </a>
-                <p class="fs-5 mb-0">{{ item.price }}</p>
-            </div>
-            <div class="mb-1">
-                <a href="{% url 'companies:detail' item.company.pk %}" class="mb-auto text-muted text-decoration-none">{{ item.company }}</a>
-                <p class="mb-auto text-muted">{{ item.company.city }}</p>
-            </div>
-            <div>
-                {% for desc in item.split_description_to_lines|slice:":2" %}<p class="m-0">{{ desc }}</p>{% endfor %}
-            </div>
-            <div class="d-flex justify-content-between mt-3">
-                <div>
-                    <button onclick="void(0)" class="btn btn-primary">Откликнуться</button>
-                    <button onclick="void(0)" class="btn btn-link">В избранное</button>
+        <div class="d-flex bg-light sticky-top justify-content-between ">
+            <button class="btn btn-primary position-fixed  bottom-0 end-0 translate-middle-x mb-3"
+                    onclick="myFunction()">Фильтр
+            </button>
+
+            <form class="mb-3 flex-grow-1" method="get">
+                <div class=" d-flex flex-rows ">
+                    <input class="input-group " type="search" name="find" value="{{find}}"
+                           placeholder="Поиск по названию">
+                    <button class="btn btn-primary" type="submit">Поиск</button>
                 </div>
-                <div class="mb-1 text-muted">{{ item.created_at|date:'d.m.Y' }}</div>
-            </div>
+
+                <div id="advanSearch" class="d-flex flex-row  mt-3 d-none  justify-content-around">
+                    <div>
+                        <label class="align-items-center">ЗАРПЛАТА</label>
+                        <div class="d-flex align-items-center">
+                            <label>ОТ</label><input class="ms-2" type="number" name="fromsalary" value="{{from_salary}}"
+                                                    placeholder="от">
+                        </div>
+                        <div>
+                            <input class="mb-2" type="checkbox" {% if zero_salary %} checked {% endif %}
+                                   name="zerosalary"> <label>Не указана</label>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="align-items-center">Компания</label>
+                            <input class="" type="text" name="company_id" value="{{company_id}}" placeholder="Компания">
+                        </div>
+                    </div>
+
+                    <div>
+                        <input class=" input-group " style="max-width: 250px;" type="text" name="citysearch" value="{{citysearch}}"
+                               placeholder="Поиск города" id="myInput" onkeyup="filterFunction()">
+
+                        <div class="overflow-auto  " style="max-width: 250px; max-height: 250px;" id="">
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="city"
+                                    id="myDropdown"  >
+                                <option selected value="">Выбрать из списка</option>
+                                {% for i in cities %}
+
+                                <option {% if cityselected == i.id %} selected {% endif %} value="{{i.id}}">{{i}}</option>
+
+                                {% endfor %}
+
+                            </select>
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
         </div>
-    {% endfor %}
-    {% if object_list|length == 0 %}
-        <strong class="mb-3">Нет активных вакансий</strong>
-    {% endif %}
+      
+        {% for item in object_list %}
+          <div class="col-md-12 border p-3">
+              <div class="d-flex justify-content-between">
+                  <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
+                      <h5 class="mb-0">{{ item.name }}</h5>
+                  </a>
+                  <p class="fs-5 mb-0">{{ item.price }}</p>
+              </div>
+              <div class="mb-1">
+                  <a href="{% url 'companies:detail' item.company.pk %}" class="mb-auto text-muted text-decoration-none">{{item.company }}</a>
+                  <p class="mb-auto text-muted">{{ item.company.city }}</p>
+              </div>
+              <div>
+                  {% for desc in item.split_description_to_lines|slice:":2" %}<p class="m-0">{{ desc }}</p>{% endfor %}
+              </div>
+              <div class="d-flex justify-content-between mt-3">
+                  <div>
+                      <button onclick="void(0)" class="btn  btn-primary">Откликнуться</button>
+                      {% if item.id in my_favorites %}
+                          <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-success">В избранном</button>
+                      {% else %}
+                          <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-primary">В избранное</button>
+                      {% endif %}
+                  </div>
+                  <div class="mb-1 text-muted">{{ item.created_at|date:'d.m.Y' }}</div>
+              </div>
+          </div>
+        {% endfor %}
+        {% if object_list|length == 0 %}
+          <strong class="mb-3">Нет активных вакансий</strong>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
