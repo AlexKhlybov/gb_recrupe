@@ -30,10 +30,10 @@
                 </div>
                 {% if field.name == "avatar"%}
                     {% if user.employeeprofile.avatar %}
-                            <div class=""><img width = "200" height = "160"
+                            <div class=""><img width = "200" height = "160" style="object-fit: scale-down;"
                                            src="/media/{{ user.company.logo }}"></div>
                     {% else %}
-                            <div class=""><img width = "200" height = "160"
+                            <div class=""><img width = "200" height = "160" style="object-fit: scale-down;"
                                            src="/media/users/def_img.png"></div>
                     {% endif %}
                 {% endif %}

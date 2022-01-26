@@ -1,0 +1,51 @@
+<!-- Модальное окно образования -->
+<div class="modal fade" id="educationModal" tabindex="-1" aria-hidden="true">
+    <form class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Место обучения</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3 row">
+                    <div class="col-lg-5">
+                        <strong><label for="modalEducationLevel" class="form-label">Уровень</label></strong>
+                        <select class="form-select" id="modalEducationLevel" required>
+                            {% for i in levels %}
+                                <option value="{{ i.0 }}">{{ i.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <strong><label for="modalEducationInstitution" class="form-label">Учебное заведение</label></strong>
+                    <input type="text" class="form-control" id="modalEducationInstitution" placeholder="Название или аббревиатура" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="modalEducationFaculty" class="form-label">Факультет</label>
+                    <input type="text" class="form-control" id="modalEducationFaculty">
+                </div>
+
+                <div class="mb-3">
+                    <label for="modalEducationSpecialization" class="form-label">Специализация</label>
+                    <input type="text" class="form-control" id="modalEducationSpecialization">
+                </div>
+
+                <div class="input-group mb-3">
+                        <label for="modalEducationYearOfEnding" class="form-label"><strong>Год окончания</strong></label>
+                        <div class="input-group row">
+                            <input type="number" id="modalEducationYearOfEnding" class="form-control  col-lg-2" placeholder="Год" min="1900" max="2100" required>
+                            <p class="text-muted col-sm-10 m-0 align-self-center">Если учитесь в настоящее время — укажите год предполагаемого окончания</p>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+{#                <button type="button" class="btn btn-primary" id="EducationModalSave">Сохранить</button>#}
+                <button type="submit" class="btn btn-primary" id="educationModalSave">Сохранить</button>
+            </div>
+        </div>
+    </form>
+</div>
