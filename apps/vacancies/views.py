@@ -95,7 +95,7 @@ class MyVacancyCompanyListView(VacancyCompanyListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["template"] = "Recrupe | Мои вакансии"
+        context["title"] = "Recrupe | Мои вакансии"
         return context
     
     
