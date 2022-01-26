@@ -102,15 +102,16 @@ class FavoritesResumeListView(ListView):
     
     
 def favorites_edit(request, resume):
-    user = User.objects.get(id=request.user.id)
-    resume = Resume.objects.get(id=resume)
-    obj, created = ResumeFavorites.objects.get_or_create(
-        user=user,
-        resume=resume,)
-    if not created:
-        obj.delete()
-        return JsonResponse({"delete": True}, status=200)
-    return JsonResponse({"delete": False}, status=200)
+    if request.is_ajax():
+        user = User.objects.get(id=request.user.id)
+        resume = Resume.objects.get(id=resume)
+        obj, created = ResumeFavorites.objects.get_or_create(
+            user=user,
+            resume=resume,)
+        if not created:
+            obj.delete()
+            return JsonResponse({"delete": True}, status=200)
+        return JsonResponse({"delete": False}, status=200)
 
 
 class ResumeDetailView(DetailView):

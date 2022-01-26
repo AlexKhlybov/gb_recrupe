@@ -41,10 +41,9 @@
                 <div class="mb-1 text-muted">Обновлено {{ item.updated_at|date:'d.m.Y' }}</div>
             </div>
         </div>
-    {% endfor %}
-    {% if object_list|length == 0 %}
+    {% empty %}
         <strong class="mb-3">Нет подходящих резюме</strong>
-    {% endif %}
+    {% endfor %}
     </div>
 </div>
 {% endblock %}
