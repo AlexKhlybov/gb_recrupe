@@ -26,6 +26,7 @@
             Ваше резюме
             {% if form.is_draft.value %} <span class="text-muted">(черновик)</span> {% endif %}
         </h2>
+        <hr>
         <h4 class="mb-2 text-muted"><strong>{{ user.last_name }} {{ user.first_name }}</strong></h4>
 
         {% if user.email or user.phone %}
@@ -36,6 +37,7 @@
                     {% if user.phone %}<li>Телефон: <a href="tel:{{ user.phone }}" target="_blank">{{ user.phone }}</a></li> {% endif %}
                 </ol>
             </div>
+            <hr>
         {% endif %}
 
         <div class="text-center spinner-loading">
@@ -43,6 +45,7 @@
                 <span class="visually-hidden">Loading...</span>
             </div>
         </div>
+
         <div class="alert alert-danger" role="alert" style="display: none"></div>
         <form method="post" style="display: none" id="resume-form">
             {% csrf_token %}
@@ -51,7 +54,7 @@
                 <div class="col-sm-2">
                     <label for="{{ form.name.id_for_label }}" class="col-form-label">Желаемая должность</label>
                 </div>
-                <div class="col">
+                <div class="col-6">
                     {# <input type="text" id="position_name" class="form-control" maxlength="128">#}
                     {{ form.name }}
                 </div>
@@ -60,7 +63,7 @@
                 <div class="col-sm-2">
                     <label for="{{ form.price.id_for_label }}" class="col-form-label">{{ form.price.label }}</label>
                 </div>
-                <div class="col-auto">
+                <div class="col-auto" style="min-width: 270px;">
                     {# <input type="number" id="inputPassword6" class="form-control" min="0" max="99999999">#}
                     {{ form.price }}
                 </div>
@@ -70,7 +73,7 @@
                 </span>
                 </div>
             </div>
-
+            
             <h5 class="mb-2">Опыт работы</h5>
             <div class="row g-2 mb-4">
                 <div class="col-sm-2">
@@ -80,7 +83,7 @@
                     <div id="experience-container">
                     </div>
                     {# <button class="btn btn-primary">Добавить место работы</button>#}
-                    <button type="button" class="btn btn-primary" id="btnAppendExperience">Добавить место работы</button>
+                    <button type="button" class="btn btn-outline-primary" style="min-width: 250px;" id="btnAppendExperience">Добавить место работы</button>
                 </div>
             </div>
 
@@ -92,7 +95,7 @@
                 <div class="col">
                     <div class="mb-4" id="education-container">
                     </div>
-                    <button type="button" class="btn btn-primary" id="btnAppendEducation">Добавить место обучения</button>
+                    <button type="button" class="btn btn-outline-primary" style="min-width: 250px;" id="btnAppendEducation">Добавить место обучения</button>
                 </div>
             </div>
 
@@ -104,7 +107,7 @@
                 <div class="col">
                     <div class="mb-4" id="courses-container">
                     </div>
-                    <button type="button" class="btn btn-primary" id="btnAppendCourses">Добавить пройденные курсы</button>
+                    <button type="button" class="btn btn-outline-primary" style="min-width: 250px;" id="btnAppendCourses">Добавить пройденные курсы</button>
                 </div>
             </div>
 

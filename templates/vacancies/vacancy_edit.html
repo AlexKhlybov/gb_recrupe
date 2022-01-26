@@ -8,6 +8,9 @@
         textarea {
             max-height: none;
         }
+        .label__form {
+            font-size: 1.4rem;
+          }
     </style>
 {% endblock %}
 
@@ -19,6 +22,7 @@
     <div class="container">
         {% if request.user and request.user.company %}
         <h2 class="mb-3">Ваша вакансия</h2>
+            <hr>
             <div class="row g-5">
                 <div class="col-md-10">
                     <h3><strong>{{ request.user.company.name }}</strong></h3>
@@ -36,18 +40,19 @@
                         <img src="/media/companies/{{ request.user.company.logo }}" style="object-fit: scale-down" width="100%" alt="{{ object.name }}">
                     </div>
                 </div>
+                <hr>
             </div>
 
             <form method="post">
                 {% csrf_token %}
 {#                {% for i in form %}{% if i.widget_type == 'hidden' %}{{ i }}{% endif %}{% endfor %}#}
-                <div class="mb-4">
-                    <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }}</label>
+                <div class="mb-5 w-50">
+                    <label for="{{ form.name.id_for_label }}" class="form-label  label__form">{{ form.name.label }}</label>
                     {{ form.name }}
                 </div>
 
-                <p>Размер заработной платы (необязательно)</p>
-                <div class="row gx-2 align-items-center mb-4 w-50">
+                <div class="row gx-2 align-items-center mb-5 w-50">
+                    <p class="label__form">Размер заработной платы (необязательно)</p>
                     <div class="col">
                         <div class="row">
                             <label for="{{ form.price_min.id_for_label }}" class="col-auto col-form-label">{{ form.price_min.label }}</label>
@@ -66,22 +71,22 @@
                     </div>
                 </div>
 
-                <div class="mb-4 w-50">
-                    <label for="{{ form.experience.id_for_label }}" class="form-label">{{ form.experience.label }}</label>
+                <div class="mb-5 w-50">
+                    <label for="{{ form.experience.id_for_label }}" class="form-label  label__form">{{ form.experience.label }}</label>
                     <div class="col-auto">
                         {{ form.experience }}
                     </div>
                 </div>
 
-                <div class="mb-4">
-                    <label for="{{ form.skills.id_for_label }}" class="form-label">{{ form.skills.label }}</label>
+                <div class="mb-5">
+                    <label for="{{ form.skills.id_for_label }}" class="form-label  label__form">{{ form.skills.label }}</label>
                     <div class="col-auto">
                         {{ form.skills }}
                     </div>
                 </div>
 
-                <div class="mb-4">
-                    <label for="{{ form.description.id_for_label }}" class="form-label">{{ form.description.label }}</label>
+                <div class="mb-5">
+                    <label for="{{ form.description.id_for_label }}" class="form-label  label__form">{{ form.description.label }}</label>
                     {{ form.description }}
                 </div>
 

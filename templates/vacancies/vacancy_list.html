@@ -4,16 +4,16 @@
 <div class="container">
     <h5 class="mb-3">Найдено {{object_list.count}} вакансий</h5>
     <div class="mb-5">
-        <div class="d-flex bg-light sticky-top justify-content-between ">
+        <div class="d-flex bg-light sticky-top justify-content-between p-3">
             <button class="btn btn-primary position-fixed  bottom-0 end-0 translate-middle-x mb-3"
                     onclick="myFunction()">Фильтр
             </button>
 
-            <form class="mb-3 flex-grow-1" method="get">
-                <div class=" d-flex flex-rows ">
+            <form class=" flex-grow-1" method="get">
+                <div class=" d-flex flex-rows">
                     <input class="input-group " type="search" name="find" value="{{find}}"
                            placeholder="Поиск по названию">
-                    <button class="btn btn-primary" type="submit">Поиск</button>
+                    <button class="btn btn-primary ms-3" style="min-width: 200px;" type="submit">Поиск</button>
                 </div>
 
                 <div id="advanSearch" class="d-flex flex-row  mt-3 d-none  justify-content-around">
@@ -74,12 +74,16 @@
               </div>
               <div class="d-flex justify-content-between mt-3">
                   <div>
-                      <button onclick="void(0)" class="btn  btn-primary">Откликнуться</button>
-                      {% if item.id in my_favorites %}
-                          <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-success">В избранном</button>
-                      {% else %}
-                          <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-primary">В избранное</button>
-                      {% endif %}
+                        {% if not request.user.role == 1 %}
+                            <button onclick="void(0)" class="btn  btn-primary">Откликнуться</button>
+                            {% if item.id in my_favorites %}
+                                <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-success">В избранном</button>
+                            {% else %}
+                                <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-primary">В избранное</button>
+                            {% endif %}
+                        {% else %}
+                            <button onclick="void(0)" class="btn  btn-primary">Проверить</button>
+                        {% endif %}
                   </div>
                   <div class="mb-1 text-muted">{{ item.created_at|date:'d.m.Y' }}</div>
               </div>
