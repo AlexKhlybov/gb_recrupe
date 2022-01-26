@@ -18,7 +18,7 @@
                             {{ request.user }}
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
-                            <li><a class="dropdown-item" href="{% url 'resume:my' %}">Мои резюме</a></li>
+                            <li><a class="dropdown-item" href="{% url 'resume:my-resume' request.user.id %}">Мои резюме</a></li>
                             <li><a class="dropdown-item" href="{% url 'user:editemployee' %}">Профиль</a></li>
                         </ul>
                     </div>

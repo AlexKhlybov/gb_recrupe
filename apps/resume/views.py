@@ -5,8 +5,9 @@ from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import JsonResponse
 
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView, ListView
+from apps.resume.forms import ResumeForm, get_resume_data, save_resume_data
 
 from apps.main.models import City
 from apps.resume.models import Resume, ResumeFavorites, ResumeModeration, Education
@@ -101,15 +102,16 @@ class FavoritesResumeListView(ListView):
     
     
 def favorites_edit(request, resume):
-    user = User.objects.get(id=request.user.id)
-    resume = Resume.objects.get(id=resume)
-    obj, created = ResumeFavorites.objects.get_or_create(
-        user=user,
-        resume=resume,)
-    if not created:
-        obj.delete()
-        return JsonResponse({"delete": True}, status=200)
-    return JsonResponse({"delete": False}, status=200)
+    if request.is_ajax():
+        user = User.objects.get(id=request.user.id)
+        resume = Resume.objects.get(id=resume)
+        obj, created = ResumeFavorites.objects.get_or_create(
+            user=user,
+            resume=resume,)
+        if not created:
+            obj.delete()
+            return JsonResponse({"delete": True}, status=200)
+        return JsonResponse({"delete": False}, status=200)
 
 
 class ResumeDetailView(DetailView):

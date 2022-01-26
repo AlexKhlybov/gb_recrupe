@@ -4,6 +4,7 @@ const resumeData = {
     courses: [],        // Курсы
 };
 
+
 const months = [
     'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
 ];
@@ -29,7 +30,7 @@ async function loadResumeData() {
             'X-CSRFToken': csrf_token(),
         },
         body: ''})
-
+    
     if (response.ok) {
         let json = await response.json()
         //let json = await response.text()
@@ -80,7 +81,8 @@ async function saveResume(event, draft) {
             let json = await response.json();
             //let json = await response.text()
             // console.log(JSON.stringify(json))
-            window.location.href = '/resume/my/'
+            // window.location.href = '/resume/my-resume/'
+            window.location.href = document.referrer;
         } else {
             let text = ''
             try {
