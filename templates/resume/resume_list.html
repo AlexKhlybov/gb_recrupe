@@ -5,17 +5,16 @@
     <h2 class="mb-3">Резюме</h2>
     <div class="mb-5">
 
-
         <div class="d-flex bg-light sticky-top justify-content-between ">
             <button class="btn btn-primary position-fixed  bottom-0 end-0 translate-middle-x mb-3"
                     onclick="myFunction()">Фильтр
             </button>
 
-            <form class="mb-3 flex-grow-1" method="get">
-                <div class=" d-flex flex-rows ">
-                    <input class="input-group " type="search" name="find" value="{{find}}"
+            <form class="flex-grow-1 p-3" method="get">
+                <div class=" d-flex flex-rows">
+                    <input class="input-group" type="search" name="find" value="{{find}}"
                            placeholder="Поиск по названию">
-                    <button class="btn btn-primary" type="submit">Поиск</button>
+                    <button class="btn btn-primary ms-3" style="min-width: 200px;" type="submit">Поиск</button>
                 </div>
 
                 <div id="advanSearch" class="d-flex flex-row  mt-3 d-none  justify-content-around">
@@ -39,18 +38,13 @@
                     <div>
                         <input class=" input-group " style="max-width: 250px;" type="text" name="level" value="{{level}}"
                                placeholder="Уровень образования" id="myInput"  onkeyup="filterFunctionResume()">
-
                         <div class="overflow-auto  " style="max-width: 250px; max-height: 250px;" id="">
                             <ul  name="level"  id="myDropdown"  >
-
                                 {% for i in levels %}
                                 <div class="d-flex flex-row align-items-center mt-2">
                                     <input  type="checkbox" {% if level == i.id %} checked {% endif %} name="{{i.level}}" ><li >{{i.get_level_display}}</li>
-
                                 </div>
-
                                 {% endfor %}
-
                             </ul>
                         </div>
                     </div>
@@ -58,6 +52,7 @@
                 </div>
             </form>
         </div>
+
     {% for item in object_list %}
         <div class="col-md-12 border p-3">
             <div class="d-flex justify-content-between">
@@ -83,11 +78,15 @@
             {% endif %}
             <div class="d-flex justify-content-between mt-3">
                 <div>
-                    <button onclick="void(0)" class="btn btn-primary">Откликнуться</button>
-                    {% if item.id in my_favorites_list_id %}
-                        <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-success">В избранном</button>
+                    {% if not request.user.role == 1 %}
+                        <button onclick="void(0)" class="btn btn-primary">Откликнуться</button>
+                        {% if item.id in my_favorites_list_id %}
+                            <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-success">В избранном</button>
+                        {% else %}
+                            <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-primary">В избранное</button>
+                        {% endif %}
                     {% else %}
-                        <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-primary">В избранное</button>
+                        <button onclick="void(0)" class="btn  btn-primary">Проверить</button>
                     {% endif %}
                 </div>
                 <div class="mb-1 text-muted">Обновлено {{ item.updated_at|date:'d.m.Y' }}</div>
