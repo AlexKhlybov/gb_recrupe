@@ -27,21 +27,21 @@ class ResumeListView(ListView):
         from_salary = self.request.GET.get('fromsalary')
         cityselected = self.request.GET.get('city')
         education = self.request.GET.get('education')
-        citysearch = self.request.GET.get('citysearch')
-        if cityselected != None and cityselected != '':
+        levelfind = self.request.GET.get('levelfind')
+        if cityselected is not None:
             context['cityselected'] = int(cityselected)
-        if zero_salary != None:
+        if zero_salary is not None:
             context['zero_salary'] = zero_salary
         if from_salary != None and from_salary != '':
             context['from_salary'] = int(from_salary)
-        if find != None and find != '':
+        if find is not None:
             context['find'] = find
         if level != None and level != '':
-            context['level'] = level
-        if education != None and education != '':
+            context['level'] = int(level)
+        if education is not None:
             context['education'] = education
-        if citysearch != None and citysearch != '':
-            context['citysearch'] = citysearch
+        if levelfind is not None:
+            context['levelfind'] = levelfind
         context["my_favorites_list_id"] = ResumeFavorites.get_favorite_vacancy_list(self.request.user.id)
         return context
 

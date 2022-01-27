@@ -30,24 +30,44 @@
                         </div>
 
                         <div class="mb-2">
-                            <label class="align-items-center">Образование</label>
-                            <input class="" type="text" name="education" value="{{education}}" placeholder="Образование">
+                            <label class="align-items-center">Учереждение</label>
+                            <input class="" type="text" name="education" value="{{education}}" placeholder="Поиск">
                         </div>
                     </div>
 
-                    <div>
-                        <input class=" input-group " style="max-width: 250px;" type="text" name="level" value="{{level}}"
-                               placeholder="Уровень образования" id="myInput"  onkeyup="filterFunctionResume()">
+<!--                    <div>-->
+<!--                        <input class=" input-group " style="max-width: 250px;" type="text" name="level" value="{{level}}"-->
+<!--                               placeholder="Уровень образования" id="myInput"  onkeyup="filterFunctionResume()">-->
+<!--                        <div class="overflow-auto  " style="max-width: 250px; max-height: 250px;" id="">-->
+<!--                            <ul  name="level"  id="myDropdown"  >-->
+<!--                                {% for i in levels %}-->
+<!--                                <div class="d-flex flex-row align-items-center mt-2">-->
+<!--                                    <input  type="checkbox" {% if level == i.id %} checked {% endif %} name="{{i.level}}" ><li >{{i.get_level_display}}</li>-->
+<!--                                </div>-->
+<!--                                {% endfor %}-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+
+                     <div>
+                        <input class=" input-group " style="max-width: 250px;" type="text" name="levelfind" value="{{levelfind}}"
+                               placeholder="Уровень образования" id="myInput" onkeyup="filterFunction()">
+
                         <div class="overflow-auto  " style="max-width: 250px; max-height: 250px;" id="">
-                            <ul  name="level"  id="myDropdown"  >
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="level" id="myDropdown"  >
+                                <option  value="">Выбрать из списка</option>
                                 {% for i in levels %}
-                                <div class="d-flex flex-row align-items-center mt-2">
-                                    <input  type="checkbox" {% if level == i.id %} checked {% endif %} name="{{i.level}}" ><li >{{i.get_level_display}}</li>
-                                </div>
+
+                                <option {% if level == i.level %} selected {% endif %} value="{{i.level}}">{{i.get_level_display}}</option>
+
                                 {% endfor %}
-                            </ul>
+
+                            </select>
                         </div>
+
                     </div>
+
 
                 </div>
             </form>
