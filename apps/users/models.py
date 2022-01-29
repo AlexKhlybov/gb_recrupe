@@ -1,3 +1,4 @@
+import email
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.signals import post_save
@@ -24,6 +25,7 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=32, verbose_name='Фамилия')
     second_name = models.CharField(max_length=32, blank=True, verbose_name='Отчество')
     phone = models.CharField(max_length=16, blank=True, verbose_name='Номер телефона')
+    email = models.EmailField(max_length=255, default="example@mail.ru", verbose_name='Email')
     role = models.PositiveSmallIntegerField(choices=USER_TYPE, default=USER_TYPE_MODERATOR, verbose_name='Роль')
 
     class Meta:

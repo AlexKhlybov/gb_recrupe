@@ -136,3 +136,8 @@ LOGIN_URL = '/users/login/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email notify settings
+RECIPIENTS_EMAIL = ['manager@mysite.com']   # замените на свою почту
+DEFAULT_FROM_EMAIL = 'admin@mysite.com'  # замените на свою почту
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
