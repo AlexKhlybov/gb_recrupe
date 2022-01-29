@@ -15,6 +15,7 @@
                             {{ request.user }}
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
+                            <li><a class="dropdown-item" href="{% url 'moderation:companies' %}">Проверить компании</a></li>
                             <li><a class="dropdown-item" href="{% url 'moderation:resume' %}">Проверить резюме</a></li>
                             <li><a class="dropdown-item" href="{% url 'moderation:vacancy' %}">Проверить вакансии</a></li>
                             <li><hr class="dropdown-divider"></li>

@@ -71,6 +71,12 @@ class VacancyListView(ListView):
 class VacancyDetailView(DetailView):
     model = Vacancy
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["is_favorite"] = VacancyFavorites.objects.filter(
+            user=self.request.user, vacancy_id=self.kwargs['pk']).exists()
+        return context
+
 
 class VacancyCompanyListView(ListView):
     """

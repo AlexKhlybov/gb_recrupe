@@ -1,8 +1,15 @@
 <div class="col-md-12 border p-3">
     <div class="d-flex justify-content-between">
-        <a href="{% url 'resume:detail' item.pk %}" class="text-decoration-none">
-            <h5 class="mb-0">{{ item.name }}</h5>
-        </a>
+        <div class="d-flex">
+            <a href="{% url 'resume:detail' item.pk %}" class="text-decoration-none">
+                <h5 class="mb-0">{{ item.name }}</h5>
+            </a>
+            {% if request.user.is_staff or item.user_id == request.user.pk %}
+                {% if item.status != 2 %}
+                    <span class="mx-2 {% if item.status == 3 %}text-warning{% elif item.status == 4 %}text-danger{% else %}text-muted{% endif %}">{{ item.get_status_display }}</span>
+                {% endif %}
+            {% endif %}
+        </div>
         <p class="fs-5 mb-0">{% if item.price %}{{ item.price }} руб. {% else %} з/п не указана {% endif %}</p>
     </div>
     <div class="mb-2">
@@ -22,15 +29,19 @@
     {% endif %}
     <div class="d-flex justify-content-between mt-3">
         <div>
-            {% if not request.user.role == 1 %}
+            {% if request.user.role == 1 %}  {# Модератор #}
+                <a href="{% url 'resume:detail' item.pk %}" class="btn  btn-primary">Проверить</a>
+            {% elif request.user.role == 2 %}  {# Соискатель #}
+                {% if item.user_id == request.user.pk %}
+                    <a class="btn btn-primary" href="{% url 'resume:edit' item.pk %}" role="button">Изменить</a>
+                {% endif %}
+            {% elif request.user.role == 3 %}  {# Работодатель #}
                 <button onclick="void(0)" class="btn btn-primary">Откликнуться</button>
                 {% if item.id in my_favorites_list_id %}
                     <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-success">В избранном</button>
                 {% else %}
                     <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-primary">В избранное</button>
                 {% endif %}
-            {% else %}
-                <button onclick="void(0)" class="btn  btn-primary">Проверить</button>
             {% endif %}
         </div>
         <div class="mb-1 text-muted">Обновлено {{ item.updated_at|date:'d.m.Y' }}</div>

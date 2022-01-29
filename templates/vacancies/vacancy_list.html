@@ -59,10 +59,9 @@
       
         {% for item in object_list %}
             {% include 'vacancies/includes/vacancy_list_item.html' %}
-        {% endfor %}
-        {% if object_list|length == 0 %}
+        {% empty %}
             <strong class="mb-3">Нет активных вакансий</strong>
-        {% endif %}
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

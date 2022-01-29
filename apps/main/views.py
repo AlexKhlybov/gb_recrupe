@@ -16,7 +16,7 @@ class HomePageList(ListView):
         context = super().get_context_data(**kwargs)
         context["title"] = "Recrupe | Главная"
         context["news"] = News.objects.all()[:2]
-        context["partners"] = Company.objects.filter(is_active=True)[:10]
+        context["partners"] = Company.public.all()[:10]
         context["job_recomendations"] = Vacancy.public.all()[:5]
         context["resume_recomendations"] = Resume.public.filter()[:5]
         # if self.request.user.role == 2:

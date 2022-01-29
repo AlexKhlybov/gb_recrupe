@@ -18,6 +18,10 @@ class ResumePublicManager(models.Manager):
 
 
 class Resume(models.Model):
+    class Meta:
+        verbose_name = 'Резюме'
+        verbose_name_plural = 'Резюме'
+
     STATUS_DRAFT = 1
     STATUS_PUBLIC = 2
     STATUS_COMPLAINT = 3
@@ -29,10 +33,6 @@ class Resume(models.Model):
         (STATUS_COMPLAINT, 'Жалоба'),
         (STATUS_CLAIM, 'Претензия'),
     )
-
-    class Meta:
-        verbose_name = 'Резюме'
-        verbose_name_plural = 'Резюме'
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=True, on_delete=models.CASCADE,
                              verbose_name='Соискатель')
@@ -47,7 +47,6 @@ class Resume(models.Model):
     courses = models.ManyToManyField('Courses', db_index=True, blank=True, verbose_name='Курсы')
     favorites = models.ManyToManyField(User, related_name="favorites_resume", through="ResumeFavorites",
                                        through_fields=("resume", "user"))
-
     status = models.IntegerField(choices=STATUS, db_index=True, default=STATUS_PUBLIC, verbose_name='Статус')
 
     objects = models.Manager()
@@ -233,7 +232,7 @@ class Courses(models.Model):
 
 
 class ResumeFavorites(models.Model):
-    user = models.ForeignKey(User, related_name="my_favor_resume", verbose_name='Работадатель',
+    user = models.ForeignKey(User, related_name="my_favor_resume", verbose_name='Работодатель',
                              on_delete=models.CASCADE)
     resume = models.ForeignKey(Resume, related_name="favorites_resume",  verbose_name='Резюме',
                                on_delete=models.CASCADE)
@@ -255,5 +254,4 @@ class ResumeFavorites(models.Model):
     @staticmethod
     def get_favorite_vacancy_list(user_id):
         """Возвращает список id вакансий добавленных в избранное"""
-        # TODO сделать фильтрацию под юзера
-        return ResumeFavorites.objects.values_list('resume', flat=True).order_by('id')
+        return ResumeFavorites.objects.filter(user_id=user_id).values_list('resume', flat=True).order_by('id')

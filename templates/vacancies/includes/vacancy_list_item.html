@@ -1,16 +1,20 @@
 <div class="col-md-12 border p-3">
     <div class="d-flex justify-content-between">
         <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
-            <h5 class="mb-0">{{ item.name }}</h5>
+            <div class="d-flex">
+                <h5 class="mb-0">{{ item.name }}</h5>
+                {% if request.user.is_staff or item.company.user_id == request.user.pk %}
+                    {% if item.status != 2 %}
+                        <span class="mx-2 {% if item.status == 3 %}text-warning{% elif item.status == 4 %}text-danger{% else %}text-muted{% endif %}">({{ item.get_status_display }})</span>
+                    {% endif %}
+                {% endif %}
+            </div>
         </a>
         <p class="fs-5 mb-0">{{ item.price }}</p>
     </div>
     <div class="mb-1">
         <div class="d-flex justify-content-between">
             <a href="{% url 'companies:detail' item.company.pk %}" class="mb-auto text-muted text-decoration-none">{{item.company }}</a>
-            {% if request.user.is_staff %}
-                <p>{{ item.get_status_display }}</p>
-            {% endif %}
         </div>
         <p class="mb-auto text-muted">{{ item.company.city }}</p>
     </div>
@@ -19,15 +23,19 @@
     </div>
     <div class="d-flex justify-content-between mt-3">
         <div>
-            {% if not request.user.role == 1 %}
+            {% if request.user.role == 1 %}  {# Модератор #}
+                <a href="{% url 'vacancies:detail' item.pk %}" class="btn  btn-primary">Проверить</a>
+            {% elif request.user.role == 2 %}  {# Соискатель #}
                 <button onclick="void(0)" class="btn  btn-primary">Откликнуться</button>
                 {% if item.id in my_favorites %}
                     <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-success">В избранном</button>
                 {% else %}
                     <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-primary">В избранное</button>
                 {% endif %}
-            {% else %}
-                <button onclick="void(0)" class="btn  btn-primary">Проверить</button>
+            {% elif request.user.role == 3 %}  {# Работодатель #}
+                {% if item.company.user_id == request.user.pk %}
+                    <a class="btn btn-primary" href="{% url 'vacancies:edit' item.pk %}" role="button">Изменить</a>
+                {% endif %}
             {% endif %}
         </div>
         <div class="mb-1 text-muted">{{ item.created_at|date:'d.m.Y' }}</div>

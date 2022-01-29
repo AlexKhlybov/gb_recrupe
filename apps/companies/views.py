@@ -9,14 +9,13 @@ class CompanyListView(ListView):
     model = Company
 
     def get_queryset(self):
-        where = Q(is_active=True)
+        where = Q(status=Company.STATUS_PUBLIC)
         user = self.request.user
         if user and user.pk:
             where = where | Q(user=user)
-
         if user and user.pk and user.role == User.USER_TYPE_MODERATOR:
-            return Company.objects.select_related()
-        return Company.objects.select_related().filter(where)
+            return Company.public.select_related()
+        return Company.public.select_related().filter(where)
 
 
 class CompanyDetailView(DetailView):

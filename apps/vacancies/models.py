@@ -55,10 +55,6 @@ class Vacancy(models.Model):
     price_max = models.IntegerField(verbose_name="Зарплата до", db_index=True, null=True, blank=True)
     favorites = models.ManyToManyField(User, related_name="favorites_vacancy", through="VacancyFavorites",
                                        through_fields=("vacancy", "user"))
-
-    # is_closed = models.BooleanField(default=False, db_index=True, verbose_name='Признак снятия вакансии')
-    # is_active = models.BooleanField(default=True, db_index=True, verbose_name='Активен')
-
     status = models.IntegerField(choices=STATUS, db_index=True, default=STATUS_PUBLIC, verbose_name='Статус')
 
     objects = models.Manager()
@@ -130,5 +126,4 @@ class VacancyFavorites(models.Model):
     @staticmethod
     def get_favorite_vacancy_list(user_id):
         """Возвращает список id вакансий добавленных в избранное"""
-        # TODO сделать фильтрацию под юзера
-        return VacancyFavorites.objects.values_list('vacancy', flat=True).order_by('id')
+        return VacancyFavorites.objects.filter(user_id=user_id).values_list('vacancy', flat=True).order_by('id')

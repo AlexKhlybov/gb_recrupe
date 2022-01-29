@@ -1,6 +1,6 @@
 {% if request.user.role == 1 %}  {# Модератор #}
     <div class="row row-cols-auto mb-4">
-        <div class="col col-lg-4">
+        <div class="col col-lg-5">
             <form method="post">
                 {% csrf_token %}
                 <label for="id_status" class="form-label"><strong>Статус резюме</strong></label>
@@ -15,16 +15,20 @@
             </form>
         </div>
     </div>
-{% elif request.user.role == 3 %}  {# Работодатель #}
+{% elif request.user.role == 2 %}  {# Соискатель #}
     <div class="d-flex justify-content-between mb-2">
         <div class="d-flex gap-2">
             <button type="button" class="btn btn-primary">Откликнуться</button>
             {% if is_favorite %}
-                <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-success btn--resume">В избранном</button>
+                <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-success btn--vacancy">В избранном</button>
             {% else %}
-                <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-primary btn--resume">В избранное</button>
+                <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-primary btn--vacancy">В избранное</button>
             {% endif %}
         </div>
-        <button type="button" class="btn btn-outline-danger" {% if object.status >= 3 %}disabled{% endif %}>Пожаловаться</button>
+        {% if object.status < 3 %}
+            <button type="button" class="btn btn-outline-danger" {% if object.status >= 3 %}disabled{% endif %}>Пожаловаться</button>
+        {% endif %}
     </div>
+{% elif request.user.role == 3 %}  {# Работодатель #}
+
 {% endif %}

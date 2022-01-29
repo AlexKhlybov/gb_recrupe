@@ -123,6 +123,12 @@ class ResumeDetailView(DetailView):
             resume.save()
         return redirect('/moderation/resume/')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["is_favorite"] = ResumeFavorites.objects.filter(
+            user=self.request.user, resume_id=self.kwargs['pk']).exists()
+        return context
+
 
 @login_required
 def create(request):
