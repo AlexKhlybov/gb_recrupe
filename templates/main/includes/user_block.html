@@ -8,8 +8,19 @@
         <div class="col-6 gap-2 d-flex justify-content-end align-items-center">
             {% if request.user.id %}
                 {% if request.user.role == 1 %}  {# Модератор #}
-                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'user:editemployee' %}">
-                        {{ request.user }}</a>
+{#                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'user:editemployee' %}">#}
+{#                        {{ request.user }}</a>#}
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ request.user }}
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
+                            <li><a class="dropdown-item" href="{% url 'moderation:resume' %}">Проверить резюме</a></li>
+                            <li><a class="dropdown-item" href="{% url 'moderation:vacancy' %}">Проверить вакансии</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'user:editemployee' %}">Профиль</a></li>
+                        </ul>
+                    </div>
                 {% elif request.user.role == 2 %}  {# Соискатель #}
 {#                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'user:editemployee' %}">#}
 {#                        {{ request.user }}</a>#}
@@ -19,6 +30,8 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
                             <li><a class="dropdown-item" href="{% url 'resume:my' %}">Мои резюме</a></li>
+                            <li><a class="dropdown-item" href="{% url 'vacancies:favorites' request.user.pk %}">Избранные вакансии</a></li>
+                            <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{% url 'user:editemployee' %}">Профиль</a></li>
                         </ul>
                     </div>
@@ -30,7 +43,9 @@
                             {{ request.user }}
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
-                            <li><a class="dropdown-item" href="{% url 'companies:my-vacancies' request.user.company.id %}">Мои вакансии</a></li>
+                            <li><a class="dropdown-item" href="{% url 'vacancies:my' %}">Мои вакансии</a></li>
+                            <li><a class="dropdown-item" href="{% url 'resume:favorites' request.user.pk %}">Избранные резюме</a></li>
+                            <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{% url 'user:editcompany' %}">Профиль</a></li>
                         </ul>
                     </div>

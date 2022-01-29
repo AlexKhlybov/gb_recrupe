@@ -3,7 +3,11 @@
 {% block content %}
 <div class="container">
     <div class="d-flex justify-content-between">
-        <h3><strong>{{ object.name }}</strong></h3>
+        {% if request.user.role == 1 %}
+            <h3><strong>{{ object.name }}</strong> <span class="text-muted">({{ object.get_status_display }})</span></h3>
+        {% else %}
+            <h3><strong>{{ object.name }}</strong></h3>
+        {% endif %}
         <h3><strong>{% if object.price %} {{ object.price }} руб. {% else %} з/п не указана {% endif %}</strong></h3>
     </div>
     <p class="mb-0">{{ object.user.last_name }} {{ object.user.first_name }}</p>
@@ -18,6 +22,8 @@
             </ol>
         </div>
     {% endif %}
+
+    {% include 'resume/includes/communication.html' %}
 
     <div class="mb-4">
         <h3 class="text-muted mb-2"> Опыт работы {{ object.get_experience_text }}</h3>

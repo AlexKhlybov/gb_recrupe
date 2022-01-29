@@ -15,8 +15,8 @@
                     <a href="{% url 'resume:detail' item.pk %}" class="text-decoration-none">
                         <h5 class="mb-0">{{ item.name }}</h5>
                     </a>
-                    {% if item.is_draft %}
-                        <span class="text-muted mx-2">(черновик)</span>
+                    {% if item.status != 2 %}
+                        <span class="mx-2 {% if item.status == 3 %}text-warning{% elif item.status == 4 %}text-danger{% else %}text-muted{% endif %}">{{ item.get_status_display }}</span>
                     {% endif %}
                 </div>
                 <p class="fs-5 mb-0">{% if item.price %}{{ item.price }} руб. {% else %} з/п не указана {% endif %}</p>

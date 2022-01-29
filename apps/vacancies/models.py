@@ -1,15 +1,35 @@
-from ast import mod
-
 from django.db import models
+from django.db.models import Q
 
 from apps.companies.models import Company
 from apps.users.models import User
+
+
+class VacancyPublicManager(models.Manager):
+    def get_queryset(self):
+        """
+        Объектный менеджер, показывающий только активные вакансии, и те на которые отправили жалобу.
+        С публикации снимаем черновики и те, на которые модератор отправил претензию (подтвердил жалобу)
+        """
+        return super().get_queryset().filter(Q(status=Vacancy.STATUS_PUBLIC) | Q(status=Vacancy.STATUS_COMPLAINT))
 
 
 class Vacancy(models.Model):
     class Meta:
         ordering = ('-created_at',)
         verbose_name_plural = 'Вакансии'
+
+    # STATUS_DRAFT = 1
+    STATUS_PUBLIC = 2
+    STATUS_COMPLAINT = 3
+    STATUS_CLAIM = 4
+
+    STATUS = (
+        # (STATUS_DRAFT, 'Черновик'),
+        (STATUS_PUBLIC, 'Опубликовано'),
+        (STATUS_COMPLAINT, 'Жалоба'),
+        (STATUS_CLAIM, 'Претензия'),
+    )
 
     EXPERIENCE_NONE = 1
     EXPERIENCE_1_3 = 2
@@ -33,12 +53,16 @@ class Vacancy(models.Model):
                                                   verbose_name="Опыт работы")
     price_min = models.IntegerField(verbose_name="Зарплата от", db_index=True, null=True, blank=True)
     price_max = models.IntegerField(verbose_name="Зарплата до", db_index=True, null=True, blank=True)
-    # skills = models.ManyToManyField(VacancySkills)
-    
-    favorites = models.ManyToManyField(User, related_name="favorites_vacancy", through="VacancyFavorites", through_fields=("vacancy", "user"))
+    favorites = models.ManyToManyField(User, related_name="favorites_vacancy", through="VacancyFavorites",
+                                       through_fields=("vacancy", "user"))
 
-    is_closed = models.BooleanField(default=False, db_index=True, verbose_name='Признак снятия вакансии')
-    is_active = models.BooleanField(default=True, db_index=True, verbose_name='Активен')
+    # is_closed = models.BooleanField(default=False, db_index=True, verbose_name='Признак снятия вакансии')
+    # is_active = models.BooleanField(default=True, db_index=True, verbose_name='Активен')
+
+    status = models.IntegerField(choices=STATUS, db_index=True, default=STATUS_PUBLIC, verbose_name='Статус')
+
+    objects = models.Manager()
+    public = VacancyPublicManager()
 
     @property
     def split_description_to_lines(self):
@@ -69,7 +93,6 @@ class Vacancy(models.Model):
         VacancySkills.objects.filter(vacancy=self).delete()
         super().delete(using, keep_parents)
 
-
     def __str__(self):
         return f"{self.name}"
 
@@ -84,33 +107,11 @@ class VacancySkills(models.Model):
     def __str__(self):
         return f'{self.name} ({self.vacancy})'
 
-class VacancyModeration(models.Model):
-    INDEFINED = "Неизвестно"
-    UPPROVE = "Подтверждено"
-    BAN = "Запрещено"
 
-    STATUS = (
-        (INDEFINED, "Неизвестно"),
-        (UPPROVE, "Подтверждено"),
-        (BAN, "Запрещено"),
-    )
-
-    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE)
-    status = models.CharField(choices=STATUS, max_length=100, null=True, blank=True, verbose_name='Статус')
-    comment = models.TextField(blank=True, verbose_name='Комментрарий модератора')
-    date = models.DateField(null=True, blank=True, verbose_name='Время отпраления комментария')
-
-    class Meta:
-        verbose_name = 'Модерация вакансии '
-        verbose_name_plural = 'Модерация вакансии'
-
-    def __str__(self):
-        return self.vacancy.name
-
-      
 class VacancyFavorites(models.Model):
     user = models.ForeignKey(User, related_name="my_favor_vacancy", verbose_name='Соискатель', on_delete=models.CASCADE)
-    vacancy = models.ForeignKey(Vacancy, related_name="favorites_vacancy", verbose_name='Вакансия', on_delete=models.CASCADE)
+    vacancy = models.ForeignKey(Vacancy, related_name="favorites_vacancy", verbose_name='Вакансия',
+                                on_delete=models.CASCADE)
     
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Изменен')

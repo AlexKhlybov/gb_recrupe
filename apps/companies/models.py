@@ -57,27 +57,3 @@ class Company(models.Model):
 
     def split_description_to_lines(self):
         return self.description.split('\n')
-
-
-class CompanyModeration(models.Model):
-    INDEFINED = "Неизвестно"
-    UPPROVE = "Подтверждено"
-    BAN = "Запрещено"
-
-    STATUS = (
-        (INDEFINED, "Неизвестно"),
-        (UPPROVE, "Подтверждено"),
-        (BAN, "Запрещено"),
-    )
-
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    status = models.CharField(choices=STATUS, max_length=100, null=True, blank=True, verbose_name='Статус')
-    comment = models.TextField(blank=True, verbose_name='Комментарий модератора')
-    date = models.DateField(null=True, blank=True, verbose_name='Время отправления комментария')
-
-    class Meta:
-        verbose_name = 'Модерация организаций '
-        verbose_name_plural = 'Модерация организаций'
-
-    def __str__(self):
-        return self.company.name

@@ -17,8 +17,8 @@ class HomePageList(ListView):
         context["title"] = "Recrupe | Главная"
         context["news"] = News.objects.all()[:2]
         context["partners"] = Company.objects.filter(is_active=True)[:10]
-        context["job_recomendations"] = Vacancy.objects.filter(is_active=True)[:5]
-        context["resume_recomendations"] = Resume.objects.filter(is_active=True)[:5]
+        context["job_recomendations"] = Vacancy.public.all()[:5]
+        context["resume_recomendations"] = Resume.public.filter()[:5]
         # if self.request.user.role == 2:
         #     context["favorite"] = VacancyFavorites.get_favorite_vacancy_from_user(self.request.user.id)
         # if self.request.user.role == 3:
@@ -32,5 +32,3 @@ def specification(request):
 
 def posting_rules(request):
     return render(request, 'main/posting_rules.html')
-
-
