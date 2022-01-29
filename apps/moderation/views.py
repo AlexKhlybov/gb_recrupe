@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -15,6 +16,7 @@ class CompanyModerationUpdateView(UpdateView):
     success_url = reverse_lazy('companies:')
 
 
+@login_required
 def company_moderation(request):
     if request.GET.get('find'):
         company_list = CompanyModeration.objects.filter(
@@ -30,6 +32,7 @@ def company_moderation(request):
     return render(request, 'moderation/company_list_moderation.html', content)
 
 
+@login_required
 def vacancy_moderation(request):
     if request.GET.get('find'):
         vacancy_list = Vacancy.objects.filter(name__icontains=request.GET.get('find'))
@@ -49,6 +52,7 @@ def vacancy_moderation(request):
 #     success_url = reverse_lazy('vacancies:moderation-vacancy')
 
 
+@login_required
 def resume_moderation(request):
     if request.GET.get('find'):
         resume_list = Resume.objects.filter(status=Resume.STATUS_COMPLAINT, name__icontains=request.GET.get('find'))

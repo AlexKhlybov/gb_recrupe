@@ -125,8 +125,9 @@ class ResumeDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["is_favorite"] = ResumeFavorites.objects.filter(
-            user=self.request.user, resume_id=self.kwargs['pk']).exists()
+        if not self.request.user.is_anonymous:
+            context["is_favorite"] = ResumeFavorites.objects.filter(
+                user=self.request.user, resume_id=self.kwargs['pk']).exists()
         return context
 
 
