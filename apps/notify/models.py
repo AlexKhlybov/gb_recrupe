@@ -9,8 +9,6 @@ from django.utils.timezone import now
 
 from apps.log.logging import logger
 
-# logger = logging.getLogger(__name__)
-
 
 #     Notify.send(
 #         user=user,
@@ -180,7 +178,7 @@ class Notify(models.Model):
     def send_message(self):
 
         if self.user is None:
-            print("WARNING!!! Нет такого пользователя!")
+            logger.error("Нет такого пользователя!")
             self.save()
             return
 
@@ -188,13 +186,13 @@ class Notify(models.Model):
         self.save()
 
     @staticmethod
-    def send(event, context, user=None, email=None):
+    def send(event, context, user=None, email=None, type=None):
 
         if user:
             email = user.email if not email else email
 
         # Для выбора шаблонов в action'е
-        template = NotifyTemplate.objects.get(event=event, is_active=True)
+        template = NotifyTemplate.objects.get(event=event, type=type, is_active=True)
 
         # Формируем список основных и дополнительных получателей письма
         # Первого получателя заполняем из шаблона, его данные могут быть пустыми - чтобы можно было через

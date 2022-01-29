@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 
 from apps.notify.forms import ContactForm
-from apps.notify.models import Notify, NOTIFY_EVENT
+from apps.notify.models import Notify, NOTIFY_EVENT, TYPE
 
 
 def contact_view(request):
@@ -25,6 +25,7 @@ def contact_view(request):
                 Notify.send(
                     user=request.user,
                     event=NOTIFY_EVENT.REGISTRATION_EVENT,
+                    type=TYPE.MESSAGE,
                     context={"subject": subject, "message": message},
                     email=from_email,
                 )
