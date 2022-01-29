@@ -13,23 +13,17 @@ document.querySelectorAll('.complaint_vacancy').forEach(elem => {
 function complaint_resume(event) {
     // Пожаловаться на резюме
     const target = event.target
-    complaint_request(`/resume/complaint/${target.dataset.id}`, target).then()
+    complaint_request(`/resume/complaint/${target.dataset.id}/`, target).then()
 }
 
 function complaint_vacancy(event) {
     // Пожаловаться на вакансию
     const target = event.target
-    complaint_request(`/vacancies/complaint/${target.dataset.id}`, target).then()
+    complaint_request(`/vacancies/complaint/${target.dataset.id}/`, target).then()
 }
 
 async function complaint_request(url, target) {
-    let response = await fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-        },
-    })
-
+    const response = await fetch(url, {method: 'GET'})
     if (response.ok) {
         target.disabled = true
     } else {
