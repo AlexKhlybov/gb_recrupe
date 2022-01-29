@@ -33,7 +33,7 @@ async function complaint_request(url, target) {
     if (response.ok) {
         target.disabled = true
     } else {
-        // Не технологично, за то надежно, качественно и практично
+        // Не технологично, зато надежно, качественно и практично
         alert(`Ошибка HTTP: ${response.status}`)
     }
 }
