@@ -11,6 +11,7 @@ urlpatterns = [
     path('edit/<int:pk>/', vacancies.edit, name="edit"),
     path('my/', vacancies.MyVacancyCompanyListView.as_view(), name='my'),
 
-    re_path(r'^favorites/(?P<pk>\d+)/', vacancies.FavoritesVacancyListView.as_view(), name='favorites'),
-    re_path(r'^edit-favorites/(?P<vacancy>\d+)/$', vacancies.favorites_edit, name='favorites-edit'),
+    path('favorites/<pk>/', vacancies.FavoritesVacancyListView.as_view(), name='favorites'),
+    path('edit-favorites/<vacancy>/', vacancies.favorites_edit, name='favorites-edit'),
+    path('complaint/<int:pk>/', vacancies.complaint, name='complaint'),
 ]

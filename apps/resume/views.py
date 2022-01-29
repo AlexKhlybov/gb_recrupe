@@ -160,3 +160,10 @@ def edit(request, pk=None):
         'levels': Education.LEVEL_VALUES
     }
     return render(request, 'resume/resume_edit.html', content)
+
+
+def complaint(request, pk):
+    resume = get_object_or_404(Resume, pk=pk)
+    resume.status = Resume.STATUS_COMPLAINT
+    resume.save()
+    return JsonResponse({"status": resume.status})

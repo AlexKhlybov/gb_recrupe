@@ -26,7 +26,7 @@
             {% endif %}
         </div>
         {% if object.status < 3 %}
-            <button type="button" class="btn btn-outline-danger" {% if object.status >= 3 %}disabled{% endif %}>Пожаловаться</button>
+            <button type="button" class="btn btn-outline-danger complaint_vacancy" data-id="{{ object.id }}" {% if object.status >= 3 %}disabled{% endif %}>Пожаловаться</button>
         {% endif %}
     </div>
 {% elif request.user.role == 3 %}  {# Работодатель #}

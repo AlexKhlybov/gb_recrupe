@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block js %}
+    <script src="{% static '/js/complaint.js' %}" defer></script>
+{% endblock %}
 
 {% block content %}
 <div class="container">

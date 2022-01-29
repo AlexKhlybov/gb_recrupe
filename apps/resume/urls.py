@@ -13,4 +13,5 @@ urlpatterns = [
 
     path('favorites/<int:pk>/', resume.FavoritesResumeListView.as_view(), name='favorites'),
     path('edit-favorites/<int:resume>/', resume.favorites_edit, name='favorites-edit'),
+    path('complaint/<int:pk>/', resume.complaint, name='complaint'),
 ]

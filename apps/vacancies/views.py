@@ -71,6 +71,16 @@ class VacancyListView(ListView):
 class VacancyDetailView(DetailView):
     model = Vacancy
 
+    @staticmethod
+    def post(request, *args, **kwargs):
+        status = request.POST.get('status')
+        vacancy_id = kwargs.get('pk')
+        if status and vacancy_id:
+            resume = Vacancy.objects.filter(pk=vacancy_id).first()
+            resume.status = status
+            resume.save()
+        return redirect('/moderation/vacancy/')
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if not self.request.user.is_anonymous:
@@ -154,3 +164,10 @@ def favorites_edit(request, vacancy):
         obj.delete()
         return JsonResponse({"delete": True}, status=200)
     return JsonResponse({"delete": False}, status=200)
+
+
+def complaint(request, pk):
+    vacancy = get_object_or_404(Vacancy, pk=pk)
+    vacancy.status = Vacancy.STATUS_COMPLAINT
+    vacancy.save()
+    return JsonResponse({"status": vacancy.status})
