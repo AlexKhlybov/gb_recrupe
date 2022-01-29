@@ -18,7 +18,7 @@ admin.site.register(Courses)
 class ResumeResource(resources.ModelResource):
     class Meta:
         model = Resume
-        exclude = ('created_at', 'updated_at')
+        exclude = ('created_at', 'updated_at', 'favorites')
 
 
 class ResumeSkillsResource(resources.ModelResource):

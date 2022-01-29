@@ -9,8 +9,8 @@
         "experience": 3,
         "price_min": 80000,
         "price_max": "",
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "",
+        "status": 2
     },
     {
         "id": 17,
@@ -22,8 +22,8 @@
         "experience": 2,
         "price_min": "",
         "price_max": 100000,
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "",
+        "status": 2
     },
     {
         "id": 16,
@@ -35,8 +35,8 @@
         "experience": 2,
         "price_min": 40000,
         "price_max": 55000,
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "",
+        "status": 2
     },
     {
         "id": 15,
@@ -48,8 +48,8 @@
         "experience": 2,
         "price_min": 100000,
         "price_max": 120000,
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "",
+        "status": 2
     },
     {
         "id": 14,
@@ -61,8 +61,8 @@
         "experience": 3,
         "price_min": 50000,
         "price_max": "",
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "",
+        "status": 2
     },
     {
         "id": 13,
@@ -74,8 +74,8 @@
         "experience": 2,
         "price_min": 50000,
         "price_max": 150000,
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "",
+        "status": 2
     },
     {
         "id": 12,
@@ -87,8 +87,8 @@
         "experience": 2,
         "price_min": 50000,
         "price_max": 100000,
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "",
+        "status": 2
     },
     {
         "id": 11,
@@ -100,8 +100,8 @@
         "experience": 3,
         "price_min": 100000,
         "price_max": 200000,
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "",
+        "status": 2
     },
     {
         "id": 10,
@@ -113,8 +113,8 @@
         "experience": 3,
         "price_min": 150000,
         "price_max": 250000,
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "",
+        "status": 3
     },
     {
         "id": 9,
@@ -126,8 +126,8 @@
         "experience": 3,
         "price_min": 60000,
         "price_max": 150000,
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "",
+        "status": 2
     },
     {
         "id": 8,
@@ -139,8 +139,8 @@
         "experience": 2,
         "price_min": "",
         "price_max": "",
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "",
+        "status": 2
     },
     {
         "id": 7,
@@ -152,8 +152,8 @@
         "experience": 4,
         "price_min": "",
         "price_max": "",
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "",
+        "status": 2
     },
     {
         "id": 6,
@@ -165,8 +165,8 @@
         "experience": 2,
         "price_min": 120000,
         "price_max": 150000,
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "",
+        "status": 2
     },
     {
         "id": 5,
@@ -178,8 +178,8 @@
         "experience": 2,
         "price_min": "",
         "price_max": "",
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "",
+        "status": 2
     },
     {
         "id": 4,
@@ -191,8 +191,8 @@
         "experience": 2,
         "price_min": "",
         "price_max": "",
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "",
+        "status": 2
     },
     {
         "id": 3,
@@ -204,8 +204,8 @@
         "experience": 1,
         "price_min": "",
         "price_max": "",
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "2",
+        "status": 2
     },
     {
         "id": 2,
@@ -217,8 +217,8 @@
         "experience": 1,
         "price_min": 45000,
         "price_max": "",
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "2",
+        "status": 2
     },
     {
         "id": 1,
@@ -230,7 +230,7 @@
         "experience": 2,
         "price_min": "",
         "price_max": "",
-        "is_closed": "0",
-        "is_active": "1"
+        "favorites": "2",
+        "status": 2
     }
 ]
