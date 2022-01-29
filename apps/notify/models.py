@@ -171,7 +171,7 @@ class Notify(models.Model):
             server.close()
             self.sent_at = now()
             
-            logger.info(f"Email успешно отправлен на адрес - {account.sender}")
+            logger.info(f"Email успешно отправлен на адрес - {self.email}")
         except Exception as err:  # noqa
             logger.error(err)
 
