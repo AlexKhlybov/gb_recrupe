@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-5">Уведомления</h2>
+
+    
+    <div class="row mb-2">
+    {% for item in notify %}
+        <div class="col-md-12">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col-auto d-none d-lg-block">
+                    <img src="/media/news/{{ item.image }}" style="object-fit: cover" width="200" height="250" alt="{{ item.title }}">
+                </div>
+                <div class="col p-4 d-flex flex-column position-static">
+                    <div class="mb-1 text-muted">{{ item.created|date:'d.m.Y' }}</div>
+                    <h3 class="mb-2">{{ item.title }}</h3>
+                    <p class="card-text mb-auto">{{ item.short_text }}</p>
+                    <div class="d-flex">
+                        <div><a href="{% url 'news:detail_news' item.pk %}" class="mx-3">Подробнее</a></div>
+                        {% if request.user.role == 1 %}
+                        <div><a href="{% url 'news:update_news' item.pk %}" class="mx-3">Редактировать</a></div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

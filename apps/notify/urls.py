@@ -1,11 +1,13 @@
 from django.urls import path
 
-from apps.notify.views import contact_view, success_view
+from apps.notify import views as notify
+
 
 app_name = 'notify'
 
 
 urlpatterns = [
-    path('contact/', contact_view, name='contact'),
-    path('success/', success_view, name='success'),
+    path('messages', notify.MessagesListView.as_view() name='massages'),
+    path('contact/', notify.contact_view, name='contact'),
+    path('success/', notify.success_view, name='success'),
 ]
