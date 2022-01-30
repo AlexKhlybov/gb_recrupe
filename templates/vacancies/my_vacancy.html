@@ -8,33 +8,10 @@
     </div>
     <div class="mb-5">
     {% for item in object_list %}
-        <div class="col-md-12 border p-3">
-            <div class="d-flex justify-content-between">
-                <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
-                    <h5 class="mb-0">{{ item.name }}</h5>
-                </a>
-                <p class="fs-5 mb-0">{{ item.price }}</p>
-            </div>
-            <div class="mb-1">
-                <a href="{% url 'companies:detail' item.company.pk %}" class="mb-auto text-muted text-decoration-none">{{ item.company }}</a>
-                <p class="mb-auto text-muted">{{ item.company.city }}</p>
-            </div>
-            <div>
-                {% for desc in item.split_description_to_lines|slice:":2" %}<p class="m-0">{{ desc }}</p>{% endfor %}
-            </div>
-            <div class="d-flex justify-content-between mt-3">
-                <div>
-{#                    Не понял назначение данной кнопки, поэтому закоментил#}
-{#                    <a class="btn btn-primary" href="#" role="button">Разместить</a>#}
-                    <a class="btn btn-primary" href="{% url 'vacancies:edit' item.pk %}">Редактировать</a>
-                </div>
-                <div class="mb-1 text-muted">{{ item.created_at|date:'d.m.Y' }}</div>
-            </div>
-        </div>
+        {% include 'vacancies/includes/vacancy_list_item.html' %}
+    {% empty %}
+        <strong class="mb-3">У Вас пока нет вакансий</strong>
     {% endfor %}
-    {% if object_list|length == 0 %}
-        <strong class="mb-3">Нет активных вакансий</strong>
-    {% endif %}
     </div>
 </div>
 {% endblock %}

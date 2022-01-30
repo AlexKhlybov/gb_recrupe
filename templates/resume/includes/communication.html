@@ -1,0 +1,30 @@
+{% if request.user.role == 1 %}  {# Модератор #}
+    <div class="row row-cols-auto mb-4">
+        <div class="col col-lg-4">
+            <form method="post">
+                {% csrf_token %}
+                <label for="id_status" class="form-label"><strong>Статус резюме</strong></label>
+                <div class="input-group">
+                    <select class="form-select" id="id_status" name="status">
+                        <option value="2" {% if object.status == 2 %}selected{% endif %}>Опубликовано</option>
+                        <option value="3" {% if object.status == 3 %}selected{% endif %}>Жалоба</option>
+                        <option value="4" {% if object.status == 4 %}selected{% endif %}>Претензия</option>
+                    </select>
+                    <button type="submit" class="btn btn-outline-danger">Изменить статус</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% elif request.user.role == 3 %}  {# Работодатель #}
+    <div class="d-flex justify-content-between mb-2">
+        <div class="d-flex gap-2">
+            <button type="button" class="btn btn-primary">Откликнуться</button>
+            {% if is_favorite %}
+                <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-success btn--resume">В избранном</button>
+            {% else %}
+                <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-primary btn--resume">В избранное</button>
+            {% endif %}
+        </div>
+        <button type="button" class="btn btn-outline-danger complaint_resume" data-id="{{ object.id }}" {% if object.status >= 3 %}disabled{% endif %}>Пожаловаться</button>
+    </div>
+{% endif %}

@@ -1,19 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
-from django.urls import reverse_lazy
-from django.views.generic import DetailView, ListView, UpdateView
+from django.views.generic import DetailView, ListView
 
 from apps.main.models import City
 from apps.users.models import User
 from apps.vacancies.forms import VacancyForm
-from apps.vacancies.models import Vacancy, VacancyFavorites, VacancyModeration
-
-
-class VacancyListView(ListView):
-    model = Vacancy
+from apps.vacancies.models import Vacancy, VacancyFavorites
 
 
 class VacancyListView(ListView):
@@ -29,17 +23,17 @@ class VacancyListView(ListView):
         cityselected = self.request.GET.get('city')
         company_id = self.request.GET.get('company_id')
         citysearch = self.request.GET.get('citysearch')
-        if cityselected != None and cityselected != '':
+        if cityselected:
             context['cityselected'] = int(cityselected)
-        if zero_salary != None:
+        if zero_salary is not None:
             context['zero_salary'] = zero_salary
-        if from_salary != None and from_salary != '':
+        if from_salary:
             context['from_salary'] = int(from_salary)
-        if find != None and find != '':
+        if find:
             context['find'] = find
-        if company_id != None and company_id != '':
+        if company_id:
             context['company_id'] = company_id
-        if citysearch != None and citysearch != '':
+        if citysearch:
             context['citysearch'] = citysearch
         context["my_favorites"] = VacancyFavorites.get_favorite_vacancy_list(self.request.user.id)
         return context
@@ -51,23 +45,23 @@ class VacancyListView(ListView):
         city = self.request.GET.get('city')
         from_salary = self.request.GET.get('fromsalary')
         company_id = self.request.GET.get('company_id')
-        if find != None and find != "":
+        if find:
             find_list = Vacancy.objects.filter(name__icontains=find)
             result = [i.id for i in find_list]
 
-        if city != None and city != "":
+        if city:
             city_list = [i.id for i in Vacancy.objects.filter(company__city=city)]
             result = list(set(city_list) & set(result))
 
-        if zero_salary != None:
+        if zero_salary is not None:
             zero_list = [i.id for i in Vacancy.objects.filter(price_min=None, price_max=None)]
             result = list(set(zero_list) & set(result))
 
-        if from_salary != None and from_salary != '':
+        if from_salary:
             from_list = [i.id for i in Vacancy.objects.filter(price_min__gte=int(from_salary))]
             result = list(set(from_list) & set(result))
 
-        if company_id != None and company_id != '':
+        if company_id:
             company_list = [i.id for i in Vacancy.objects.filter(company__name__icontains=company_id)]
             result = list(set(company_list) & set(result))
 
@@ -77,17 +71,34 @@ class VacancyListView(ListView):
 class VacancyDetailView(DetailView):
     model = Vacancy
 
+    @staticmethod
+    def post(request, *args, **kwargs):
+        status = request.POST.get('status')
+        vacancy_id = kwargs.get('pk')
+        if status and vacancy_id:
+            resume = Vacancy.objects.filter(pk=vacancy_id).first()
+            resume.status = status
+            resume.save()
+        return redirect('/moderation/vacancy/')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not self.request.user.is_anonymous:
+            context["is_favorite"] = VacancyFavorites.objects.filter(
+                user=self.request.user, vacancy_id=self.kwargs['pk']).exists()
+        return context
+
 
 class VacancyCompanyListView(ListView):
     """
-    Получить список вакансий компании
+    Получить список вакансий компании.
     Объединить с VacancyListView
     """
     model = Vacancy
 
     def get_queryset(self):
         company_id = self.kwargs['company_id']
-        return Vacancy.objects.filter(company_id=company_id, is_closed=False, is_active=True)
+        return Vacancy.objects.filter(company_id=company_id)
 
 
 class MyVacancyCompanyListView(VacancyCompanyListView):
@@ -97,7 +108,10 @@ class MyVacancyCompanyListView(VacancyCompanyListView):
         context = super().get_context_data(**kwargs)
         context["title"] = "Recrupe | Мои вакансии"
         return context
-    
+
+    def get_queryset(self):
+        return Vacancy.objects.filter(company__user=self.request.user.pk)
+
     
 class FavoritesVacancyListView(ListView):
     model = VacancyFavorites
@@ -127,7 +141,7 @@ def edit(request, pk=None):
         if form.is_valid():
             try:
                 form.save(company=request.user.company)
-                return redirect(f'/companies/{request.user.company.pk}/my-vacancies/')
+                return redirect(f'/vacancies/my/')
             except Exception as e:
                 raise e
                 # form.add_error(None, str(e))
@@ -145,31 +159,15 @@ def edit(request, pk=None):
 def favorites_edit(request, vacancy):
     user = User.objects.get(id=request.user.id)
     vacancy = Vacancy.objects.get(id=vacancy)
-    obj, created = VacancyFavorites.objects.get_or_create(
-        user=user,
-        vacancy=vacancy,)
+    obj, created = VacancyFavorites.objects.get_or_create(user=user, vacancy=vacancy)
     if not created:
         obj.delete()
         return JsonResponse({"delete": True}, status=200)
     return JsonResponse({"delete": False}, status=200)
-    
-
-def vacancy_moderation(request):
-    if request.GET.get('find'):
-        vacancy_list = VacancyModeration.objects.filter(
-            Q(vacancy__name__icontains=request.GET.get('find'))
-        )
-    else:
-        vacancy_list = VacancyModeration.objects.all()
-    content = {
-        'vacancy_list': vacancy_list,
-        'title': 'Модерация вакансии'
-    }
-    return render(request, 'moderation/vacancy_list_moderation.html', content)
 
 
-class VacancyModarationUpdateView(UpdateView):
-    model = VacancyModeration
-    fields = ['status', 'comment']
-    template_name = 'moderation/vacancy_moderation.html'
-    success_url = reverse_lazy('vacancies:moderation-vacancy')
+def complaint(request, pk):
+    vacancy = get_object_or_404(Vacancy, pk=pk)
+    vacancy.status = Vacancy.STATUS_COMPLAINT
+    vacancy.save()
+    return JsonResponse({"status": vacancy.status})

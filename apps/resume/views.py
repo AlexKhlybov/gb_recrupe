@@ -2,15 +2,14 @@ import json
 
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q
 from django.http import JsonResponse
 
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import DetailView, ListView
 from apps.resume.forms import ResumeForm, get_resume_data, save_resume_data
 
 from apps.main.models import City
-from apps.resume.models import Resume, ResumeFavorites, ResumeModeration, Education
+from apps.resume.models import Resume, ResumeFavorites, Education
 from apps.users.models import User
 
 
@@ -46,38 +45,38 @@ class ResumeListView(ListView):
         return context
 
     def get_queryset(self):
-        result = [i.id for i in Resume.objects.all()]
+        result = [i.id for i in Resume.public.all()]
         find = self.request.GET.get('find')
         zero_salary = self.request.GET.get('zerosalary')
         city = self.request.GET.get('city')
         from_salary = self.request.GET.get('fromsalary')
         education = self.request.GET.get('education')
         level = self.request.GET.get('level')
-        if find != None and find != "":
-            find_list = Resume.objects.filter(name__icontains=find)
+        if find:
+            find_list = Resume.public.filter(name__icontains=find)
             result = [i.id for i in find_list]
 
-        # if city != None and city != "":
-        #     city_list = [i.id for i in Resume.objects.filter(company__city=city)]
+        # if city :
+        #     city_list = [i.id for i in Resume.public.filter(company__city=city)]
         #     result = list(set(city_list) & set(result))
 
-        if zero_salary != None:
-            zero_list = [i.id for i in Resume.objects.filter(price=None)]
+        if zero_salary:
+            zero_list = [i.id for i in Resume.public.filter(price=None)]
             result = list(set(zero_list) & set(result))
 
-        if from_salary != None and from_salary != '':
-            from_list = [i.id for i in Resume.objects.filter(price__gte=int(from_salary))]
+        if from_salary:
+            from_list = [i.id for i in Resume.public.filter(price__gte=int(from_salary))]
             result = list(set(from_list) & set(result))
 
-        if education != None and education != '':
-            education_list = [i.id for i in Resume.objects.filter(education__educational_institution__icontains=education)]
+        if education:
+            education_list = [i.id for i in Resume.public.filter(education__educational_institution__icontains=education)]
             result = list(set(education_list) & set(result))
 
-        if level != None and level != '':
-            level_list = [i.id for i in Resume.objects.filter(education__level__icontains=level)]
+        if level:
+            level_list = [i.id for i in Resume.public.filter(education__level__icontains=level)]
             result = list(set(level_list) & set(result))
 
-        return Resume.objects.filter(pk__in=result)
+        return Resume.public.filter(pk__in=result)
 
 
 class MyResumeListView(ListView):
@@ -104,18 +103,32 @@ class FavoritesResumeListView(ListView):
 def favorites_edit(request, resume):
     user = User.objects.get(id=request.user.id)
     resume = Resume.objects.get(id=resume)
-    obj, created = ResumeFavorites.objects.get_or_create(
-        user=user,
-        resume=resume,)
+    obj, created = ResumeFavorites.objects.get_or_create(user=user, resume=resume)
     if not created:
         obj.delete()
-        return JsonResponse({"delete": True}, status=200)
-    return JsonResponse({"delete": False}, status=200)
+    return JsonResponse({"delete": not created}, status=200)
 
 
 class ResumeDetailView(DetailView):
     model = Resume
     template_name = "resume/resume_detail.html"
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        status = request.POST.get('status')
+        resume_id = kwargs.get('pk')
+        if status and resume_id:
+            resume = Resume.objects.filter(pk=resume_id).first()
+            resume.status = status
+            resume.save()
+        return redirect('/moderation/resume/')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not self.request.user.is_anonymous:
+            context["is_favorite"] = ResumeFavorites.objects.filter(
+                user=self.request.user, resume_id=self.kwargs['pk']).exists()
+        return context
 
 
 @login_required
@@ -149,15 +162,8 @@ def edit(request, pk=None):
     return render(request, 'resume/resume_edit.html', content)
 
 
-def resume_moderation(request):
-    if request.GET.get('find'):
-        resume_list = ResumeModeration.objects.filter(
-            Q(resume__name__icontains=request.GET.get('find'))
-        )
-    else:
-        resume_list = ResumeModeration.objects.all()
-    content = {
-        'resume_list': resume_list,
-        'title': 'Модерация резюме'
-    }
-    return render(request, 'moderation/resume_list_moderation.html', content)
+def complaint(request, pk):
+    resume = get_object_or_404(Resume, pk=pk)
+    resume.status = Resume.STATUS_COMPLAINT
+    resume.save()
+    return JsonResponse({"status": resume.status})

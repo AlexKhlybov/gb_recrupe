@@ -49,8 +49,7 @@
         <div class="alert alert-danger" role="alert" style="display: none"></div>
         <form method="post" style="display: none" id="resume-form">
             {% csrf_token %}
-            <h5 class="mb-2">Специальность</h5>
-            <div class="row g-2 align-items-center mb-2">
+            <div class="row g-2 align-items-center mb-2 mt-4">
                 <div class="col-sm-2">
                     <label for="{{ form.name.id_for_label }}" class="col-form-label">Желаемая должность</label>
                 </div>
