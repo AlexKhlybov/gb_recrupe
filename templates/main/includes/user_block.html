@@ -25,8 +25,6 @@
                     <a class="btn btn-sm btn-outline-secondary" href="{% url 'user:editemployee' %}">
                         {{ user }}</a>
                 {% elif user.role == 2 %}  {# Соискатель #}
-                       <a class="btn btn-sm btn-outline-secondary" href="{% url 'user:editemployee' %}">#}
-                       {{ user }}</a>#}
                     <div class="dropdown">
                         <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ user }}

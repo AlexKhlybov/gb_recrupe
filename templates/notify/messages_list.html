@@ -23,6 +23,10 @@
                     </div>
                 </div>
             </a>
+        {% empty %}
+            <div>
+                <p class="ps-3">У вас пока нет ни одного уведомления!</p>
+            </div>
         {% endfor %}
         </div>
       {# <div><a href="{% url 'news:detail_news' item.k %}" class="mx-3">Подробнее</a></div> #}
