@@ -61,7 +61,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'apps.notify.context_processors.unread_msg'
+                'apps.notify.context.unread_msg',
+                'apps.resume.context.favorite_resume',
+                'apps.vacancies.context.favorite_vacancy',
             ],
         },
     },

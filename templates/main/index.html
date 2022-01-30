@@ -90,13 +90,21 @@
                                     </div>
                                     <p class="p-0 m-0">Уведомления и сообщения</p>
                                 </div>
-                                <span class="badge bg-primary rounded-pill">14</span>
+                                <span class="badge {% if unread_msg %}bg-primary text-white{% else %} text-black {% endif %} rounded-pill">{{ unread_msg }}</span>
                             </li>
                             {% if user.role == 1 %}
-                                <li class="list-group-item d-flex justify-content-between align-items-center py-3">
-                                    Жалобы
-                                    <span class="badge bg-primary rounded-pill">2</span>
-                                </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                                          </svg>
+                                    </div>
+                                    <p class="p-0 m-0">Жалобы</p>
+                                </div>
+                                <span class="badge bg-primary rounded-pill">14</span>
+                            </li>
                             {% elif user.role == 2 %}
                                 <li class="list-group-item d-flex justify-content-between align-items-center py-3">
                                     <div class="d-flex align-items-center">
@@ -120,7 +128,7 @@
                                             Избранные вакансии
                                         </p>
                                     </div>
-                                    <span class="badge bg-primary rounded-pill">2</span>
+                                    <span class="badge {% if favorite_vacancy %}bg-primary text-white{% else %} text-black {% endif %} rounded-pill">{{ favorite_vacancy }}</span>
                                 </li>
                             {% elif user.role == 3 %}
                                 <li class="list-group-item d-flex justify-content-between align-items-center py-3">
@@ -145,7 +153,7 @@
                                             Избранные резюме
                                         </p>
                                     </div>
-                                    <span class="badge bg-primary rounded-pill">2</span>
+                                    <span class="badge {% if favorite_resume %}bg-primary text-white{% else %} text-black {% endif %} rounded-pill">{{ favorite_resume }}</span>
                                 </li>
                             {% endif %}
                         </ul>

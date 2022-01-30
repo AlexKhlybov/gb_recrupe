@@ -247,6 +247,10 @@ class ResumeFavorites(models.Model):
     def __str__(self):
         return f'{self.vacancy.name} ({self.user.get_full_name})'
     
+    @classmethod
+    def get_number_favorite(cls, user):
+        return ResumeFavorites.objects.filter(user=user).count()
+    
     @staticmethod
     def get_favorite_resume_from_user(user_id):
         return ResumeFavorites.objects.filter(user=user_id)
