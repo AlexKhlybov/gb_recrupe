@@ -1,31 +1,32 @@
 {% extends 'base.html' %}
+{% load date_delta %}
 
 {% block content %}
 <div class="container">
-    <h2 class="mb-5">Уведомления</h2>
-
-    
+    <h2 class="mt-4 mb-3">Уведомления</h2>
     <div class="row mb-2">
-    {% for item in notify %}
-        <div class="col-md-12">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col-auto d-none d-lg-block">
-                    <img src="/media/news/{{ item.image }}" style="object-fit: cover" width="200" height="250" alt="{{ item.title }}">
-                </div>
-                <div class="col p-4 d-flex flex-column position-static">
-                    <div class="mb-1 text-muted">{{ item.created|date:'d.m.Y' }}</div>
-                    <h3 class="mb-2">{{ item.title }}</h3>
-                    <p class="card-text mb-auto">{{ item.short_text }}</p>
-                    <div class="d-flex">
-                        <div><a href="{% url 'news:detail_news' item.pk %}" class="mx-3">Подробнее</a></div>
-                        {% if request.user.role == 1 %}
-                        <div><a href="{% url 'news:update_news' item.pk %}" class="mx-3">Редактировать</a></div>
-                        {% endif %}
+        <div class="list-group">
+        {% for notify in notify %}
+            <a href="#" type="button" id="btnMessageDetail" data-messageid="{{ notify.id }}" class="list-group-item list-group-item-action{% if not notify.is_read %} fw-bold{% endif %}" aria-current="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <div class="row w-100 d-flex flex-row align-items-center">
+                    <div class="col-2">
+                        <small>{{ notify.sender_email }}</small>
+                    </div>
+                    <div class="col-8">
+                        <div class="row d-flex flex-row align-items-center">
+                            <p class="col-3 me-3 p-0">{{ notify.subject|capfirst|truncatechars:20 }}</p>
+                            <p class="col-8 p-0 text-black-50">{{ notify.text|truncatechars:70 }}</p>
+                        </div>
+                    </div>
+                    <div class="col-2 d-flex flex-row-reverse">
+                        <small>{{ notify.sent_at|date_delta }}</small>
                     </div>
                 </div>
-            </div>
+            </a>
+        {% endfor %}
         </div>
-    {% endfor %}
+      {# <div><a href="{% url 'news:detail_news' item.k %}" class="mx-3">Подробнее</a></div> #}
     </div>
 </div>
+{% include 'notify/include/modal_detail.html' %}
 {% endblock %}

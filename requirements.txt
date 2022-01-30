@@ -5,4 +5,5 @@ python-dateutil
 django-import-export
 django-crispy-forms
 django-solo
+dateparser
 tablib

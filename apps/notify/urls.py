@@ -7,7 +7,8 @@ app_name = 'notify'
 
 
 urlpatterns = [
-    path('messages', notify.MessagesListView.as_view(), name='massages'),
+    path('', notify.MessagesListView.as_view(), name='messages'),
+    path('detail/<int:pk>/', notify.MessageDetailView.as_view(), name='detail'),
     path('contact/', notify.contact_view, name='contact'),
     path('success/', notify.success_view, name='success'),
 ]
