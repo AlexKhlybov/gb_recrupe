@@ -21,6 +21,7 @@ class Resume(models.Model):
     class Meta:
         verbose_name = 'Резюме'
         verbose_name_plural = 'Резюме'
+        ordering = ('-updated_at', '-id', )
 
     STATUS_DRAFT = 1
     STATUS_PUBLIC = 2
