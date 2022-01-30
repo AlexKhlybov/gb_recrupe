@@ -145,6 +145,10 @@ class Notify(models.Model):
 
     def get_sender(self):
         pass
+    
+    @classmethod
+    def get_number_unread(cls, user):
+        return cls.objects.filter(user=user, type=TYPE.MESSAGE, is_read=False).count()
 
     def _send(self):
         # if self.user:
