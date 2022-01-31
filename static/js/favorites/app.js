@@ -42,7 +42,12 @@ class Favoretes {
 
         this.favorite_id;
 
-        document.addEventListener('click', e => this._onAddRemoveFavorites(e))
+        document.querySelectorAll('.btn--vacancy').forEach(elem => {
+            elem.addEventListener('click', e => this._onAddRemoveFavorites(e))
+        })
+        document.querySelectorAll('.btn--resume').forEach(elem => {
+            elem.addEventListener('click', e => this._onAddRemoveFavorites(e))
+        })
     };
 
     // Слушает кнопку "Избранное"
