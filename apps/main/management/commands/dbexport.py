@@ -10,7 +10,7 @@ from apps.news.admin import NewsResource
 from apps.resume.admin import (CoursesResource, EducationResource,
                                ExperienceResource, ResumeResource,
                                ResumeSkillsResource)
-from apps.users.admin import UserResource
+from apps.users.admin import UserResource, EmployeeProfileResource
 from apps.vacancies.admin import VacancyResource, VacancySkillsResource
 from apps.notify.admin import NotifyTemplateResource, SMTPAccountResource
 
@@ -20,7 +20,7 @@ class Command(BaseCommand):
         parser.add_argument('-m', '--models', nargs='+', type=str, default=[])
 
     def handle(self, *args, **options):
-        resource = [CityResource, UserResource, NewsResource]
+        resource = [CityResource, UserResource, EmployeeProfileResource, NewsResource]
         resource += [CompanyResource, VacancyResource, VacancySkillsResource]
         resource += [EducationResource, ExperienceResource, CoursesResource, ResumeResource, ResumeSkillsResource]
         resource += [SMTPAccountResource, NotifyTemplateResource]

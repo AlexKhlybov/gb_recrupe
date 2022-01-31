@@ -6,8 +6,9 @@ from django.http import JsonResponse
 
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import DetailView, ListView
-from apps.resume.forms import ResumeForm, get_resume_data, save_resume_data
+from django.contrib.auth.mixins import LoginRequiredMixin
 
+from apps.resume.forms import ResumeForm, get_resume_data, save_resume_data
 from apps.main.models import City
 from apps.resume.models import Resume, ResumeFavorites, Education
 from apps.users.models import User
@@ -15,7 +16,7 @@ from apps.users.models import User
 from apps.resume.models import ResumeSkills
 
 
-class ResumeListView(ListView):
+class ResumeListView(LoginRequiredMixin, ListView):
     model = Resume
 
     def get_context_data(self, **kwargs):
@@ -104,7 +105,7 @@ class ResumeListView(ListView):
         return Resume.public.filter(pk__in=result)
 
 
-class MyResumeListView(ListView):
+class MyResumeListView(LoginRequiredMixin, ListView):
     model = Resume
     template_name = "resume/my_resume.html"
     
@@ -115,7 +116,7 @@ class MyResumeListView(ListView):
         return context
     
 
-class FavoritesResumeListView(ListView):
+class FavoritesResumeListView(LoginRequiredMixin, ListView):
     model = ResumeFavorites
     template_name = "resume/favorites_resume.html"
     
@@ -124,7 +125,7 @@ class FavoritesResumeListView(ListView):
         context["favorites"] = Resume.get_favorite_resume(self.request.user.id)
         return context
     
-    
+
 def favorites_edit(request, resume):
     user = User.objects.get(id=request.user.id)
     resume = Resume.objects.get(id=resume)
@@ -134,7 +135,7 @@ def favorites_edit(request, resume):
     return JsonResponse({"delete": not created}, status=200)
 
 
-class ResumeDetailView(DetailView):
+class ResumeDetailView(LoginRequiredMixin, DetailView):
     model = Resume
     template_name = "resume/resume_detail.html"
 

@@ -3,16 +3,20 @@
         "id": 1,
         "user": 2,
         "skills": "",
-        "birthday": "2022-01-16",
-        "city": "Москва",
-        "gender": "M"
+        "birthday": "1900-01-01",
+        "city": "",
+        "aboutMe": "",
+        "gender": "",
+        "avatar": ""
     },
     {
-        "id": 2,
+        "id": 9,
         "user": 1,
-        "skills": "",
-        "birthday": "2020-01-16",
+        "skills": "git",
+        "birthday": "2004-01-31",
         "city": "Москва",
-        "gender": "M"
+        "aboutMe": "Я тут самый главный ))",
+        "gender": "M",
+        "avatar": ""
     }
 ]

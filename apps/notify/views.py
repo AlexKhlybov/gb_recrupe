@@ -1,17 +1,16 @@
-import datetime
-
 from django.core.mail import BadHeaderError
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
-from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.views.generic import CreateView, DetailView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from apps.notify.forms import ContactForm
 from apps.notify.models import NOTIFY_EVENT, TYPE, Notify
 from apps.users.models import User
 
 
-class MessagesListView(ListView):
+class MessagesListView(LoginRequiredMixin, ListView):
     model = Notify
     context_object_name = "notify"
     template_name = "notify/messages_list.html"
@@ -21,7 +20,7 @@ class MessagesListView(ListView):
         return qs
 
 
-class MessageCreateView(CreateView):
+class MessageCreateView(LoginRequiredMixin, CreateView):
     model = Notify
     context_object_name = "notify"
 

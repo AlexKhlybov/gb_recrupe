@@ -1,5 +1,6 @@
 from django.db.models import Q
 from django.views.generic import DetailView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from apps.companies.models import Company
 from apps.users.models import User
@@ -18,5 +19,5 @@ class CompanyListView(ListView):
         return Company.public.select_related().filter(where)
 
 
-class CompanyDetailView(DetailView):
+class CompanyDetailView(LoginRequiredMixin, DetailView):
     model = Company

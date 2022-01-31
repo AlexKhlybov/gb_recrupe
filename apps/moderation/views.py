@@ -3,13 +3,14 @@ from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from apps.moderation.models import CompanyModeration
 from apps.resume.models import Resume
 from apps.vacancies.models import Vacancy
 
 
-class CompanyModerationUpdateView(UpdateView):
+class CompanyModerationUpdateView(LoginRequiredMixin, UpdateView):
     model = CompanyModeration
     fields = ['status', 'comment']
     template_name = 'moderation/company_moderation.html'

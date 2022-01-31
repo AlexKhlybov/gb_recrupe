@@ -10,7 +10,7 @@ from apps.companies.models import Company
 from apps.main.models import City
 from apps.news.models import News
 from apps.resume.models import Courses, Education, Experience, Resume, ResumeSkills
-from apps.users.models import User
+from apps.users.models import User, EmployeeProfile
 from apps.vacancies.models import Vacancy, VacancySkills
 from apps.notify.models import NotifyTemplate, SMTPAccount
 
@@ -20,7 +20,7 @@ class Command(BaseCommand):
         parser.add_argument('-m', '--models', nargs='+', type=str, default=[])
 
     def handle(self, *args, **options):
-        models = [City, User, News]
+        models = [City, User, EmployeeProfile, News]
         models += [Company, Vacancy, VacancySkills]
         models += [Education, Experience, Courses, Resume, ResumeSkills]
         models += [NotifyTemplate, SMTPAccount]
