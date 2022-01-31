@@ -1,10 +1,9 @@
-import datetime
-
 from django.core.mail import BadHeaderError
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
-from django.views.generic import CreateView, DetailView, ListView, UpdateView, LoginRequiredMixin
+from django.views.generic import CreateView, DetailView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from apps.notify.forms import ContactForm
 from apps.notify.models import NOTIFY_EVENT, TYPE, Notify

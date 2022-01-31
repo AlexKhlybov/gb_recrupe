@@ -2,7 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
-from django.views.generic import DetailView, ListView, LoginRequiredMixin
+from django.views.generic import DetailView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from apps.main.models import City
 from apps.users.models import User
@@ -134,7 +135,7 @@ class VacancyCompanyListView(LoginRequiredMixin, ListView):
         return Vacancy.objects.filter(company_id=company_id)
 
 
-class MyVacancyCompanyListView(LoginRequiredMixin, VacancyCompanyListView):
+class MyVacancyCompanyListView(VacancyCompanyListView):
     template_name = "vacancies/my_vacancy.html"
 
     def get_context_data(self, **kwargs):

@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView, UpdateView, LoginRequiredMixin
-from pyexpat import model
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from apps.news.forms import NewsEditForm
 from apps.news.models import News

@@ -1,11 +1,12 @@
 from django.db.models import Q
-from django.views.generic import DetailView, ListView, LoginRequiredMixin
+from django.views.generic import DetailView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from apps.companies.models import Company
 from apps.users.models import User
 
 
-class CompanyListView(LoginRequiredMixin, ListView):
+class CompanyListView(ListView):
     model = Company
 
     def get_queryset(self):

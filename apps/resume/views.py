@@ -5,9 +5,10 @@ from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
 
 from django.shortcuts import get_object_or_404, render, redirect
-from django.views.generic import DetailView, ListView, LoginRequiredMixin
-from apps.resume.forms import ResumeForm, get_resume_data, save_resume_data
+from django.views.generic import DetailView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
+from apps.resume.forms import ResumeForm, get_resume_data, save_resume_data
 from apps.main.models import City
 from apps.resume.models import Resume, ResumeFavorites, Education
 from apps.users.models import User
