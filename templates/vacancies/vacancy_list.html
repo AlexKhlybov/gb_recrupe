@@ -125,9 +125,9 @@
                         <div class="mb-1 text-muted">{{ item.created_at|date:'d.m.Y' }}</div>
                     </div>
                 </div>
+                {% empty %}
+                    <strong class="mb-3">Нет активных вакансий</strong>
                 {% endfor %}
-                {% if object_list|length == 0 %}
-                <strong class="mb-3 ps-5">Нет активных вакансий</strong>
                 {% endif %}
             </div>
         </div>

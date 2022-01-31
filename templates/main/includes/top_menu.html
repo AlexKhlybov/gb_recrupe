@@ -10,7 +10,7 @@
                 <a class="p-3 link-secondary  link__top-menu" href="{% url 'vacancies:favorites' request.user.id %}">Избранные вакансии</a>
                 <a class="p-3 link-secondary  link__top-menu" href="{% url 'vacancies:all' %}">Все вакансии</a>
             {% elif  request.user.role == 3 %}
-                <a class="p-3 link-secondary  link__top-menu" href="{% url 'companies:my-vacancies' request.user.company.id %}">Мои вакансии</a>
+                <a class="p-3 link-secondary  link__top-menu" href="{% url 'vacancies:my' %}">Мои вакансии</a>
                 <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:favorites' request.user.id %}">Избранные резюме</a>
                 <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:all' %}">Все резюме</a>
             {% endif %}

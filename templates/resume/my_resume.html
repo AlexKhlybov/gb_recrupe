@@ -9,40 +9,9 @@
 
     <div class="mb-5">
     {% for item in my_resume %}
-        <div class="col-md-12 border p-3">
-            <div class="d-flex justify-content-between">
-                <div class="d-flex">
-                    <a href="{% url 'resume:detail' item.pk %}" class="text-decoration-none">
-                        <h5 class="mb-0">{{ item.name }}</h5>
-                    </a>
-                    {% if item.is_draft %}
-                        <span class="text-muted mx-2">(черновик)</span>
-                    {% endif %}
-                </div>
-                <p class="fs-5 mb-0">{% if item.price %}{{ item.price }} руб. {% else %} з/п не указана {% endif %}</p>
-            </div>
-            <div class="mb-2">
-                <p class="mb-auto"> Опыт работы {{ item.get_experience_text }}</p>
-            </div>
-            {% if item.experience.first %}
-                <div>
-                    <p class="mb-0 text-muted">Последнее место работы:</p>
-                    <p class="mb-0">
-                        <strong>{{ item.experience.first.organization_name }}</strong>,
-                        <span class="mb-auto text-muted">{{ item.experience.first.delta_text }}</span>
-                    </p>
-                    <p class="mb-auto text-muted">{{ item.experience.first.position }}</p>
-                </div>
-            {% endif %}
-            <div class="d-flex justify-content-between mt-3">
-                <div>
-                    <a class="btn btn-primary" href="{% url 'resume:edit' item.pk %}" role="button">Изменить</a>
-                </div>
-                <div class="mb-1 text-muted">Обновлено {{ item.updated_at|date:'d.m.Y' }}</div>
-            </div>
-        </div>
+        {% include 'resume/includes/resume_list_item.html' %}
     {% empty %}
-        <strong class="mb-3">Нет подходящих резюме</strong>
+        <strong class="mb-3">У Вас пока нет резюме</strong>
     {% endfor %}
     </div>
 </div>

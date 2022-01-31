@@ -1,15 +1,13 @@
 from django.contrib import admin
 from import_export import resources
 
-from apps.resume.models import (Courses, Education, Experience, Resume,
-                                ResumeModeration, ResumeSkills)
+from apps.resume.models import Courses, Education, Experience, Resume, ResumeSkills
 
 admin.site.register(Resume)
 admin.site.register(Experience)
 admin.site.register(ResumeSkills)
 admin.site.register(Education)
 admin.site.register(Courses)
-admin.site.register(ResumeModeration)
 
 
 # from import_export import resources
@@ -20,7 +18,7 @@ admin.site.register(ResumeModeration)
 class ResumeResource(resources.ModelResource):
     class Meta:
         model = Resume
-        exclude = ('created_at', 'updated_at')
+        exclude = ('created_at', 'updated_at', 'favorites')
 
 
 class ResumeSkillsResource(resources.ModelResource):
@@ -42,7 +40,3 @@ class ExperienceResource(resources.ModelResource):
 class CoursesResource(resources.ModelResource):
     class Meta:
         model = Courses
-
-class ResumeModerationResource(resources.ModelResource):
-    class Meta:
-        model = ResumeModeration

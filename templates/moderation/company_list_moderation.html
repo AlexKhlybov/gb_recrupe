@@ -27,7 +27,7 @@
             <div class="col p-4 d-flex flex-column ">
                 <h4 class="mb-2">Статус:</h4>
                 <h3 class="mb-2">{{ item.status }}</h3>
-                <a href="{% url 'companies:moderation-company' item.pk %}"> <label class="btn btn-success">Редактирование</label></a>
+                <a href="{% url 'moderation:moderation-company' item.pk %}"> <label class="btn btn-success">Редактирование</label></a>
             </div>
 
         </div>
