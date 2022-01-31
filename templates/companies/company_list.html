@@ -14,7 +14,7 @@
                     <div class="d-flex justify-content-between">
                         <h3 class="mb-2">{{ item.name }}</h3>
                         {% if item.status != 2 %}
-                            {% if request.user.is_staff or item.user_id == request.user.pk %}
+                            {% if user.is_staff or item.user_id == user.pk %}
                                 <h6 class="mx-2 text-muted">{{ item.get_status_display }}</h6>
                             {% endif %}
                         {% endif %}

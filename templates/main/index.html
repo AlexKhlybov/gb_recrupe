@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="top__banner  mb-5  d-flex  justify-content-center">
-        {% if request.user.role == 1 %} {# Модератор #}
+        {% if user.role == 1 %} {# Модератор #}
             <div class="container">
                 <h1 class="text-dark  mb-4">Приветствую тебя о великий и могучий!</h1>
                 <div class="row  top__banner-content  justify-content-center  align-items-center">
@@ -18,7 +18,7 @@
                     </div>
                 </div>
             </div>
-        {% elif request.user.role == 2 %} {# Работник #}
+        {% elif user.role == 2 %} {# Работник #}
             <div class="container">
                 <div class="row  top__banner-content  justify-content-center  align-items-center">
                     <div class="col-4  top__banner-left  text-start">
@@ -32,7 +32,7 @@
                     <div class="col-4  top__banner-right  top__banner-text--green">Работа есть для всех!</div>
                 </div>
             </div>
-        {% elif request.user.role == 3 %}  {# Компания #}
+        {% elif user.role == 3 %}  {# Компания #}
             <div class="container">
                 <div class="row  top__banner-content  justify-content-center  align-items-center">
                     <div class="col-4  top__banner-left  text-start">
@@ -195,7 +195,7 @@
                 </div>
             </div>
 
-            {% if request.user.role == 1 %}  {# Модератор #}
+            {% if user.role == 1 %}  {# Модератор #}
                 <div class="col-md-8">
                     <article class="blog-post">
                         <h2 class="blog-post-title my-4">Новые вакансии</h2>
@@ -220,7 +220,7 @@
                         {% endfor %}
                     </article>
                 </div>
-            {% elif request.user.role == 2 %}  {# Соискатель #}
+            {% elif user.role == 2 %}  {# Соискатель #}
                 <div class="col-md-8">
                     <article class="blog-post">
                         <h2 class="blog-post-title my-4">Рекомендации для вас</h2>
@@ -245,7 +245,7 @@
                         {% endfor %}
                     </article>
                 </div>
-            {% elif request.user.role == 3 %}  {# Компания #}
+            {% elif user.role == 3 %}  {# Компания #}
                 <div class="col-md-8">
                     <article class="blog-post">
                         <h2 class="blog-post-title my-4">Рекомендации для вас</h2>
