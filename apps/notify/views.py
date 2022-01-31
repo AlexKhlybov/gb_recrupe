@@ -1,9 +1,9 @@
 import datetime
 
-from django.utils import timezone
 from django.core.mail import BadHeaderError
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
+from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from apps.notify.forms import ContactForm

@@ -1,6 +1,5 @@
-from import_export import resources
-
 from django.contrib import admin
+from import_export import resources
 
 from apps.notify.models import Notify, NotifyTemplate, SMTPAccount
 
@@ -41,6 +40,8 @@ class NotifyTemplateAdmin(admin.ModelAdmin):
 class SMTPAccountResource(resources.ModelResource):
     class Meta:
         model = SMTPAccount
+
+
 class NotifyTemplateResource(resources.ModelResource):
     class Meta:
         model = NotifyTemplate
