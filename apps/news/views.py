@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.views.generic import CreateView, DetailView, ListView, UpdateView, LoginRequiredMixin
 from pyexpat import model
 
 from apps.news.forms import NewsEditForm
@@ -28,7 +28,7 @@ class NewsDetailView(DetailView):
         return context
     
 
-class NewsUpdateView(UpdateView):
+class NewsUpdateView(LoginRequiredMixin, UpdateView):
     model = News
     success_url = reverse_lazy("news:all")
     form_class = NewsEditForm
@@ -40,7 +40,7 @@ class NewsUpdateView(UpdateView):
         return context
     
 
-class NewsCreateView(CreateView):
+class NewsCreateView(LoginRequiredMixin, CreateView):
     model = News
     success_url = reverse_lazy("news:all")
     form_class = NewsEditForm

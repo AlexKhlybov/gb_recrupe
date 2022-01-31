@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from apps.users.forms import (CompanyProfileEditForm, EmployeeProfileEditForm,
                               UserEditForm, UserRegisterForm)
@@ -68,6 +69,7 @@ def registration(request):
     return render(request, 'users/registration.html', content)
 
 
+@login_required
 def edit_epmloyee(request):
     title = 'Редактирование профиля сотрудника'
     if request.method == 'POST':
@@ -92,6 +94,7 @@ def edit_epmloyee(request):
     return render(request, 'users/editemployee.html', content)
 
 
+@login_required
 def edit_company(request):
     title = 'Редактирование профиля компании'
     if request.method == 'POST':

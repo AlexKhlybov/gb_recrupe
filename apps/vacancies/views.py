@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, LoginRequiredMixin
 
 from apps.main.models import City
 from apps.users.models import User
@@ -12,12 +12,12 @@ from apps.vacancies.models import Vacancy, VacancyFavorites
 from apps.companies.models import Company
 
 
-class VacancyListView(ListView):
+class VacancyListView(LoginRequiredMixin, ListView):
     model = Vacancy
 
 
 
-class VacancyListView(ListView):
+class VacancyListView(LoginRequiredMixin, ListView):
     model = Vacancy
 
     def get_context_data(self, **kwargs):
@@ -101,7 +101,7 @@ class VacancyListView(ListView):
         return Vacancy.objects.filter(pk__in=result)
 
 
-class VacancyDetailView(DetailView):
+class VacancyDetailView(LoginRequiredMixin, DetailView):
     model = Vacancy
 
     @staticmethod
@@ -122,7 +122,7 @@ class VacancyDetailView(DetailView):
         return context
 
 
-class VacancyCompanyListView(ListView):
+class VacancyCompanyListView(LoginRequiredMixin, ListView):
     """
     Получить список вакансий компании.
     Объединить с VacancyListView
@@ -134,7 +134,7 @@ class VacancyCompanyListView(ListView):
         return Vacancy.objects.filter(company_id=company_id)
 
 
-class MyVacancyCompanyListView(VacancyCompanyListView):
+class MyVacancyCompanyListView(LoginRequiredMixin, VacancyCompanyListView):
     template_name = "vacancies/my_vacancy.html"
 
     def get_context_data(self, **kwargs):
@@ -143,7 +143,7 @@ class MyVacancyCompanyListView(VacancyCompanyListView):
         return context
 
 
-class FavoritesVacancyListView(ListView):
+class FavoritesVacancyListView(LoginRequiredMixin, ListView):
     model = VacancyFavorites
     template_name = "vacancies/favorites_vacancy.html"
 
