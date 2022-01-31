@@ -1,9 +1,17 @@
 [
     {
         "id": 1,
-        "user": 1,
+        "user": 2,
         "skills": "",
         "birthday": "2022-01-16",
+        "city": "Москва",
+        "gender": "M"
+    },
+    {
+        "id": 2,
+        "user": 1,
+        "skills": "",
+        "birthday": "2020-01-16",
         "city": "Москва",
         "gender": "M"
     }
