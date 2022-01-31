@@ -22,7 +22,7 @@ class ResumeForm(forms.ModelForm):
         instance = kwargs.get('instance', None)
         if instance:
             skills = ', '.join([x.name for x in instance.skills])
-            kwargs['initial'] = {'skills': skills, 'is_draft': instance.is_draft}
+            kwargs['initial'] = {'skills': skills, 'is_draft': instance.status == Resume.STATUS_DRAFT}
         super().__init__(*args, **kwargs)
 
         for field_name, field in self.fields.items():
@@ -85,8 +85,7 @@ def save_resume_data(request, resume_id, obj):
         resume.name = obj['name']
         resume.price = obj['price']
         resume.about_me = obj['about_me']
-        resume.is_draft = obj['draft']
-        resume.is_active = not resume.is_draft
+        resume.status = Resume.STATUS_DRAFT if obj['draft'] else Resume.STATUS_PUBLIC
         resume.save()
 
         resume.experience.all().delete()

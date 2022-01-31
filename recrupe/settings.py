@@ -30,7 +30,8 @@ INSTALLED_APPS = [
     'apps.vacancies',
     'apps.resume',
     'apps.notify',
-    
+    'apps.moderation',
+
     'crispy_forms',
 ]
 
@@ -113,7 +114,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -139,8 +140,3 @@ LOGIN_URL = '/users/login/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Email notify settings
-RECIPIENTS_EMAIL = ['manager@mysite.com']   # замените на свою почту
-DEFAULT_FROM_EMAIL = 'admin@mysite.com'  # замените на свою почту
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

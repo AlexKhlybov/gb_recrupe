@@ -42,11 +42,13 @@ class Favoretes {
 
         this.favorite_id;
 
-        document.addEventListener('click', e => this._onAddRemoveFavorites(e));
+        document.addEventListener('click', e => this._onAddRemoveFavorites(e))
     };
 
     // Слушает кнопку "Избранное"
     _onAddRemoveFavorites(e) {
+        if (e.target.attributes.id === undefined) return;
+
         this.favorites_id = e.target.attributes.id.value;
         if (e.target.classList.contains('btn--vacancy')) {
             let api_url = `${this.url_vacancy}/${this.favorites_id}/`

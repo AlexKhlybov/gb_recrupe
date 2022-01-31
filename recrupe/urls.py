@@ -12,6 +12,7 @@ urlpatterns = [
     path('vacancies/', include('apps.vacancies.urls', namespace='vacancies')),
     path('resume/', include('apps.resume.urls', namespace='resume')),
     path('notify/', include('apps.notify.urls', namespace='notify')),
+    path('moderation/', include('apps.moderation.urls', namespace='moderation')),
 ]
 
 if settings.DEBUG:

@@ -1,97 +1,136 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <h5 class="mb-3">Найдено {{object_list.count}} вакансий</h5>
-    <div class="mb-5">
-        <div class="d-flex bg-light sticky-top justify-content-between p-3">
-            <button class="btn btn-primary position-fixed  bottom-0 end-0 translate-middle-x mb-3"
-                    onclick="myFunction()">Фильтр
-            </button>
-
-            <form class=" flex-grow-1" method="get">
-                <div class=" d-flex flex-rows">
-                    <input class="input-group " type="search" name="find" value="{{find}}"
-                           placeholder="Поиск по названию">
-                    <button class="btn btn-primary ms-3" style="min-width: 200px;" type="submit">Поиск</button>
-                </div>
-
-                <div id="advanSearch" class="d-flex flex-row  mt-3 d-none  justify-content-around">
+<div class="container " >
+    <h5 class="mb-3 ms-5">Найдено {{object_list.count}} вакансий</h5>
+    <div class="d-flex  flex-row ">
+        <div id="advanSearch" class="d-flex  flex-column p-2 bg-light border position-relative  ">
+            <div class="sticky-top">
+                <form class="" >
+                <div class="d-flex justify-content-center mt-3  mb-4"><h5 class="">Фильтр</h5></div>
+                <div class="d-flex flex-column  justify-content-centr" style="width: 250px;">
+                    <input id ="from_salary" class=" form-control" type="number"  form="form" name="from_salary" value="{{from_salary}}" placeholder="Зарплата от">
+                    <input id ="to_salary" class=" form-control mt-1" type="number" form="form" name="to_salary" value="{{to_salary}}" placeholder="Зарплата до">
                     <div>
-                        <label class="align-items-center">ЗАРПЛАТА</label>
-                        <div class="d-flex align-items-center">
-                            <label>ОТ</label><input class="ms-2" type="number" name="fromsalary" value="{{from_salary}}"
-                                                    placeholder="от">
-                        </div>
-                        <div>
-                            <input class="mb-2" type="checkbox" {% if zero_salary %} checked {% endif %}
-                                   name="zerosalary"> <label>Не указана</label>
-                        </div>
-
-                        <div class="mb-2">
-                            <label class="align-items-center">Компания</label>
-                            <input class="" type="text" name="company_id" value="{{company_id}}" placeholder="Компания">
-                        </div>
+                        <input id="zero_salary" class="mb-2 mt-3 ms-2" onclick="noInput()" form="form" type="checkbox" {% if zero_salary %} checked {% endif %}
+                               name="zero_salary"> <label>з/п не указана</label>
                     </div>
-
+                    <br>
                     <div>
-                        <input class=" input-group " style="max-width: 250px;" type="text" name="citysearch" value="{{citysearch}}"
-                               placeholder="Поиск города" id="myInput" onkeyup="filterFunction()">
-
-                        <div class="overflow-auto  " style="max-width: 250px; max-height: 250px;" id="">
-                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="city"
-                                    id="myDropdown"  >
-                                <option selected value="">Выбрать из списка</option>
-                                {% for i in cities %}
-
-                                <option {% if cityselected == i.id %} selected {% endif %} value="{{i.id}}">{{i}}</option>
-
+                        <input id="input_company" form="form" autocomplete="off" class="w-100 mb-2  form-control" type="text"
+                               name="company_id" value="{{company_id}}" placeholder="Компания"
+                                onclick="visibleFilterList('company_list')" onkeyup="filterFunction('input_company','myDropdownCompany')">
+                        <div id="company_list" class=" shadow overflow-auto d-none  p-3  w-100 bg-white rounded position-absolute"
+                             style=" max-height: 150px;" >
+                            <ul class="" id="myDropdownCompany">
+                                {% for i in companies %}
+                                <li class="" onclick="addItem('input_company','{{i}}','company_list')">{{i}}</li>
                                 {% endfor %}
+                            </ul>
 
-                            </select>
+                        </div>
+                    </div>
+                     <br>
+                    <div>
+                        <input id="experience_search" autocomplete="off" class="  form-control" form="form" style="max-width: 250px;" type="text"
+                               name="experience_search" value="{{experience_search}}"
+                               placeholder="Опыт работы" id="input_experience" onclick="visibleFilterList('experience_list')" onkeyup="filterFunction('input_experience','myDropdownExperience')">
+
+                        <div id="experience_list" class="overflow-auto d-none shadow p-3  w-100 bg-white rounded position-absolute"
+                             style=" max-height: 150px;" >
+                            <ul id="myDropdownExperience">
+                                <li  onclick="addItem('experience_search','Не имеет значения','experience_list')">Не имеет значения</li>
+                                <li  onclick="addItem('experience_search','от 1 года до 3 лет','experience_list')">от 1 года до 3 лет</li>
+                                <li  onclick="addItem('experience_search','от 3 до 6 лет','experience_list')">от 3 до 6 лет</li>
+                                <li  onclick="addItem('experience_search','более 6 лет','experience_list')">более 6 лет</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <input autocomplete="off" class="  form-control" form="form" style="max-width: 250px;" type="text"
+                               name="city_search" value="{{city_search}}"
+                               placeholder="Город" id="input_city" onclick="visibleFilterList('city_list')" onkeyup="filterFunction('input_city','myDropdownCity')">
+
+                        <div id="city_list" class="overflow-auto d-none shadow p-3  w-100 bg-white rounded position-absolute"
+                             style=" max-height: 150px;" >
+                            <ul id="myDropdownCity">
+                                {% for i in cities %}
+                                <li  onclick="addItem('input_city','{{i}}','city_list')">{{i}}</li>
+                                {% endfor %}
+                            </ul>
+
                         </div>
 
                     </div>
-
+                    <br>
+                    <button id="clickSubmit" class="btn btn-primary " form="form" style="min-width: 200px;" type="submit">Применить</button>
                 </div>
             </form>
+                <button class="btn  w-100 mt-2 btn-secondary" onclick="cleanerFilterVacancy()" >Очистить</button>
+            </div>
+
         </div>
-      
-        {% for item in object_list %}
-          <div class="col-md-12 border p-3">
-              <div class="d-flex justify-content-between">
-                  <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
-                      <h5 class="mb-0">{{ item.name }}</h5>
-                  </a>
-                  <p class="fs-5 mb-0">{{ item.price }}</p>
-              </div>
-              <div class="mb-1">
-                  <a href="{% url 'companies:detail' item.company.pk %}" class="mb-auto text-muted text-decoration-none">{{item.company }}</a>
-                  <p class="mb-auto text-muted">{{ item.company.city }}</p>
-              </div>
-              <div>
-                  {% for desc in item.split_description_to_lines|slice:":2" %}<p class="m-0">{{ desc }}</p>{% endfor %}
-              </div>
-              <div class="d-flex justify-content-between mt-3">
-                  <div>
-                        {% if not request.user.role == 1 %}
-                            <button onclick="void(0)" class="btn  btn-primary">Откликнуться</button>
-                            {% if item.id in my_favorites %}
-                                <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-success">В избранном</button>
-                            {% else %}
-                                <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-primary">В избранное</button>
-                            {% endif %}
-                        {% else %}
-                            <button onclick="void(0)" class="btn  btn-primary">Проверить</button>
-                        {% endif %}
-                  </div>
-                  <div class="mb-1 text-muted">{{ item.created_at|date:'d.m.Y' }}</div>
-              </div>
-          </div>
-        {% endfor %}
-        {% if object_list|length == 0 %}
-          <strong class="mb-3">Нет активных вакансий</strong>
-        {% endif %}
+        <div class="w-100">
+
+            <div class="mb-5">
+                <div class="d-flex bg-light sticky-top justify-content-between p-3">
+                    <form class=" flex-grow-1" id="form" method="get">
+                        <div class=" d-flex flex-rows">
+                            <input id="find" class="input-group form-control" type="search" name="find" value="{{find}}" placeholder="Поиск по названию">
+                            <div class="position-relative mt-1" style="left:-33px;">
+                                <a><img onclick="myFunction()" style="height:27px" src="../static/sliders.svg" alt=""/></a>
+                            </div>
+                            <button class="btn btn-primary "  style="min-width: 200px;" type="submit">Поиск</button>
+                        </div>
+
+                    </form>
+                </div>
+
+                {% for item in object_list %}
+                    <div class="col-md-12 border p-3">
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
+                                <h5 class="mb-0">{{ item.name }}</h5>
+                            </a>
+                            <p class="fs-5 mb-0">{{ item.price }}</p>
+                        </div>
+                        <div class="mb-1">
+                            <a href="{% url 'companies:detail' item.company.pk %}"
+                            class="mb-auto text-muted text-decoration-none">{{item.company }}</a>
+                            <p class="mb-auto text-muted">{{ item.company.city }}</p>
+                        </div>
+                        <div>
+                            {% for desc in item.split_description_to_lines|slice:":2" %}<p class="m-0">{{ desc }}</p>{% endfor %}
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <div>
+                                {% if not request.user.role == 1 %}
+                                <button onclick="void(0)" class="btn  btn-primary">Откликнуться</button>
+                                {% if item.id in my_favorites %}
+                                <button id="{{ item.id }}"
+                                        class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-success">
+                                    В избранном
+                                </button>
+                                {% else %}
+                                <button id="{{ item.id }}"
+                                        class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-primary">
+                                    В избранное
+                                </button>
+                                {% endif %}
+                                {% else %}
+                                <button onclick="void(0)" class="btn  btn-primary">Проверить</button>
+                                {% endif %}
+                            </div>
+                            <div class="mb-1 text-muted">{{ item.created_at|date:'d.m.Y' }}</div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <strong class="mb-3">Нет активных вакансий</strong>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
+<script>window.onload = noInput()</script>
 {% endblock %}

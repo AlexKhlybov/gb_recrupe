@@ -9,8 +9,7 @@ from import_export import resources
 from apps.companies.models import Company
 from apps.main.models import City
 from apps.news.models import News
-from apps.resume.models import (Courses, Education, Experience, Resume,
-                                ResumeSkills)
+from apps.resume.models import Courses, Education, Experience, Resume, ResumeSkills
 from apps.users.models import User
 from apps.vacancies.models import Vacancy, VacancySkills
 

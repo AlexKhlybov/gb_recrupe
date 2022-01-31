@@ -4,17 +4,17 @@
     <div class="top__banner  mb-5  d-flex  justify-content-center">
         {% if request.user.role == 1 %} {# Модератор #}
             <div class="container">
-                <h1 class="text-dark  mb-4">Приветствую тебя о великиий и могучий!</h1>
+                <h1 class="text-dark  mb-4">Приветствую тебя о великий и могучий!</h1>
                 <div class="row  top__banner-content  justify-content-center  align-items-center">
                     <div class="col-4  top__banner-left">
                         <h3 class="mt-3  text-uppercase">Соискатели</h3>
                         <p class="my-3">Описание вакансии — это первый шаг к сердцу (и знаниям) кандидата. И он важен, как и первое впечатление при знакомстве. Если накосячить, кандидат дальше по воронке уже не пойдет. Поэтому, отнеситесь к составлению текста вакансии с большой ответственностью.</p>
-                        <a class="w-60 btn btn-lg btn-success" href="{% url 'resume:moderation-resume' %}" role="button">Проверить резюме</a>
+                        <a class="w-60 btn btn-lg btn-success" href="{% url 'moderation:resume' %}" role="button">Проверить резюме</a>
                     </div>
                     <div class="col-4  top__banner-right">
-                        <h3 class="mt-3  text-uppercase">Работадатели</h3>
+                        <h3 class="mt-3  text-uppercase">Работодатели</h3>
                         <p class="my-3">Описание вакансии — это первый шаг к сердцу (и знаниям) кандидата. И он важен, как и первое впечатление при знакомстве. Если накосячить, кандидат дальше по воронке уже не пойдет. Поэтому, отнеситесь к составлению текста вакансии с большой ответственностью.</p>
-                        <a class="w-60 btn btn-lg btn-primary" href="{% url 'companies:moderation-companies' %}" role="button">Проверить вакансии</a>
+                        <a class="w-60 btn btn-lg btn-primary" href="{% url 'moderation:vacancy' %}" role="button">Проверить вакансии</a>
                     </div>
                 </div>
             </div>
