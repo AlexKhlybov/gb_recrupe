@@ -80,6 +80,19 @@ class Resume(models.Model):
         return 'отсутствует'
 
     @property
+    def get_experience_year(self):
+        experience = self.experience.aggregate(Min('start_date'), Max('end_date'))
+        end_date_isnull = self.experience.filter(end_date__isnull=True).count()
+        _min: datetime.date = experience['start_date__min'] if experience['start_date__min'] else datetime.date.today()
+        _max: datetime.date = experience['end_date__max'] if end_date_isnull == 0 else datetime.date.today()
+
+        diff = relativedelta.relativedelta(_max, _min)
+        years = diff.years
+        month = diff.months
+
+        return  years + month/12
+
+    @property
     def skills(self):
         return ResumeSkills.objects.filter(resume=self)
     
