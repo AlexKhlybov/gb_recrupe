@@ -12,7 +12,7 @@ def date_delta(input_date: datetime) -> str:
     """
     Считает разницу в днях
     """
-    delta = (datetime.now(timezone.utc) - input_date).days
+    delta = (datetime.now() - input_date).days
     if delta == 0:
         return "сегодня"
     elif delta == 1:

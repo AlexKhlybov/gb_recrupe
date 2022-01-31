@@ -69,7 +69,7 @@ window.onload = function () {
         }
 
         request.csrf = getCookie('csrftoken');
-        if (!formID) {
+        if (action == "show") {
             request.body = `id=${messageID}`;
             request.url = `${window.location.href}detail/`;
         } else {
@@ -95,8 +95,7 @@ window.onload = function () {
             const modal = document.querySelector('.modal-dialog');
             modal.textContent = '';
             modal.insertAdjacentHTML('beforeend', renderMsg(data));
-            console.log(action == 'answer')
-            if (action == 'answer') {
+            if ((action == 'answer') || (action == 'new')) {
                 alert = {
                     title: "Отправлено!",
                     text: "Ваше сообщение успешно отправлено!",
@@ -113,7 +112,7 @@ window.onload = function () {
                     text: "Ошибка загрузки сообщения. Попробуйте чуть позже!",
                     type: "alert-danger"
                 }
-            } else if (action == 'answer') {
+            } else if ((action == 'answer') || (action == 'new')) {
                 alert = {
                     title: "Ошибка",
                     text: "Ошибка отправки. Попробуйте чуть позже!",
@@ -137,7 +136,7 @@ window.onload = function () {
     });
 
 
-    function getFormMessgas(event) {
+    function getFormMessgas(event, action=null) {
 
         // Отрисовывает форму ответа на сообщение
         function renderAnswerMsgForm(sender) {
@@ -168,22 +167,64 @@ window.onload = function () {
         </div>`
         };
 
+        // Отрисовывает окно - "Новое сообщение"
+        function renderNewMsg() {
+            return `<div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropTitle">Новое сообщение</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" name="NewMsgForm" id="formNewMessage">
+                    <div class="mb-3">
+                        <label for="SendInput" class="form-label">Кому:</label>
+                        <input type="text" class="form-control" id="sendMessage" placeholder="E-mail пользователя">
+                    </div>
+                    <div class="mb-3">
+                        <label for="messageInput" class="form-label">Тема</label>
+                        <input type="text" class="form-control" id="messageInput">
+                    </div>
+                    <div class="mb-3">
+                        <label for="messageTextarea" class="form-label">Сообщение</label>
+                        <textarea class="form-control" id="messageTextarea" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-send-new" id="btnMessage">Отправить</button>
+                </form>
+            </div>
+        </div>`
+        }
+
         const modal = document.querySelector('.modal-dialog');
-        const sender = document.getElementById('staticBackdropSender').getAttribute('value');
-        modal.textContent = '';
-        modal.insertAdjacentHTML('beforeend', renderAnswerMsgForm(sender));
+
+        if (action == 'new') {
+            modal.textContent = '';
+            modal.insertAdjacentHTML('beforeend', renderNewMsg());
+        } else {
+            const sender = document.getElementById('staticBackdropSender').getAttribute('value');
+            modal.textContent = '';
+            modal.insertAdjacentHTML('beforeend', renderAnswerMsgForm(sender));
+        }
     };
 
 
-    //Ловим событие кнопок "Ответить" и "Отправить"
+    //Ловим событие кнопок "Ответить", "Отправить", "Новое сообщение"
     document.addEventListener('click', event => {
         if (event.target.classList.contains('btn-answer')) {
             getFormMessgas(event).then();
+        };
+        if (event.target.classList.contains('btn-new-msg')) {
+            // const form = 'formNewMessage';
+            getFormMessgas(event, action='new');
         };
         if (event.target.classList.contains('btn-send')) {
             const form = 'formAnswerMessage';
             getModalMessage(event, action='answer', null, form).then()
         };
+        if (event.target.classList.contains('btn-send-new')) {
+            const form = 'formNewMessage';
+            getModalMessage(event, action='new', null, form).then()
+        };
+        
     })
 
     // //Ловим событие кнопки "Новое сообщение"

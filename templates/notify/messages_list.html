@@ -3,7 +3,12 @@
 
 {% block content %}
 <div class="container">
-    <h2 class="mt-4 mb-3">Уведомления</h2>
+    <div class="d-flex justify-content-between align-items-end  mb-3">
+        <h2 class="mt-4 mb-3">Уведомления</h2>
+        <div>
+            <a class="w-60 btn btn-lg btn-primary btn-new-msg" style="outline: none;" href="#" id="createNewMessage" type="button" aria-current="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Создать сообщение</a>
+        </div>
+    </div>
     <div class="row mb-2">
         <div class="list-group">
         {% for notify in notify %}
