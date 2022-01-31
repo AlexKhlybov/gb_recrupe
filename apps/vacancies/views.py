@@ -7,7 +7,7 @@ from django.views.generic import DetailView, ListView
 from apps.main.models import City
 from apps.users.models import User
 from apps.vacancies.forms import VacancyForm
-from apps.vacancies.models import Vacancy, VacancyFavorites, VacancyModeration
+from apps.vacancies.models import Vacancy, VacancyFavorites
 
 from apps.companies.models import Company
 
@@ -197,21 +197,6 @@ def favorites_edit(request, vacancy):
         obj.delete()
         return JsonResponse({"delete": True}, status=200)
     return JsonResponse({"delete": False}, status=200)
-
-
-def vacancy_moderation(request):
-    if request.GET.get('find'):
-        vacancy_list = VacancyModeration.objects.filter(
-            Q(vacancy__name__icontains=request.GET.get('find'))
-        )
-    else:
-        vacancy_list = VacancyModeration.objects.all()
-    content = {
-        'vacancy_list': vacancy_list,
-        'title': 'Модерация вакансии'
-    }
-    return render(request, 'moderation/vacancy_list_moderation.html', content)
-
 
 def complaint(request, pk):
     vacancy = get_object_or_404(Vacancy, pk=pk)
