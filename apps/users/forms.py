@@ -75,7 +75,7 @@ class UserRegisterForm(UserCreationForm):
 class UserEditForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'second_name', 'phone', 'password')
+        fields = ('first_name', 'last_name', 'second_name', 'phone', 'password', 'receiving_messages')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -88,6 +88,9 @@ class UserEditForm(UserChangeForm):
 
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
+            
+            if field_name == 'receiving_messages':
+                field.widget.attrs['class'] = "form-check-input"
 
 class EmployeeProfileEditForm(UserChangeForm):
 

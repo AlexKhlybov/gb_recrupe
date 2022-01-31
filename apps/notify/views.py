@@ -1,5 +1,6 @@
 import datetime
 
+from django.utils import timezone
 from django.core.mail import BadHeaderError
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
@@ -49,13 +50,14 @@ class MessageCreateView(CreateView):
                     sender_email=request.user.email,
                     type=TYPE.MESSAGE,
                     event=NOTIFY_EVENT.MESSAGE,
-                    send_at=datetime.datetime.utcnow(),
-                    sent_at=datetime.datetime.utcnow(),
+                    send_at=timezone.now(),
+                    sent_at=timezone.now(),
                 )
-                # Отправляем уведомление на почту о получении сообщении.
-                Notify.send(
-                    event=NOTIFY_EVENT.MESSAGE, type=TYPE.EMAIL, context={}, email=body["email"],
-                )
+                if recipient.receiving_messages:
+                    # Отправляем уведомление на почту о получении сообщении.
+                    Notify.send(
+                        event=NOTIFY_EVENT.MESSAGE, type=TYPE.EMAIL, context={}, email=body["email"],
+                    )
                 return JsonResponse({"detail": "Ok"}, status=200)
 
 
