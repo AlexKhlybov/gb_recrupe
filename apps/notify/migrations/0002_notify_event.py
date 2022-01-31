@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('notify', '0001_initial'),
+        ("notify", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='notify',
-            name='event',
-            field=models.IntegerField(blank=True, choices=[(1, 'Register'), (2, 'Feeback'), (3, 'Message')], null=True, verbose_name='Событие'),
+            model_name="notify",
+            name="event",
+            field=models.IntegerField(
+                blank=True, choices=[(1, "Register"), (2, "Feeback"), (3, "Message")], null=True, verbose_name="Событие"
+            ),
         ),
     ]

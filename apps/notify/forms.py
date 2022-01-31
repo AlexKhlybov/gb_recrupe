@@ -5,18 +5,19 @@ from django import forms
 from apps.news.models import News
 from apps.notify.models import Notify
 
+
 class ContactForm(forms.Form):
-    from_email = forms.EmailField(label='Email', required=True)
-    subject = forms.CharField(label='Тема', required=True)
-    message = forms.CharField(label='Сообщение', widget=forms.Textarea, required=True)
+    from_email = forms.EmailField(label="Email", required=True)
+    subject = forms.CharField(label="Тема", required=True)
+    message = forms.CharField(label="Сообщение", widget=forms.Textarea, required=True)
 
 
-# class NewsEditForm(forms.ModelForm): 
+# class NewsEditForm(forms.ModelForm):
 
 #     class Meta:
 #         model = Notify
 #         exclude = ("created",)
-        
+
 #     def __init__(self, *args, **kwargs):
 #         super().__init__(*args, **kwargs)
 #         self.helper = FormHelper()

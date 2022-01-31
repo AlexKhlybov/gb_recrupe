@@ -8,6 +8,8 @@ def unread_msg(request):
     """
     if request.user.is_authenticated:
         unread = Notify.get_number_unread(request.user)
-        return {"unread_msg": unread,}
+        return {
+            "unread_msg": unread,
+        }
     else:
         return {"unread_msg": 0}

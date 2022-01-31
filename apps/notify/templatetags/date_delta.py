@@ -1,8 +1,8 @@
-from dateparser import parse
 import re
-from django import template
-from datetime import timezone, datetime
+from datetime import datetime, timezone
 
+from dateparser import parse
+from django import template
 
 register = template.Library()
 
@@ -14,8 +14,8 @@ def date_delta(input_date: datetime) -> str:
     """
     delta = (datetime.now(timezone.utc) - input_date).days
     if delta == 0:
-        return 'сегодня'
+        return "сегодня"
     elif delta == 1:
-        return 'вчера'
+        return "вчера"
     else:
         return input_date.date()
