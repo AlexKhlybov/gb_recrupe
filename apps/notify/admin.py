@@ -1,3 +1,5 @@
+from import_export import resources
+
 from django.contrib import admin
 
 from apps.notify.models import Notify, NotifyTemplate, SMTPAccount
@@ -36,14 +38,9 @@ class NotifyTemplateAdmin(admin.ModelAdmin):
     list_filter = ("type", "event", "is_active")
 
 
-# from apps.companies.models import Company, CompanyModeration
-
-# admin.site.register(Company)
-# admin.site.register(CompanyModeration)
-
-# class CompanyResource(resources.ModelResource):
-#     class Meta:
-#         model = Company
-# class ModerCompanyResource(resources.ModelResource):
-#     class Meta:
-#         model = CompanyModeration
+class SMTPAccountResource(resources.ModelResource):
+    class Meta:
+        model = SMTPAccount
+class NotifyTemplateResource(resources.ModelResource):
+    class Meta:
+        model = NotifyTemplate

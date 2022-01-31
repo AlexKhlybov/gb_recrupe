@@ -2,17 +2,17 @@
     <nav class="nav d-flex justify-content-start">
         <div class="d-flex  justify-content-between">
             <a class="p-3 link-secondary  link__top-menu" href="/">Главная</a>
-            {% if request.user and request.user.pk %}
-                {% if request.user.role == 1 %}
+            {% if user and user.pk %}
+                {% if user.role == 1 %}
                     <a class="p-3 link-secondary  link__top-menu" href="{% url 'vacancies:all' %}">Вакансии</a>
                     <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:all' %}">Резюме</a>
-                {% elif request.user.role == 2 %}
+                {% elif user.role == 2 %}
                     <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:my' %}">Мои резюме</a>
-                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'vacancies:favorites' request.user.id %}">Избранные вакансии</a>
+                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'vacancies:favorites' user.id %}">Избранные вакансии</a>
                     <a class="p-3 link-secondary  link__top-menu" href="{% url 'vacancies:all' %}">Все вакансии</a>
-                {% elif  request.user.role == 3 %}
-                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'companies:my-vacancies' request.user.company.id %}">Мои вакансии</a>
-                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:favorites' request.user.id %}">Избранные резюме</a>
+                {% elif  user.role == 3 %}
+                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'companies:vacancies' user.company.id %}">Мои вакансии</a>
+                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:favorites' user.id %}">Избранные резюме</a>
                     <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:all' %}">Все резюме</a>
                 {% endif %}
             {% endif %}

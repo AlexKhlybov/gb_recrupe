@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "last_login": "2022-01-16 11:27:35",
+        "last_login": "2022-01-31 09:53:04",
         "is_superuser": "1",
         "groups": "",
         "user_permissions": "",
@@ -14,7 +14,8 @@
         "last_name": "Модератор",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-01",
-        "role": 1
+        "role": 1,
+        "receiving_messages": "0"
     },
     {
         "id": 2,
@@ -31,7 +32,8 @@
         "last_name": "Соискатель",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-02",
-        "role": 2
+        "role": 2,
+        "receiving_messages": "0"
     },
     {
         "id": 3,
@@ -48,7 +50,8 @@
         "last_name": "Ozon",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-03",
-        "role": 3
+        "role": 3,
+        "receiving_messages": "0"
     },
     {
         "id": 4,
@@ -65,7 +68,8 @@
         "last_name": "sberbank",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-04",
-        "role": 3
+        "role": 3,
+        "receiving_messages": "0"
     },
     {
         "id": 5,
@@ -82,7 +86,8 @@
         "last_name": "beeline",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-05",
-        "role": 3
+        "role": 3,
+        "receiving_messages": "0"
     },
     {
         "id": 6,
@@ -99,7 +104,8 @@
         "last_name": "yandex",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-06",
-        "role": 3
+        "role": 3,
+        "receiving_messages": "0"
     },
     {
         "id": 7,
@@ -116,7 +122,8 @@
         "last_name": "lenta",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-07",
-        "role": 3
+        "role": 3,
+        "receiving_messages": "0"
     },
     {
         "id": 8,
@@ -133,7 +140,8 @@
         "last_name": "domclick",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-08",
-        "role": 3
+        "role": 3,
+        "receiving_messages": "0"
     },
     {
         "id": 9,
@@ -150,6 +158,7 @@
         "last_name": "tinkoff",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-09",
-        "role": 3
+        "role": 3,
+        "receiving_messages": "0"
     }
 ]

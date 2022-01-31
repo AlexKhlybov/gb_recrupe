@@ -1,426 +1,341 @@
 [
     {
-        "id": 1,
         "vacancy": 1,
         "name": "Английский — B1 — Средний"
     },
     {
-        "id": 2,
         "vacancy": 1,
         "name": "Python"
     },
     {
-        "id": 3,
         "vacancy": 1,
         "name": "Git"
     },
     {
-        "id": 4,
         "vacancy": 1,
         "name": "SQL"
     },
     {
-        "id": 5,
         "vacancy": 1,
         "name": "MS SQL"
     },
     {
-        "id": 6,
         "vacancy": 1,
         "name": "Kafka"
     },
     {
-        "id": 7,
         "vacancy": 1,
         "name": "ClickHouse"
     },
     {
-        "id": 8,
         "vacancy": 1,
         "name": "Docker"
     },
     {
-        "id": 9,
         "vacancy": 1,
         "name": "IT"
     },
     {
-        "id": 10,
         "vacancy": 6,
         "name": "Atlassian Jira"
     },
     {
-        "id": 11,
         "vacancy": 6,
         "name": "Atlassian Confluence"
     },
     {
-        "id": 12,
         "vacancy": 6,
         "name": "Управление проектами"
     },
     {
-        "id": 13,
         "vacancy": 7,
         "name": "Управление проектами"
     },
     {
-        "id": 14,
         "vacancy": 7,
         "name": "Работа в команде"
     },
     {
-        "id": 15,
         "vacancy": 7,
         "name": "Agile Project Management"
     },
     {
-        "id": 16,
         "vacancy": 7,
         "name": "Управление командой"
     },
     {
-        "id": 17,
         "vacancy": 7,
         "name": "Управление персоналом"
     },
     {
-        "id": 18,
         "vacancy": 8,
         "name": "Terraform"
     },
     {
-        "id": 19,
         "vacancy": 8,
         "name": "VMware"
     },
     {
-        "id": 20,
         "vacancy": 8,
         "name": "Ansible"
     },
     {
-        "id": 21,
         "vacancy": 8,
         "name": "Docker"
     },
     {
-        "id": 22,
         "vacancy": 8,
         "name": "Nginx"
     },
     {
-        "id": 23,
         "vacancy": 9,
         "name": "vanessa automation"
     },
     {
-        "id": 24,
         "vacancy": 9,
         "name": "1C"
     },
     {
-        "id": 25,
         "vacancy": 9,
         "name": "Тестирование"
     },
     {
-        "id": 26,
         "vacancy": 9,
         "name": "API"
     },
     {
-        "id": 27,
         "vacancy": 9,
         "name": "REST API"
     },
     {
-        "id": 28,
         "vacancy": 9,
         "name": "WMS"
     },
     {
-        "id": 29,
         "vacancy": 9,
         "name": "AXELOT"
     },
     {
-        "id": 30,
         "vacancy": 10,
         "name": "Git"
     },
     {
-        "id": 31,
         "vacancy": 10,
         "name": "Java"
     },
     {
-        "id": 32,
         "vacancy": 10,
         "name": "Kotlin"
     },
     {
-        "id": 33,
         "vacancy": 10,
         "name": "ООП"
     },
     {
-        "id": 34,
         "vacancy": 10,
         "name": "C++"
     },
     {
-        "id": 35,
         "vacancy": 10,
         "name": "Swift"
     },
     {
-        "id": 36,
         "vacancy": 10,
         "name": "Realm"
     },
     {
-        "id": 37,
         "vacancy": 10,
         "name": "Firebase"
     },
     {
-        "id": 38,
         "vacancy": 10,
         "name": "Управление командой"
     },
     {
-        "id": 39,
         "vacancy": 11,
         "name": "PostgreSQL"
     },
     {
-        "id": 40,
         "vacancy": 11,
         "name": "Hadoop"
     },
     {
-        "id": 41,
         "vacancy": 11,
         "name": "ETL"
     },
     {
-        "id": 42,
         "vacancy": 11,
         "name": "SQL"
     },
     {
-        "id": 43,
         "vacancy": 11,
         "name": "Python"
     },
     {
-        "id": 44,
         "vacancy": 11,
         "name": "MS SQL"
     },
     {
-        "id": 45,
         "vacancy": 11,
         "name": "Git"
     },
     {
-        "id": 46,
         "vacancy": 12,
         "name": "Linux"
     },
     {
-        "id": 47,
         "vacancy": 12,
         "name": "Atlassian Jira"
     },
     {
-        "id": 48,
         "vacancy": 12,
         "name": "SQL"
     },
     {
-        "id": 49,
         "vacancy": 12,
         "name": "CSS"
     },
     {
-        "id": 50,
         "vacancy": 12,
         "name": "HTML"
     },
     {
-        "id": 51,
         "vacancy": 13,
         "name": "SQL"
     },
     {
-        "id": 52,
         "vacancy": 13,
         "name": "ORACLE"
     },
     {
-        "id": 53,
         "vacancy": 13,
         "name": "Remedy"
     },
     {
-        "id": 54,
         "vacancy": 13,
         "name": "Zabbix"
     },
     {
-        "id": 55,
         "vacancy": 14,
         "name": "Ozon"
     },
     {
-        "id": 56,
         "vacancy": 14,
         "name": "wildberries"
     },
     {
-        "id": 57,
         "vacancy": 14,
         "name": "Маркетплайс"
     },
     {
-        "id": 58,
         "vacancy": 14,
         "name": "Удаленная работа"
     },
     {
-        "id": 59,
         "vacancy": 14,
         "name": "Mpstat"
     },
     {
-        "id": 60,
         "vacancy": 14,
         "name": "Сбермаркет"
     },
     {
-        "id": 61,
         "vacancy": 14,
         "name": "Интернет магазин"
     },
     {
-        "id": 62,
         "vacancy": 15,
         "name": "Google Analytics"
     },
     {
-        "id": 63,
         "vacancy": 15,
         "name": "SEO"
     },
     {
-        "id": 64,
         "vacancy": 15,
         "name": "Яндекс.Метрика"
     },
     {
-        "id": 65,
         "vacancy": 15,
         "name": "SEO оптимизация"
     },
     {
-        "id": 66,
         "vacancy": 15,
         "name": "Поисковая оптимизация сайтов"
     },
     {
-        "id": 67,
         "vacancy": 15,
         "name": "SERM"
     },
     {
-        "id": 68,
         "vacancy": 15,
         "name": "Поисковые системы"
     },
     {
-        "id": 69,
         "vacancy": 15,
         "name": "seo аудит"
     },
     {
-        "id": 70,
         "vacancy": 15,
         "name": "Аудит поисковой видимости сайта"
     },
     {
-        "id": 71,
         "vacancy": 15,
         "name": "Составление семантического ядра"
     },
     {
-        "id": 72,
         "vacancy": 15,
         "name": "западный seo"
     },
     {
-        "id": 73,
         "vacancy": 17,
         "name": "Python"
     },
     {
-        "id": 74,
         "vacancy": 17,
         "name": "SQL"
     },
     {
-        "id": 75,
         "vacancy": 17,
         "name": "ABC-анализ"
     },
     {
-        "id": 76,
         "vacancy": 17,
         "name": "Английский язык"
     },
     {
-        "id": 77,
         "vacancy": 17,
         "name": "Анализ данных"
     },
     {
-        "id": 78,
         "vacancy": 17,
         "name": "Аналитическое мышление"
     },
     {
-        "id": 79,
         "vacancy": 17,
         "name": "Статистический анализ"
     },
     {
-        "id": 80,
         "vacancy": 17,
         "name": "Математическая статистика"
     },
     {
-        "id": 81,
         "vacancy": 18,
         "name": "UML"
     },
     {
-        "id": 82,
         "vacancy": 18,
         "name": "BPMN"
     },
     {
-        "id": 83,
         "vacancy": 18,
         "name": "Atlassian Jira"
     },
     {
-        "id": 84,
         "vacancy": 18,
         "name": "Atlassian Confluence"
     },
     {
-        "id": 85,
         "vacancy": 18,
         "name": "Scrum"
     }

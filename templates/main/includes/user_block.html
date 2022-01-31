@@ -52,7 +52,7 @@
                             {{ user }}
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
-                            <li><a class="dropdown-item" href="{% url 'vacancies:my' %}">Мои вакансии</a></li>
+                            <li><a class="dropdown-item" href="{% url 'companies:vacancies' user.company.id %}">Мои вакансии</a></li>
                             <li><a class="dropdown-item" href="{% url 'resume:favorites' user.pk %}">Избранные резюме</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{% url 'user:editcompany' %}">Профиль</a></li>

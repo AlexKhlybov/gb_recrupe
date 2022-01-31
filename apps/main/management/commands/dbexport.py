@@ -12,6 +12,7 @@ from apps.resume.admin import (CoursesResource, EducationResource,
                                ResumeSkillsResource)
 from apps.users.admin import UserResource
 from apps.vacancies.admin import VacancyResource, VacancySkillsResource
+from apps.notify.admin import NotifyTemplateResource, SMTPAccountResource
 
 
 class Command(BaseCommand):
@@ -22,6 +23,7 @@ class Command(BaseCommand):
         resource = [CityResource, UserResource, NewsResource]
         resource += [CompanyResource, VacancyResource, VacancySkillsResource]
         resource += [EducationResource, ExperienceResource, CoursesResource, ResumeResource, ResumeSkillsResource]
+        resource += [SMTPAccountResource, NotifyTemplateResource]
 
         for i in resource:
             self.export_model(i, options)
