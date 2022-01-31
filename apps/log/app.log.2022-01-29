@@ -1,0 +1,10 @@
+2022-01-29 06:05:51,077 INFO models.py Email успешно отправлен на адрес - aghlybov@gmail.com
+2022-01-29 06:39:56,155 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-29 06:39:57,302 INFO models.py Email успешно отправлен на адрес - aghlybov@gmail.com
+2022-01-29 06:40:48,735 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-29 06:40:49,738 INFO models.py Email успешно отправлен на адрес - aghlybov@gmail.com
+2022-01-29 12:11:11,011 ERROR views.py Ошибка отправки сообщения - {err}
+2022-01-29 12:17:43,917 ERROR views.py Ошибка отправки сообщения - 'QueryDict' object has no attribute 'email'
+2022-01-29 16:53:27,829 ERROR views.py Ошибка отправки сообщения - 'method' object is not subscriptable
+2022-01-29 16:54:53,757 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-29 16:54:55,365 INFO models.py Email успешно отправлен на адрес - aghlybov@gmail.com

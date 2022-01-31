@@ -1,3 +1,5 @@
+import email
+from reprlib import recursive_repr
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.signals import post_save
@@ -25,6 +27,7 @@ class User(AbstractUser):
     second_name = models.CharField(max_length=32, blank=True, verbose_name='Отчество')
     phone = models.CharField(max_length=16, blank=True, verbose_name='Номер телефона')
     role = models.PositiveSmallIntegerField(choices=USER_TYPE, default=USER_TYPE_MODERATOR, verbose_name='Роль')
+    receiving_messages = models.BooleanField(default=False, verbose_name='Получать уведомления на e-mail')
 
     class Meta:
         verbose_name = 'Пользователь'
@@ -42,6 +45,10 @@ class User(AbstractUser):
     @property
     def get_full_name(self):
         return f'{self.first_name} {self.last_name} {self.second_name}'
+    
+    @staticmethod
+    def get_user_by_email(email):
+        return User.objects.get(email=email)
 
       
 class EmployeeProfile(models.Model):

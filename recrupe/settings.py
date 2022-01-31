@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'apps.companies',
     'apps.vacancies',
     'apps.resume',
+    'apps.notify',
     'apps.moderation',
 
     'crispy_forms',
@@ -61,6 +62,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.notify.context.unread_msg',
+                'apps.resume.context.favorite_resume',
+                'apps.vacancies.context.favorite_vacancy',
             ],
         },
     },

@@ -6,6 +6,8 @@ from django.urls import reverse
 
 from apps.users.forms import (CompanyProfileEditForm, EmployeeProfileEditForm,
                               UserEditForm, UserRegisterForm)
+from apps.notify.models import Notify, NOTIFY_EVENT, TYPE
+from apps.log.logging import logger
 
 
 def auth_user_view(request):
@@ -47,8 +49,18 @@ def registration(request):
         register_form = UserRegisterForm(request.POST, request.FILES)
         if register_form.is_valid():
             register_form.save()
+            try:
+                Notify.send(
+                    event=NOTIFY_EVENT.REGISTRATION_EVENT,
+                    type=TYPE.EMAIL,
+                    context={},
+                    email=request.POST["email"],
+                )
+            except Exception as err:
+                logger.error(f"Ошибка отправки сообщения - {err}")
             return HttpResponseRedirect(reverse('user:login'))
         else:
+            logger.error(f"Ошибка валидации при регистрации - {register_form.errors}")
             messages.add_message(request, messages.ERROR, register_form.errors)
     else:
         register_form = UserRegisterForm()

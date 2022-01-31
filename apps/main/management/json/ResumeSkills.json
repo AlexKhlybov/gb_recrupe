@@ -1,136 +1,109 @@
 [
     {
-        "id": 1,
         "resume": 2,
         "name": "Git"
     },
     {
-        "id": 2,
         "resume": 2,
         "name": "C++"
     },
     {
-        "id": 3,
         "resume": 2,
         "name": "Python"
     },
     {
-        "id": 4,
         "resume": 2,
         "name": "MS SQL"
     },
     {
-        "id": 5,
         "resume": 2,
         "name": "Js"
     },
     {
-        "id": 6,
         "resume": 2,
         "name": "ORACLE"
     },
     {
-        "id": 7,
         "resume": 2,
         "name": "FirebirdSQL"
     },
     {
-        "id": 8,
         "resume": 2,
         "name": "ООП"
     },
     {
-        "id": 9,
         "resume": 2,
         "name": "Django"
     },
     {
-        "id": 10,
         "resume": 2,
         "name": "Django Framework"
     },
     {
-        "id": 11,
         "resume": 3,
         "name": "FastAPI"
     },
     {
-        "id": 12,
         "resume": 3,
         "name": "SQLAlchemy"
     },
     {
-        "id": 13,
         "resume": 3,
         "name": "PostgreSQL"
     },
     {
-        "id": 14,
         "resume": 3,
         "name": "Redis"
     },
     {
-        "id": 15,
         "resume": 3,
         "name": "Websocket"
     },
     {
-        "id": 16,
         "resume": 3,
         "name": "MDBootstrap"
     },
     {
-        "id": 17,
         "resume": 3,
         "name": "Jetkins"
     },
     {
-        "id": 18,
         "resume": 3,
         "name": "Git"
     },
     {
-        "id": 19,
         "resume": 3,
         "name": "Ubuntu"
     },
     {
-        "id": 20,
         "resume": 3,
         "name": "Nginx"
     },
     {
-        "id": 21,
         "resume": 3,
         "name": "Docker"
     },
     {
-        "id": 22,
         "resume": 3,
         "name": "MySQL"
     },
     {
-        "id": 23,
         "resume": 3,
         "name": "ReactJS Hooks"
     },
     {
-        "id": 24,
         "resume": 3,
         "name": "Shell Scripting"
     },
     {
-        "id": 25,
         "resume": 3,
         "name": "CDN"
     },
     {
-        "id": 26,
         "resume": 3,
         "name": "PHP"
     },
     {
-        "id": 27,
         "resume": 3,
         "name": "jQuery"
     }

@@ -155,11 +155,12 @@ dumps/
 # migrations
 /apps/companies/migrations/*.py
 /apps/main/migrations/*.py
+/apps/moderation/migrations/*.py
 /apps/news/migrations/*.py
+/apps/notify/migrations/*.py
 /apps/resume/migrations/*.py
 /apps/users/migrations/*.py
 /apps/vacancies/migrations/*.py
-/apps/moderation/migrations/*.py
 
 # Temp file
 tmp/

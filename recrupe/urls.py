@@ -11,6 +11,7 @@ urlpatterns = [
     path('companies/', include('apps.companies.urls', namespace='companies')),
     path('vacancies/', include('apps.vacancies.urls', namespace='vacancies')),
     path('resume/', include('apps.resume.urls', namespace='resume')),
+    path('notify/', include('apps.notify.urls', namespace='notify')),
     path('moderation/', include('apps.moderation.urls', namespace='moderation')),
 ]
 

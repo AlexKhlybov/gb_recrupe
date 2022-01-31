@@ -84,6 +84,7 @@ class Vacancy(models.Model):
         """Возвращает через пользователя (м2м) все избранные им вакансии"""
         user = User.objects.get(id=user)
         return user.favorites_vacancy.all()
+    
 
     def delete(self, using=None, keep_parents=False):
         VacancySkills.objects.filter(vacancy=self).delete()
@@ -126,4 +127,10 @@ class VacancyFavorites(models.Model):
     @staticmethod
     def get_favorite_vacancy_list(user_id):
         """Возвращает список id вакансий добавленных в избранное"""
-        return VacancyFavorites.objects.filter(user_id=user_id).values_list('vacancy', flat=True).order_by('id')
+        # TODO сделать фильтрацию под юзера
+        return VacancyFavorites.objects.values_list('vacancy', flat=True).order_by('id')
+    
+    @classmethod
+    def get_number_favorite(cls, user):
+        return VacancyFavorites.objects.filter(user=user).count()
+
