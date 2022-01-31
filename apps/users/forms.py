@@ -24,7 +24,7 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password1', 'password2', 'role', 'first_name', 'last_name', 'second_name', 'phone', )
+        fields = ('email', 'password1', 'password2', 'role', 'first_name', 'last_name', 'second_name', 'phone', 'receiving_messages')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -38,6 +38,9 @@ class UserRegisterForm(UserCreationForm):
 
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
+            
+            if field_name == 'receiving_messages':
+                field.widget.attrs['class'] = "form-check-input"
 
     # Проверка на уникальность имени пользователя
     def clean_email(self):
