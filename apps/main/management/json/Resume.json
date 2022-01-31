@@ -1,14 +1,14 @@
 [
     {
-        "id": 1,
+        "id": 3,
         "user": 2,
-        "name": "Python Junior Developer",
-        "price": 20000,
-        "about_me": "https://github.com/ArsenEremyan01",
-        "education": "3",
-        "experience": "1",
-        "courses": "",
-        "status": 3
+        "name": "Python Developer",
+        "price": 90000,
+        "about_me": "Написание сложных веб приложений на бэкенде с отдачей данных через RestAPI и админкой на материал интерфейсе",
+        "education": "1",
+        "experience": "9,8,6,7,5,4",
+        "courses": "1,2",
+        "status": 2
     },
     {
         "id": 2,
@@ -22,14 +22,14 @@
         "status": 2
     },
     {
-        "id": 3,
+        "id": 1,
         "user": 2,
-        "name": "Python Developer",
-        "price": 90000,
-        "about_me": "Написание сложных веб приложений на бэкенде с отдачей данных через RestAPI и админкой на материал интерфейсе",
-        "education": "1",
-        "experience": "9,8,6,7,5,4",
-        "courses": "1,2",
-        "status": 2
+        "name": "Python Junior Developer",
+        "price": 20000,
+        "about_me": "https://github.com/ArsenEremyan01",
+        "education": "3",
+        "experience": "1",
+        "courses": "",
+        "status": 3
     }
 ]

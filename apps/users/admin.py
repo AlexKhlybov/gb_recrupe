@@ -12,3 +12,7 @@ class UserResource(resources.ModelResource):
     class Meta:
         model = User
         exclude = ('password', )
+        
+class EmployeeProfileResource(resources.ModelResource):
+    class Meta:
+        model = EmployeeProfile
