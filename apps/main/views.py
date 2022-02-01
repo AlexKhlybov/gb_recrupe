@@ -17,12 +17,8 @@ class HomePageList(ListView):
         context["title"] = "Recrupe | Главная"
         context["news"] = News.objects.all()[:2]
         context["partners"] = Company.public.all()[:10]
-        context["job_recomendations"] = Vacancy.public.all()[:5]
-        context["resume_recomendations"] = Resume.public.filter()[:5]
-        # if self.request.user.role == 2:
-        #     context["favorite"] = VacancyFavorites.get_favorite_vacancy_from_user(self.request.user.id)
-        # if self.request.user.role == 3:
-        #     context["favorite"] = ResumeFavorites.get_favorite_resume_from_user(self.request.user.id)
+        context["job_recomendations"] = Vacancy.public.all()[:10]
+        context["resume_recomendations"] = Resume.public.filter()[:10]
         return context
 
 

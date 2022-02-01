@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "last_login": "2022-01-31 13:47:45",
+        "last_login": "2022-02-01 23:33:07",
         "is_superuser": "1",
         "groups": "",
         "user_permissions": "",
@@ -18,7 +18,7 @@
         "receiving_messages": "0"
     },
     {
-        "id": 2,
+        "id": 14,
         "last_login": "2022-01-31 11:36:52",
         "is_superuser": "0",
         "groups": "",
@@ -159,6 +159,42 @@
         "second_name": "Иванович",
         "phone": "+7(900)000-00-09",
         "role": 3,
+        "receiving_messages": "0"
+    },
+    {
+        "id": 11,
+        "last_login": "2022-01-31 11:36:52",
+        "is_superuser": "0",
+        "groups": "",
+        "user_permissions": "",
+        "email": "employee1@mail.ru",
+        "is_staff": "0",
+        "is_active": "1",
+        "date_joined": "2022-01-16 10:09:27",
+        "username": "employee1@mail.ru",
+        "first_name": "Петр",
+        "last_name": "Соискатель",
+        "second_name": "Петров",
+        "phone": "+7(900)000-00-10",
+        "role": 2,
+        "receiving_messages": "0"
+    },
+    {
+        "id": 12,
+        "last_login": "2022-01-31 11:36:52",
+        "is_superuser": "0",
+        "groups": "",
+        "user_permissions": "",
+        "email": "employee2@mail.ru",
+        "is_staff": "0",
+        "is_active": "1",
+        "date_joined": "2022-01-16 10:09:27",
+        "username": "employee2@mail.ru",
+        "first_name": "Евгений",
+        "last_name": "Соискатель",
+        "second_name": "Ватников",
+        "phone": "+7(900)000-00-11",
+        "role": 2,
         "receiving_messages": "0"
     }
 ]
