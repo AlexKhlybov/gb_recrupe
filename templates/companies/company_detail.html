@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container">
@@ -6,7 +7,7 @@
         <div class="col-md-3">
             <div class="position-sticky">
                 <div class="p-0 mb-3 rounded">
-                    <img src="/media/companies/{{ object.logo }}" alt="{{ object.name }}" class="mb-3" style="object-fit: cover; max-width: 100%;">
+                    <img src="/media/{{ object.logo }}" alt="{{ object.name }}" class="mb-3" style="object-fit: cover; max-width: 100%;">
                 </div>
 
                 <div class="p-0">
@@ -33,6 +34,26 @@
         <div class="col-md-9">
             <article class="blog-post">
                 <h2 class="mb-4">{{ object.name }}</h2>
+
+                {% if request.user.role == 1 %}  {# Модератор #}
+                    <div class="row row-cols-auto mb-4">
+                        <div class="col col-lg-5">
+                            <form method="post">
+                                {% csrf_token %}
+                                <label for="id_status" class="form-label"><strong>Статус</strong></label>
+                                <div class="input-group">
+                                    <select class="form-select" id="id_status" name="status">
+                                        <option value="1" {% if object.status == 1 %}selected{% endif %}>На модерации</option>
+                                        <option value="2" {% if object.status == 2 %}selected{% endif %}>Отказ в публикации</option>
+                                        <option value="3" {% if object.status == 3 %}selected{% endif %}>Опубликовано</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-outline-danger">Изменить статус</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                {% endif %}
+
                 {% for p in object.split_description_to_lines %}
                     <p>{{ p }}</p>
                 {% endfor %}

@@ -3,7 +3,7 @@
         <div class="col col-lg-5">
             <form method="post">
                 {% csrf_token %}
-                <label for="id_status" class="form-label"><strong>Статус резюме</strong></label>
+                <label for="id_status" class="form-label"><strong>Статус</strong></label>
                 <div class="input-group">
                     <select class="form-select" id="id_status" name="status">
                         <option value="2" {% if object.status == 2 %}selected{% endif %}>Опубликовано</option>

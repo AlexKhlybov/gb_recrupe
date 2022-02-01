@@ -2,37 +2,13 @@
 
 {% block content %}
 
-
-
 <form method="get">
     <input class="input-group mb-3" type="text" name="find" placeholder="Поиск">
 </form>
 
 <div class="row mb-2">
     {% for item in company_list %}
-    <div class="col-md-12">
-        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative">
-            <div class="col-auto d-none d-lg-block">
-                <img src="/media/companies/{{ item.company.logo }}" style="object-fit: scale-down" width="200"
-                     height="150" alt="{{ item.name }}">
-            </div>
-            <div class="col p-4 d-flex flex-column position-static">
-                <h3 class="mb-2">{{ item.company }}</h3>
-                <a href="{% url 'companies:detail' item.pk %}" class="">Подробнее</a>
-            </div>
-            <div class="col p-4 d-flex flex-column position-static">
-                <h4 class="mb-2">Комментарий</h4>
-                <p class="mb-2">{{ item.comment }}</p>
-            </div>
-            <div class="col p-4 d-flex flex-column ">
-                <h4 class="mb-2">Статус:</h4>
-                <h3 class="mb-2">{{ item.status }}</h3>
-                <a href="{% url 'moderation:moderation-company' item.pk %}"> <label class="btn btn-success">Редактирование</label></a>
-            </div>
-
-        </div>
-
-    </div>
+        {% include 'companies/includes/company_list_item.html' %}
     {% endfor %}
 </div>
 {% endblock %}

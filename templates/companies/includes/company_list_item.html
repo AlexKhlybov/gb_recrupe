@@ -1,0 +1,17 @@
+<div class="col-md-12 {% if item.status != 3 %}text-muted{% endif %}">
+    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative">
+        <div class="col-auto d-none d-lg-block">
+            <img src="/media/{{ item.logo }}" style="object-fit: scale-down" width="200" height="150" alt="{{ item.name }}">
+        </div>
+        <div class="col p-4 d-flex flex-column position-static">
+            <div class="d-flex justify-content-between">
+                <h3 class="mb-2">{{ item.name }}</h3>
+                {% if user.is_staff or item.user_id == user.pk %}
+                    <h6 class="mx-2 {% if item.status == 1 %}text-warning{% elif item.status == 2 %}text-danger{% else %}text-muted{% endif %}">{{ item.get_status_display }}</h6>
+                {% endif %}
+            </div>
+            <p class="card-text mb-auto">{{ item.short_description }}</p>
+            <a href="{% url 'companies:detail' item.pk %}" class="stretched-link">Подробнее</a>
+        </div>
+    </div>
+</div>

@@ -1,9 +1,9 @@
-import email
-from reprlib import recursive_repr
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
+from apps.tools import upload_to_and_rename
 
 
 class User(AbstractUser):
@@ -67,14 +67,15 @@ class EmployeeProfile(models.Model):
     city = models.CharField(max_length=100, verbose_name='город', blank=True)
     aboutMe = models.TextField(max_length=5000, verbose_name='о себе',  blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, verbose_name='пол')
-    avatar = models.FileField(max_length=64, null=True, verbose_name='Фотография', blank=True)
+    avatar = models.FileField(max_length=64, null=True, verbose_name='Фотография', blank=True,
+                              upload_to=upload_to_and_rename('users', 'avatar'))
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
         # print(f'sender: {created}')
         # print(f'instance: {instance.__dict__}')
         # print(f'instance: {instance.role}')
-        #User.objects.filter(username=instance)
+        # User.objects.filter(username=instance)
         if created:
             if instance.role == 2:
                 EmployeeProfile.objects.create(user=instance)

@@ -4,7 +4,11 @@
 <div class="container">
     <div class="registration-form  mb-5">
         <form method="post" action="{% url 'users:editcompany' %}" enctype="multipart/form-data">
-            <h1 class="mb-3">Редактирование профиля компании</h1>
+            <h1 class="mb-3">Редактирование профиля компании
+                {% if company.status != 3 %}
+                    <span class="{% if company.status == 1 %}text-warning{% elif company.status == 2 %}text-danger{% endif %}">({{ company.get_status_display }})</span>
+                {% endif %}
+            </h1>
             {% csrf_token %}
             {% for field in edit_form %}
                 <div class="row mb-2">
@@ -31,7 +35,7 @@
                 {% if field.name == "logo"%}
                     {% if user.company.logo %}
                         <div class="">
-                            <img style="object-fit: scale-down;" width = "200" height = "160" src="/media/companies/{{ user.company.logo }}" alt="{{ user.company.name }}">
+                            <img style="object-fit: scale-down;" width = "200" height = "160" src="/media/{{ user.company.logo }}" alt="{{ user.company.name }}">
                         </div>
                     {% else %}
                         <div class="">

@@ -5,7 +5,7 @@
     <h2 class="mt-3">{{ object.title }}</h2>
     <div class="mb-1  text-muted">{{ object.created|date:'d.m.Y' }}</div>
     <div class="mt-4"><strong>{{ object.short_text }}</strong></div>
-    <img src="/media/news/{{ object.image }}" alt="" class="img  my-4" style="object-fit: cover; max-width: 100%;">
+    <img src="/media/{{ object.image }}" alt="" class="img  my-4" style="object-fit: cover; max-width: 100%;">
     <br>
     {% for p in object.split_text_to_lines %}
         <p>{{ p }}</p>

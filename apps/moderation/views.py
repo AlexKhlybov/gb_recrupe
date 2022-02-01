@@ -5,13 +5,13 @@ from django.urls import reverse_lazy
 from django.views.generic import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from apps.moderation.models import CompanyModeration
+from apps.companies.models import Company
 from apps.resume.models import Resume
 from apps.vacancies.models import Vacancy
 
 
 class CompanyModerationUpdateView(LoginRequiredMixin, UpdateView):
-    model = CompanyModeration
+    model = Company
     fields = ['status', 'comment']
     template_name = 'moderation/company_moderation.html'
     success_url = reverse_lazy('companies:')
@@ -20,11 +20,11 @@ class CompanyModerationUpdateView(LoginRequiredMixin, UpdateView):
 @login_required
 def company_moderation(request):
     if request.GET.get('find'):
-        company_list = CompanyModeration.objects.filter(
-            Q(company__name__icontains=request.GET.get('find'))
+        company_list = Company.objects.filter(
+            Q(name__icontains=request.GET.get('find'))
         )
     else:
-        company_list = CompanyModeration.objects.all()
+        company_list = Company.objects.filter(status=Company.STATUS_MODERATION)
 
     content = {
         'company_list': company_list,

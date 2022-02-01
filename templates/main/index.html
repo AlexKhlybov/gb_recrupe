@@ -54,7 +54,7 @@
     </div>
 
     <div class="container">
-
+      
         <!-- Раздел рекомендаций -->
         <div class="row g-5 border-bottom">
             <div class="col-md-4  pt-4">
@@ -321,7 +321,7 @@
             <div class="confidence">
                     <div class="row  d-flex  align-items-center  justify-content-evenly">
                     {% for item in partners %}
-                        <div class="col-3"><img class="img" src="/media/companies/{{ item.logo }}" alt="{{ item.name }}"></div>
+                        <div class="col-3"><img class="img" src="/media/{{ item.logo }}" alt="{{ item.name }}"></div>
                     {% endfor %}
                     </div>
             </div>
