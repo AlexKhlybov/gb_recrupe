@@ -1,0 +1,50 @@
+2022-01-31 00:41:54,512 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 00:41:56,160 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
+2022-01-31 00:47:31,152 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 00:47:32,252 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
+2022-01-31 07:07:52,300 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 07:07:53,899 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
+2022-01-31 07:09:48,032 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 07:09:49,019 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
+2022-01-31 07:10:26,579 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 07:10:27,605 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
+2022-01-31 07:13:56,375 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 07:13:57,323 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
+2022-01-31 07:14:44,669 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 07:14:45,580 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
+2022-01-31 07:18:07,773 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 07:18:08,896 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
+2022-01-31 07:19:04,667 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 07:19:05,623 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
+2022-01-31 07:20:56,726 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 07:20:57,747 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
+2022-01-31 07:25:04,725 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 07:25:05,690 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
+2022-01-31 07:26:07,631 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 07:26:08,934 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
+2022-01-31 07:27:07,360 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 07:27:08,335 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
+2022-01-31 07:44:30,848 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 07:44:31,881 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
+2022-01-31 08:40:12,359 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 08:40:13,723 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
+2022-01-31 11:45:39,129 WARNING models.py Выбран клиент отправки сообщений - smtp.google.ru
+2022-01-31 11:45:39,410 ERROR models.py [Errno 8] nodename nor servname provided, or not known
+2022-01-31 11:52:27,090 WARNING models.py Выбран клиент отправки сообщений - smtp.google.ru
+2022-01-31 11:52:27,439 ERROR models.py [Errno 8] nodename nor servname provided, or not known
+2022-01-31 12:45:47,381 WARNING models.py Выбран клиент отправки сообщений - smtp.google.ru
+2022-01-31 12:45:48,397 ERROR models.py [Errno 8] nodename nor servname provided, or not known
+2022-01-31 12:51:28,665 WARNING models.py Выбран клиент отправки сообщений - smtp.google.ru
+2022-01-31 12:51:29,448 ERROR models.py [Errno 8] nodename nor servname provided, or not known
+2022-01-31 12:59:59,215 WARNING models.py Выбран клиент отправки сообщений - smtp.google.ru
+2022-01-31 13:00:18,380 ERROR models.py [Errno 8] nodename nor servname provided, or not known
+2022-01-31 13:27:53,598 WARNING models.py Выбран клиент отправки сообщений - smtp.google.com
+2022-01-31 13:32:07,653 WARNING models.py Выбран клиент отправки сообщений - smtp.google.com
+2022-01-31 13:36:17,083 WARNING models.py Выбран клиент отправки сообщений - smtp.google.com
+2022-01-31 13:43:14,374 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 13:43:15,516 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
+2022-01-31 17:46:52,684 ERROR views.py Ошибка валидации при регистрации - <ul class="errorlist"><li>password2<ul class="errorlist"><li>&quot;Пароль&quot; и &quot;Подтверждение пароля&quot; не совпадают</li></ul></li></ul>
+2022-01-31 17:47:10,323 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 17:47:11,644 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
+2022-01-31 17:50:46,297 WARNING models.py Выбран клиент отправки сообщений - smtp.gmail.com
+2022-01-31 17:50:47,331 INFO models.py Email успешно отправлен на адрес - halexx7@gmail.com
