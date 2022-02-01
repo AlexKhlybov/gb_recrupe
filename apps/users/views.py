@@ -1,3 +1,7 @@
+import os
+import uuid
+
+from django.conf import settings
 from django.contrib import auth, messages
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
@@ -5,6 +9,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
+from apps.companies.models import Company
 from apps.users.forms import (CompanyProfileEditForm, EmployeeProfileEditForm,
                               UserEditForm, UserRegisterForm)
 from apps.notify.models import Notify, NOTIFY_EVENT, TYPE
@@ -33,8 +38,7 @@ def auth_user_view(request):
         else:
             messages.add_message(request, messages.INFO, 'Не верное имя пользователя или пароль')
 
-    content = {}  #TODO - title = 'Вход'
-
+    content = {}  # TODO - title = 'Вход'
 
     return render(request, 'users/sign-in.html', content)
 
@@ -97,12 +101,18 @@ def edit_epmloyee(request):
 @login_required
 def edit_company(request):
     title = 'Редактирование профиля компании'
+    company = Company.objects.filter(pk=request.user.company.pk).first()
     if request.method == 'POST':
         # print(f'User: {request.user.__dict__}')
         edit_form = UserEditForm(request.POST, instance=request.user)
         profile_form = CompanyProfileEditForm(request.POST, request.FILES, instance=request.user.company)
         if edit_form.is_valid() and profile_form.is_valid():
             edit_form.save()
+            if request.user.company:
+                # После того как сохранили изменения, отправляем компанию на модерацию
+                if company:
+                    company.status = Company.STATUS_MODERATION
+                    company.save()
             return HttpResponseRedirect(reverse('user:editcompany'))
         else:
             if not edit_form.is_valid():
@@ -115,10 +125,14 @@ def edit_company(request):
 
     # print(f'edit_form: {edit_form.__dict__}')
 
-    content = {'title': title, 'edit_form': edit_form, 'profile_form': profile_form}
+    content = {
+        'title': title,
+        'edit_form': edit_form,
+        'profile_form': profile_form,
+        'company': company,
+    }
 
     return render(request, 'users/editcompany.html', content)
-
 
 
 # title = 'редактирование'

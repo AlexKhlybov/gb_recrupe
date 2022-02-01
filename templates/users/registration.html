@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <div class="registration-form  mb-5">
-        <form method="post" action="{% url 'users:registration' %}">
+        <form method="post" action="{% url 'users:registration' %}" class="needs-validation" novalidate>
             <h1 class="mt-5  mb-3">Регистрация</h1>
             {% csrf_token %}
             {% for field in register_form %}
@@ -34,4 +34,24 @@
         </form>
     </div>
 </div>
+
+<script>
+    (function () {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
 {% endblock %}

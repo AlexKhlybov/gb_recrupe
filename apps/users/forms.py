@@ -14,8 +14,7 @@ from .models import EmployeeProfile, User
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(label='Email', required=True)
-    role = forms.ChoiceField(choices=((2, "Соискатель"), (3, "Работодатель"), (1, "Модератор")), label='Я:',
-                             required=True)
+    role = forms.ChoiceField(choices=[x for x in User.USER_TYPE if x[0] != 1], label='Я:', required=True)
     first_name = forms.CharField(label='Фамилия', required=True)
     last_name = forms.CharField(label='Имя', required=True)
     second_name = forms.CharField(label='Отчество', required=False)
@@ -24,7 +23,8 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password1', 'password2', 'role', 'first_name', 'last_name', 'second_name', 'phone', 'receiving_messages')
+        fields = ('email', 'password1', 'password2', 'role', 'first_name', 'last_name', 'second_name', 'phone',
+                  'receiving_messages')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -95,8 +95,8 @@ class UserEditForm(UserChangeForm):
             if field_name == 'receiving_messages':
                 field.widget.attrs['class'] = "form-check-input"
 
-class EmployeeProfileEditForm(UserChangeForm):
 
+class EmployeeProfileEditForm(UserChangeForm):
     birthday = forms.DateField(input_formats=('%d.%m.%Y', '%Y-%m-%d'))
 
     class Meta:
@@ -109,11 +109,13 @@ class EmployeeProfileEditForm(UserChangeForm):
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
 
-class CompanyProfileEditForm(UserChangeForm):
 
+class CompanyProfileEditForm(UserChangeForm):
     class Meta:
         model = Company
         fields = ('name', 'url', 'city', 'address', 'description', 'logo')
+
+    logo = forms.ImageField(max_length=1024, label='Логотип организации', required=False)
 
     def __init__(self, *args, **kwargs):
         super(CompanyProfileEditForm, self).__init__(*args, **kwargs)
@@ -121,9 +123,6 @@ class CompanyProfileEditForm(UserChangeForm):
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
 
-
-
-    #
     # def clean_age(self):
     #     data = self.cleaned_data['age']
     #     if data < 18:

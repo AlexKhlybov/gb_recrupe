@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -21,3 +22,13 @@ class CompanyListView(ListView):
 
 class CompanyDetailView(LoginRequiredMixin, DetailView):
     model = Company
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        company_id = kwargs.get('pk')
+        status = request.POST.get('status')
+        if request.user.role == User.USER_TYPE_MODERATOR and status and company_id:
+            company = Company.objects.filter(pk=company_id).first()
+            company.status = status
+            company.save()
+        return redirect('/moderation/companies/')

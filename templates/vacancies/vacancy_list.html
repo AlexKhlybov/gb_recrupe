@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container " >
@@ -79,7 +80,7 @@
                         <div class=" d-flex flex-rows">
                             <input id="find" class="input-group form-control" type="search" name="find" value="{{find}}" placeholder="Поиск по названию">
                             <div class="position-relative mt-1" style="left:-33px;">
-                                <a><img onclick="myFunction()" style="height:27px" src="../static/sliders.svg" alt=""/></a>
+                                <a><img onclick="myFunction()" style="height:27px" src="{% static '/sliders.svg' %}" alt=""/></a>
                             </div>
                             <button class="btn btn-primary "  style="min-width: 200px;" type="submit">Поиск</button>
                         </div>
