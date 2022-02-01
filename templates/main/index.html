@@ -55,31 +55,12 @@
 
     <div class="container">
 
-        <!-- Раздел новостей -->
-        <h2 class="blog-post-title pb-4 mb-0">Последние новости портала</h2>
-        <div class="row mb-2 border-bottom">
-            {% for item in news %}
-                <div class="col-md-6">
-                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                        <div class="col p-4 d-flex flex-column position-static">
-                            <div class="mb-1 text-muted">{{ item.created|date:'d.m.Y' }}</div>
-                            <h5 class="mb-1">{{ item.title }}</h5>
-                            <p class="card-text mb-auto">{{ item.short_text }}</p>
-                            <a href="{% url 'news:detail_news' item.pk %}" class="stretched-link">Подробнее</a>
-                        </div>
-                        <div class="col-auto d-none d-lg-block">
-                            <img src="/media/news/{{ item.image }}" style="object-fit: cover" width="200" height="250" alt="{{ item.title }}">
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-
         <!-- Раздел рекомендаций -->
-        <div class="row g-5">
-            <div class="col-md-4">
+        <div class="row g-5 border-bottom">
+            <div class="col-md-4  pt-4">
                 <div class="position-sticky" style="top: 2rem;">
                     {% if user.is_authenticated %}
+                    <div class="pb-5 mb-5">
                         <ul class="list-group">
                             <li class="list-group-item p-0 m-0">
                                 <a href="{% url 'notify:messages' %}" type="button" class="list-group-item-action p-3">
@@ -177,19 +158,36 @@
                                 </li>
                             {% endif %}
                         </ul>
+                        <div class="card mt-5">
+                            <div class="card-header">
+                                Будь умнее с каждым днем!
+                            </div>
+                            <div class="card-body">
+                                <blockquote class="blockquote mb-0">
+                                    <p>Кто живет чужим трудом, тот неизбежно кончит тем, что начнет жить чужим умом, ибо свой ум вырабатывается только с помощью собственного труда.</p>
+                                    <footer class="blockquote-footer mt-3"><cite title="Source Title">Василий Ключевский</cite></footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                        
                     {% else %}
                         <div class="p-4 mb-3 rounded">
                             <h4 class="fst-italic">О нас</h4>
-                            <p class="mb-0">Рекрутинговое агентство в IT-сфере, оказывающее услуги по поиску и подбору IT-персонала для организаций.</p>
-                        </div>
-        
-                        <div class="p-4">
-                            <h4 class="fst-italic">Тест/Отладка</h4>
-                            <ol class="list-unstyled mb-0">
-                                <li><a href="{% url 'vacancies:all' %}">Вакансии</a></li>
-                                <li><a href="{% url 'resume:all' %}">Резюме</a></li>
-                            </ol>
-                            <p class="my-3">Если вы нашли ошибку - выделите ее мышкой и нажмите Alt + F4</p>
+                            <p class="">Рекрутинговое агентство в IT-сфере, оказывающее услуги по поиску и подбору IT-персонала для организаций.</p>
+                            <p>Для подробного просмотра резюме/вакансий и для просмотра контактов <a href="{% url 'user:registration' %}">зарегистрируйтесь</a> или <a href="{% url 'user:login' %}">войдите</a></p>
+
+                            <div class="card my-4">
+                                <div class="card-header">
+                                    Будь умнее с каждым днем!
+                                </div>
+                                <div class="card-body">
+                                    <blockquote class="blockquote mb-0">
+                                        <p>Кто живет чужим трудом, тот неизбежно кончит тем, что начнет жить чужим умом, ибо свой ум вырабатывается только с помощью собственного труда.</p>
+                                        <footer class="blockquote-footer mt-3"><cite title="Source Title">Василий Ключевский</cite></footer>
+                                    </blockquote>
+                                </div>
+                            </div>
                         </div>
                     {% endif %}
                 </div>
@@ -197,10 +195,10 @@
 
             {% if user.role == 1 %}  {# Модератор #}
                 <div class="col-md-8">
-                    <article class="blog-post">
+                    <article class="blog-post row">
                         <h2 class="blog-post-title my-4">Новые вакансии</h2>
                         {% for item in job_recomendations %}
-                            <div class="col-md-12 p-3">
+                            <div class="col-md-6 p-3">
                                 <div class="d-flex justify-content-between">
                                     <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
                                         <h5 class="mb-0">{{ item.name }}</h5>
@@ -222,10 +220,10 @@
                 </div>
             {% elif user.role == 2 %}  {# Соискатель #}
                 <div class="col-md-8">
-                    <article class="blog-post">
-                        <h2 class="blog-post-title my-4">Рекомендации для вас</h2>
+                    <article class="blog-post row">
+                        <h2 class="blog-post-title my-4">Новые вакансии</h2>
                         {% for item in job_recomendations %}
-                            <div class="col-md-12 p-3">
+                            <div class="col-md-6 p-3">
                                 <div class="d-flex justify-content-between">
                                     <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
                                         <h5 class="mb-0">{{ item.name }}</h5>
@@ -247,10 +245,10 @@
                 </div>
             {% elif user.role == 3 %}  {# Компания #}
                 <div class="col-md-8">
-                    <article class="blog-post">
-                        <h2 class="blog-post-title my-4">Рекомендации для вас</h2>
+                    <article class="blog-post row">
+                        <h2 class="blog-post-title my-4">Новые резюме</h2>
                         {% for item in resume_recomendations %}
-                            <div class="col-md-12 p-3">
+                            <div class="col-md-6 p-3">
                                 <div class="d-flex justify-content-between">
                                     <a href="{% url 'resume:detail' item.pk %}" class="text-decoration-none">
                                         <h5 class="mb-0">{{ item.name }}</h5>
@@ -269,10 +267,10 @@
                 </div>
             {% else %}
                 <div class="col-md-8">
-                    <article class="blog-post">
-                        <h2 class="blog-post-title my-4">Вакансии дня</h2>
+                    <article class="blog-post row">
+                        <h2 class="blog-post-title my-4">Новые вакансии</h2>
                         {% for item in job_recomendations %}
-                            <div class="col-md-12 p-3">
+                            <div class="col-md-6 p-3">
                                 <div class="d-flex justify-content-between">
                                     <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
                                         <h5 class="mb-0">{{ item.name }}</h5>
@@ -295,8 +293,30 @@
             {% endif %}
         </div>
 
+        <!-- Раздел новостей -->
+        <div class="border-bottom pb-3 mt-5">
+            <h2 class="blog-post-title pb-4">Последние новости портала</h2>
+            <div class="row mb-2">
+                {% for item in news %}
+                    <div class="col-md-6">
+                        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                            <div class="col p-4 d-flex flex-column position-static">
+                                <div class="mb-1 text-muted">{{ item.created|date:'d.m.Y' }}</div>
+                                <h5 class="mb-1">{{ item.title }}</h5>
+                                <p class="card-text mb-auto">{{ item.short_text }}</p>
+                                <a href="{% url 'news:detail_news' item.pk %}" class="stretched-link">Подробнее</a>
+                            </div>
+                            <div class="col-auto d-none d-lg-block">
+                                <img src="/media/news/{{ item.image }}" style="object-fit: cover" width="200" height="250" alt="{{ item.title }}">
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
         <!-- Раздел доверия -->
-        <div class="">
+        <div class="mt-5">
             <h2 class="blog-post-title pb-4 mb-0">Нам доверяют</h2>
             <div class="confidence">
                     <div class="row  d-flex  align-items-center  justify-content-evenly">
