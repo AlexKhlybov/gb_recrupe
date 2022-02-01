@@ -1,41 +1,5 @@
-function send(url, method = "GET", data = {}, headers = {}, timeout = 60000) {
-    return new Promise((res, rej) => {
-        var xhr;
 
-        if (window.XMLHttpRequest) {
-            xhr = new XMLHttpRequest();
-        } else if (window.ActiveXObject) {
-            xhr = new ActiveXObject("Microsoft.XMLHTTP");
-        };
-        
-        Object.entries(headers).forEach(([key, value]) => {
-            xhr.setRequestHeader(key, value);
-        });
-        
-        xhr.timeout = timeout;
-        xhr.ontimeout = function () {
-            // Этот код выполняется, если превышено время ожидания
-            rej();
-        };
-        
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-            // Этот код выполняется после получения ответа
-                if (xhr.status < 400) {
-                    res(xhr.responseText);
-                } else if (xhr.status >= 400) {
-                    rej(xhr.responseText);
-                };
-            };
-        };
-    
-        xhr.open(method, url, true);
-        xhr.send(method, JSON.stringify(data));
-    })
-};
-
-
-class Favoretes {
+class Favorites {
     constructor() {
         this.url_vacancy = "/vacancies/edit-favorites";
         this.url_resume = "/resume/edit-favorites";
@@ -92,4 +56,4 @@ class Favoretes {
     };
 };
 
-const favorites = new Favoretes();
+const favorites = new Favorites();

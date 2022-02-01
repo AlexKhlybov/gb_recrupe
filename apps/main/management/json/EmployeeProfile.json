@@ -1,6 +1,26 @@
 [
     {
-        "id": 1,
+        "id": 2,
+        "user": 11,
+        "skills": "",
+        "birthday": "1900-01-01",
+        "city": "",
+        "aboutMe": "",
+        "gender": "",
+        "avatar": ""
+    },
+    {
+        "id": 3,
+        "user": 12,
+        "skills": "",
+        "birthday": "1900-01-01",
+        "city": "",
+        "aboutMe": "",
+        "gender": "",
+        "avatar": ""
+    },
+    {
+        "id": 4,
         "user": 2,
         "skills": "",
         "birthday": "1900-01-01",
@@ -10,13 +30,13 @@
         "avatar": ""
     },
     {
-        "id": 9,
+        "id": 8,
         "user": 1,
-        "skills": "git",
-        "birthday": "2004-01-31",
-        "city": "Москва",
-        "aboutMe": "Я тут самый главный ))",
-        "gender": "M",
+        "skills": "",
+        "birthday": "1900-01-01",
+        "city": "",
+        "aboutMe": "",
+        "gender": "",
         "avatar": ""
     }
 ]

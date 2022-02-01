@@ -3,25 +3,25 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropTitle">Modal title</h5>
+                <h5 class="modal-title" id="staticBackdropTitle">Modal</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="d-flex justify-content-between mb-3">
                     <div class="d-flex align-items-center">
                         <p style="margin: 0px;" >от: </p>
-                        <small class="text-muted ms-3" id="staticBackdropSender"></small>
+                        <small class="text-muted ms-3" id="staticBackdropSender" value="${data.sender}">Sender</small>
                     </div>
                     
                     <div class="d-flex align-items-center">
                         <p style="margin: 0px;">дата: </p>
-                        <small class="text-muted ms-3" id="staticBackdropDate"></small>
+                        <small class="text-muted ms-3" id="staticBackdropDate">${data.send_at}</small>
                     </div>
                 </div>
-                <p id="staticBackdropBody">Body</p>
+                <p id="staticBackdropBody">${data.text}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="staticBackdropSend">Ответить</button>
+                <button type="button" class="btn btn-primary btn-answer" id="staticBackdropSend">Ответить</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
             </div>
         </div>
