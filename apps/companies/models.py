@@ -1,10 +1,24 @@
+import os
+from uuid import uuid4
+
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from apps.main.models import City
-from apps.tools import upload_to_and_rename
 from apps.users.models import User
+
+
+def upload_to_company(instance, filename):
+    if instance.pk:
+        try:
+            company = Company.objects.filter(pk=instance.pk).first()
+            if company and company.logo:
+                company.logo.delete()
+        except (OSError, FileNotFoundError) as _:
+            pass
+    ext = filename.split('.')[-1]
+    return os.path.join('news', f'{uuid4()}.{ext}')
 
 
 class CompanyManager(models.Manager):
@@ -31,7 +45,7 @@ class Company(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания записи')
     name = models.CharField(max_length=255, db_index=True, verbose_name='Имя организации', blank=True)
     logo = models.FileField(max_length=64, null=True, verbose_name='Логотип организации', blank=True,
-                            upload_to=upload_to_and_rename('companies', 'logo'))
+                            upload_to=upload_to_company)
     url = models.URLField(max_length=64, null=True, verbose_name='Сайт компании', blank=True)
     city = models.ForeignKey(City, null=True, db_index=True, verbose_name='Город', blank=True, on_delete=models.CASCADE)
     address = models.CharField(max_length=64, null=True, verbose_name='Адрес организации', blank=True)

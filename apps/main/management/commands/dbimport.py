@@ -41,7 +41,7 @@ class Command(BaseCommand):
             for i in data:
                 resource = resources.modelresource_factory(model=model)()
                 dataset = tablib.Dataset(list(i.values()), headers=list(i.keys()))
-                result = resource.import_data(dataset, dry_run=True)
+                result = resource.import_data(dataset, dry_run=True, raise_errors=False)
                 if not result.has_errors():
                     resource.import_data(dataset, dry_run=False)
                 else:

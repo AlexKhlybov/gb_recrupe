@@ -1,9 +1,22 @@
+import os
+from uuid import uuid4
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from apps.tools import upload_to_and_rename
+
+def upload_to_employee_profile(instance, filename):
+    if instance.pk:
+        try:
+            profile = EmployeeProfile.objects.filter(pk=instance.pk).first()
+            if profile and profile.avatar:
+                profile.avatar.delete()
+        except (OSError, FileNotFoundError) as _:
+            pass
+    ext = filename.split('.')[-1]
+    return os.path.join('news', f'{uuid4()}.{ext}')
 
 
 class User(AbstractUser):
@@ -62,13 +75,12 @@ class EmployeeProfile(models.Model):
 
     user = models.OneToOneField(User, unique=True, null=False, db_index=True, on_delete=models.CASCADE)
     skills = models.CharField(max_length=500, verbose_name='навыки', blank=True)
-    birthday = models.DateField(auto_now=False, auto_now_add=False, blank=True, default='1900-01-01',
-                                verbose_name='дата рождения')
+    birthday = models.DateField(null=True, blank=True, verbose_name='дата рождения')
     city = models.CharField(max_length=100, verbose_name='город', blank=True)
     aboutMe = models.TextField(max_length=5000, verbose_name='о себе',  blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, verbose_name='пол')
     avatar = models.FileField(max_length=64, null=True, verbose_name='Фотография', blank=True,
-                              upload_to=upload_to_and_rename('users', 'avatar'))
+                              upload_to=upload_to_employee_profile)
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):

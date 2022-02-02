@@ -7,12 +7,12 @@ admin.site.register(User)
 admin.site.register(EmployeeProfile)
 
 
-
 class UserResource(resources.ModelResource):
     class Meta:
         model = User
-        exclude = ('password', )
-        
+        exclude = ('password', 'last_login', 'receiving_messages')
+
+
 class EmployeeProfileResource(resources.ModelResource):
     class Meta:
         model = EmployeeProfile

@@ -1,5 +1,15 @@
 [
     {
+        "id": 1,
+        "user": 2,
+        "skills": "",
+        "birthday": "1900-01-01",
+        "city": "",
+        "aboutMe": "",
+        "gender": "",
+        "avatar": ""
+    },
+    {
         "id": 2,
         "user": 11,
         "skills": "",
@@ -12,26 +22,6 @@
     {
         "id": 3,
         "user": 12,
-        "skills": "",
-        "birthday": "1900-01-01",
-        "city": "",
-        "aboutMe": "",
-        "gender": "",
-        "avatar": ""
-    },
-    {
-        "id": 4,
-        "user": 2,
-        "skills": "",
-        "birthday": "1900-01-01",
-        "city": "",
-        "aboutMe": "",
-        "gender": "",
-        "avatar": ""
-    },
-    {
-        "id": 8,
-        "user": 1,
         "skills": "",
         "birthday": "1900-01-01",
         "city": "",
