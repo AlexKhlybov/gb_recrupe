@@ -41,6 +41,7 @@ class UserRegisterForm(UserCreationForm):
             
             if field_name == 'receiving_messages':
                 field.widget.attrs['class'] = "form-check-input"
+                field.data_err = 'Просто текст'
 
     # Проверка на уникальность имени пользователя
     def clean_email(self):
