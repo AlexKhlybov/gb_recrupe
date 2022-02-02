@@ -307,7 +307,7 @@
                                 <a href="{% url 'news:detail_news' item.pk %}" class="stretched-link">Подробнее</a>
                             </div>
                             <div class="col-auto d-none d-lg-block">
-                                <img src="/media/news/{{ item.image }}" style="object-fit: cover" width="200" height="250" alt="{{ item.title }}">
+                                <img src="/media/{{ item.image }}" style="object-fit: cover" width="200" height="250" alt="{{ item.title }}">
                             </div>
                         </div>
                     </div>
