@@ -1,7 +1,6 @@
 [
     {
         "id": 1,
-        "last_login": "2022-02-01 23:33:07",
         "is_superuser": "1",
         "groups": "",
         "user_permissions": "",
@@ -14,12 +13,10 @@
         "last_name": "Модератор",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-01",
-        "role": 1,
-        "receiving_messages": "0"
+        "role": 1
     },
     {
-        "id": 14,
-        "last_login": "2022-01-31 11:36:52",
+        "id": 2,
         "is_superuser": "0",
         "groups": "",
         "user_permissions": "",
@@ -32,12 +29,10 @@
         "last_name": "Соискатель",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-02",
-        "role": 2,
-        "receiving_messages": "0"
+        "role": 2
     },
     {
         "id": 3,
-        "last_login": "",
         "is_superuser": "0",
         "groups": "",
         "user_permissions": "",
@@ -50,12 +45,10 @@
         "last_name": "Ozon",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-03",
-        "role": 3,
-        "receiving_messages": "0"
+        "role": 3
     },
     {
         "id": 4,
-        "last_login": "2022-01-31 10:06:59",
         "is_superuser": "0",
         "groups": "",
         "user_permissions": "",
@@ -68,12 +61,10 @@
         "last_name": "sberbank",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-04",
-        "role": 3,
-        "receiving_messages": "0"
+        "role": 3
     },
     {
         "id": 5,
-        "last_login": "",
         "is_superuser": "0",
         "groups": "",
         "user_permissions": "",
@@ -86,12 +77,10 @@
         "last_name": "beeline",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-05",
-        "role": 3,
-        "receiving_messages": "0"
+        "role": 3
     },
     {
         "id": 6,
-        "last_login": "",
         "is_superuser": "0",
         "groups": "",
         "user_permissions": "",
@@ -104,12 +93,10 @@
         "last_name": "yandex",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-06",
-        "role": 3,
-        "receiving_messages": "0"
+        "role": 3
     },
     {
         "id": 7,
-        "last_login": "",
         "is_superuser": "0",
         "groups": "",
         "user_permissions": "",
@@ -122,12 +109,10 @@
         "last_name": "lenta",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-07",
-        "role": 3,
-        "receiving_messages": "0"
+        "role": 3
     },
     {
         "id": 8,
-        "last_login": "",
         "is_superuser": "0",
         "groups": "",
         "user_permissions": "",
@@ -140,12 +125,10 @@
         "last_name": "domclick",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-08",
-        "role": 3,
-        "receiving_messages": "0"
+        "role": 3
     },
     {
         "id": 9,
-        "last_login": "",
         "is_superuser": "0",
         "groups": "",
         "user_permissions": "",
@@ -158,12 +141,10 @@
         "last_name": "tinkoff",
         "second_name": "Иванович",
         "phone": "+7(900)000-00-09",
-        "role": 3,
-        "receiving_messages": "0"
+        "role": 3
     },
     {
         "id": 11,
-        "last_login": "2022-01-31 11:36:52",
         "is_superuser": "0",
         "groups": "",
         "user_permissions": "",
@@ -176,12 +157,10 @@
         "last_name": "Соискатель",
         "second_name": "Петров",
         "phone": "+7(900)000-00-10",
-        "role": 2,
-        "receiving_messages": "0"
+        "role": 2
     },
     {
         "id": 12,
-        "last_login": "2022-01-31 11:36:52",
         "is_superuser": "0",
         "groups": "",
         "user_permissions": "",
@@ -194,7 +173,6 @@
         "last_name": "Соискатель",
         "second_name": "Ватников",
         "phone": "+7(900)000-00-11",
-        "role": 2,
-        "receiving_messages": "0"
+        "role": 2
     }
 ]
