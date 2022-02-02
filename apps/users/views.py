@@ -135,6 +135,28 @@ def edit_company(request):
     return render(request, 'users/editcompany.html', content)
 
 
+@login_required
+def edit_moderator(request):
+    title = 'Редактирование профиля модератора'
+    if request.method == 'POST':
+        # print(f'User: {request.user.__dict__}')
+        edit_form = UserEditForm(request.POST, instance=request.user)
+        if edit_form.is_valid():
+            edit_form.save()
+            return HttpResponseRedirect(reverse('user:editmoderator'))
+        else:
+            if not edit_form.is_valid():
+                messages.add_message(request, messages.ERROR, edit_form.errors)
+    else:
+        edit_form = UserEditForm(instance=request.user)
+
+    content = {
+        'title': title,
+        'edit_form': edit_form,
+    }
+
+    return render(request, 'users/editmoderator.html', content)
+
 # title = 'редактирование'
     #
     # if request.method == 'POST':

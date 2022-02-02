@@ -10,4 +10,5 @@ urlpatterns = [
     path('registration/', users.registration, name='registration'),
     path('editemployee/', users.edit_epmloyee, name='editemployee'),
     path('editcompany/', users.edit_company, name='editcompany'),
+    path('editmoderator/', users.edit_moderator, name='editmoderator'),
 ]

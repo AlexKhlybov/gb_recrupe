@@ -31,7 +31,7 @@
                             <li><a class="dropdown-item" href="{% url 'moderation:resume' %}">Проверить резюме</a></li>
                             <li><a class="dropdown-item" href="{% url 'moderation:vacancy' %}">Проверить вакансии</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{% url 'user:editemployee' %}">Профиль</a></li>
+                            <li><a class="dropdown-item" href="{% url 'user:editmoderator' %}">Профиль</a></li>
                         </ul>
                     </div>
                 {% elif user.role == 2 %}  {# Соискатель #}

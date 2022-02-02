@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="registration-form  mb-5">
+        <form method="post" action="{% url 'users:editmoderator' %}" enctype="multipart/form-data">
+            <h1 class="mb-3">Редактирование профиля</h1>
+            {% csrf_token %}
+            {% for field in edit_form %}
+                <div class="row mb-2">
+                    {% if field.label != "" and field.label != "Пароль" %}
+                        <label class="col-sm-4 col-form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                        <div class="col-sm-8">
+                            {{ field }}
+                        </div>
+                    {% else %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+    
+            {% for message in messages %}
+                <p class="col-auto mb-3 text-danger">{{ message }}</p>
+            {% endfor %}
+    
+            <div class="col-auto mb-3">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </div>
+        </form>
+        <button class="btn btn-round form-control last">
+            <a href="/" class="">на главную</a>
+        </button>
+    </div>
+</div>
+{% endblock %}
