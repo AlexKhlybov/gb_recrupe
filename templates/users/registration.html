@@ -12,6 +12,11 @@
                         <label class="col-sm-4 col-form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
                         <div class="col-sm-8">
                             {{ field }}
+                            {% if field.label == 'Email' %}
+                                <div class="invalid-feedback">Введиет корректный E-mail!</div>
+                            {% else %}
+                                <div class="invalid-feedback">Поле не может быть пустым</div>
+                            {% endif %}
                         </div>
                     {% else %}
                     {% endif %}
