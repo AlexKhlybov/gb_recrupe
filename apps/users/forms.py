@@ -68,7 +68,7 @@ class UserRegisterForm(UserCreationForm):
         user = super().save()
         user.is_active = False
         user.username = user.email
-        if user.role != 3:
+        if user.role != User.USER_TYPE_MODERATOR:
             # Если не модератор регистрируется, то сразу активируем пользователя
             user.is_active = True
         user.save()

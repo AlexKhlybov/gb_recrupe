@@ -16,7 +16,7 @@ def upload_to_employee_profile(instance, filename):
         except (OSError, FileNotFoundError) as _:
             pass
     ext = filename.split('.')[-1]
-    return os.path.join('news', f'{uuid4()}.{ext}')
+    return os.path.join('users', f'{uuid4()}.{ext}')
 
 
 class User(AbstractUser):
@@ -84,16 +84,11 @@ class EmployeeProfile(models.Model):
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
-        # print(f'sender: {created}')
-        # print(f'instance: {instance.__dict__}')
-        # print(f'instance: {instance.role}')
-        # User.objects.filter(username=instance)
         if created:
-            if instance.role == 2:
+            if instance.role == User.USER_TYPE_EMPLOYEE:
                 EmployeeProfile.objects.create(user=instance)
 
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
-        if instance.role == 2:
-            # print(f'instance_1111: {instance.employeeprofile}')
+        if instance.role == User.USER_TYPE_EMPLOYEE:
             instance.employeeprofile.save()

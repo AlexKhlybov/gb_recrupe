@@ -18,7 +18,7 @@ def upload_to_company(instance, filename):
         except (OSError, FileNotFoundError) as _:
             pass
     ext = filename.split('.')[-1]
-    return os.path.join('news', f'{uuid4()}.{ext}')
+    return os.path.join('companies', f'{uuid4()}.{ext}')
 
 
 class CompanyManager(models.Manager):
@@ -81,4 +81,4 @@ class Company(models.Model):
         return ' '.join(self.description.split()[:11]) + '...'
 
     def split_description_to_lines(self):
-        return self.description.split('\n')
+        return self.description.split('\n') if self.description else ''
