@@ -278,3 +278,16 @@ a {
         font-size: 3.5rem;
     }
 }
+
+.msg__before--fill::before {
+  content: "●"; /* Добавляем символ */
+  padding-right: 7px; /* Расстояние от текста до маркеров */
+  color: rgb(240, 172, 47);
+}
+
+
+.msg__before::before {
+  content: "○"; /* Добавляем символ */
+  padding-right: 7px; /* Расстояние от текста до маркеров */
+  color: rgb(34, 34, 34);
+}
