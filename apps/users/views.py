@@ -101,7 +101,6 @@ def edit_epmloyee(request):
 @login_required
 def edit_company(request):
     title = 'Редактирование профиля компании'
-    company = Company.objects.filter(pk=request.user.company.pk).first()
     if request.method == 'POST':
         # print(f'User: {request.user.__dict__}')
         edit_form = UserEditForm(request.POST, instance=request.user)
@@ -110,9 +109,8 @@ def edit_company(request):
             edit_form.save()
             if request.user.company:
                 # После того как сохранили изменения, отправляем компанию на модерацию
-                if company:
-                    company.status = Company.STATUS_MODERATION
-                    company.save()
+                request.user.company.status = Company.STATUS_MODERATION
+                request.user.company.save()
             return HttpResponseRedirect(reverse('user:editcompany'))
         else:
             if not edit_form.is_valid():
@@ -129,7 +127,7 @@ def edit_company(request):
         'title': title,
         'edit_form': edit_form,
         'profile_form': profile_form,
-        'company': company,
+        'company': request.user.company,
     }
 
     return render(request, 'users/editcompany.html', content)
