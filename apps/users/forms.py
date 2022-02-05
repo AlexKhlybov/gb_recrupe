@@ -1,5 +1,6 @@
 # from django.contrib.auth.forms import AuthenticationForm
 # from django.contrib.auth.forms import UserChangeForm
+from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 # from .models import ShopUserProfile

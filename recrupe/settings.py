@@ -23,6 +23,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'crispy_forms',
+    'ckeditor',
+    'ckeditor_uploader',
+
     'apps.main',
     'apps.users',
     'apps.news',
@@ -31,8 +35,6 @@ INSTALLED_APPS = [
     'apps.resume',
     'apps.notify',
     'apps.moderation',
-
-    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -122,6 +124,7 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (
     BASE_DIR / 'static',
 )
@@ -130,6 +133,18 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# ckeditor
+CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/'
+CKEDITOR_UPLOAD_PATH = "/media/ckeditor/"
+CKEDITOR_IMAGE_BACKEND = 'pillow'
+CKEDITOR_FILENAME_GENERATOR = 'utils.get_ckeditor_filename'
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        # 'height': 300,
+        # 'width': 300,
+    },
+}
 
 # Пользователи/Авторизация
 AUTH_USER_MODEL = 'users.User'
