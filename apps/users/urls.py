@@ -14,7 +14,7 @@ urlpatterns = [
     # change password urls
     path("password-change/", users.UserPwdChangeView.as_view(), name="pwd_change",),
     path("password-change/done/", users.UserPwdChangeDoneView.as_view(), name="pwd_change_done"),
-    # # reset password urls
+    # reset password urls
     # re_path(
     #     r"^password-reset/$",
     #     PasswordResetView.as_view(
