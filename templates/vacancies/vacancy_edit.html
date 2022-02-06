@@ -5,9 +5,15 @@
     <link rel="stylesheet" href="{% static '/tagify/tagify.css' %}">
     <style>
         /* В blog.css почему-то объявлено для textarea max-height: 5em; */
+
         textarea {
             max-height: none;
+            width: 100%;
         }
+        .django-ckeditor-widget{
+            width: 100%;
+        }
+
         .label__form {
             font-size: 1.4rem;
         }
@@ -16,6 +22,8 @@
 
 {% block js %}
     <script src="{% static '/tagify/tagify.min.js' %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 {% endblock %}
 
 {% block content %}

@@ -90,7 +90,7 @@ class Resume(models.Model):
         years = diff.years
         month = diff.months
 
-        return  years + month/12
+        return years + month/12
 
     @property
     def skills(self):

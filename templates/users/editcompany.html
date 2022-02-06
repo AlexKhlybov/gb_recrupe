@@ -32,9 +32,15 @@
                 <div class="row mb-2">
                     {% if field.label != "" and field.label != "Password"%}
                         <label class="col-sm-4 col-form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
-                        <div class="col-sm-8">
-                            {{ field }}
-                        </div>
+                        {% if field.name == 'description' %}
+                            <div class="col-sm-8">
+                                {{ field }}
+                            </div>
+                        {% else %}
+                            <div class="col-sm-8">
+                                {{ field }}
+                            </div>
+                        {% endif %}
                     {% else %}
                     {% endif %}
                 </div>

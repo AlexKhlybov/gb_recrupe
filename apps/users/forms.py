@@ -1,16 +1,10 @@
-# from django.contrib.auth.forms import AuthenticationForm
-# from django.contrib.auth.forms import UserChangeForm
-from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-# from .models import ShopUserProfile
 from django.core.validators import validate_email
 
 from apps.companies.models import Company
 
 from .models import EmployeeProfile, User
-
-# import random, hashlib
 
 
 class UserRegisterForm(UserCreationForm):
