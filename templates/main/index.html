@@ -321,7 +321,7 @@
             <div class="confidence">
                     <div class="row  d-flex  align-items-center  justify-content-evenly">
                     {% for item in partners %}
-                        <div class="col-3"><img class="img" src="/media/{{ item.logo }}" alt="{{ item.name }}"></div>
+                        <a href="{% url 'companies:detail' item.pk %}" class="col-3"><img class="img" src="/media/{{ item.logo }}" alt="{{ item.name }}"></a>
                     {% endfor %}
                     </div>
             </div>

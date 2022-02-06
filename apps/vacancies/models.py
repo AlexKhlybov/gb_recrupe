@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextField
 from django.db import models
 from django.db.models import Q
 
@@ -48,7 +49,7 @@ class Vacancy(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='vacancy_company',
                                 verbose_name='Компания')
     name = models.CharField(max_length=128, db_index=True, verbose_name="Название вакансии")
-    description = models.TextField(max_length=5000, verbose_name='Описание вакансии')
+    description = RichTextField(max_length=5000, verbose_name='Описание вакансии')
     experience = models.PositiveSmallIntegerField(choices=EXPERIENCE, db_index=True, default=EXPERIENCE_NONE,
                                                   verbose_name="Опыт работы")
     price_min = models.IntegerField(verbose_name="Зарплата от", db_index=True, null=True, blank=True)
@@ -59,10 +60,6 @@ class Vacancy(models.Model):
 
     objects = models.Manager()
     public = VacancyPublicManager()
-
-    @property
-    def split_description_to_lines(self):
-        return self.description.split('\n')
 
     @property
     def price(self):
@@ -85,7 +82,6 @@ class Vacancy(models.Model):
         user = User.objects.get(id=user)
         return user.favorites_vacancy.all()
     
-
     def delete(self, using=None, keep_parents=False):
         VacancySkills.objects.filter(vacancy=self).delete()
         super().delete(using, keep_parents)
@@ -127,10 +123,8 @@ class VacancyFavorites(models.Model):
     @staticmethod
     def get_favorite_vacancy_list(user_id):
         """Возвращает список id вакансий добавленных в избранное"""
-        # TODO сделать фильтрацию под юзера
-        return VacancyFavorites.objects.values_list('vacancy', flat=True).order_by('id')
+        return VacancyFavorites.objects.filter(user_id=user_id).values_list('vacancy', flat=True).order_by('id')
     
     @classmethod
     def get_number_favorite(cls, user):
         return VacancyFavorites.objects.filter(user=user).count()
-

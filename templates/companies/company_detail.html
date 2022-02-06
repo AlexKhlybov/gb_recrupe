@@ -54,9 +54,7 @@
                     </div>
                 {% endif %}
 
-                {% for p in object.split_description_to_lines %}
-                    <p>{{ p }}</p>
-                {% endfor %}
+                {{ object.description|safe }}
             </article>
         </div>
     </div>

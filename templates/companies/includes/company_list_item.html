@@ -10,7 +10,7 @@
                     <h6 class="mx-2 {% if item.status == 1 %}text-warning{% elif item.status == 2 %}text-danger{% else %}text-muted{% endif %}">{{ item.get_status_display }}</h6>
                 {% endif %}
             </div>
-            <p class="card-text mb-auto">{{ item.description|truncatewords:20 }}</p>
+            <p class="card-text mb-auto">{{ item.description|striptags|safe|truncatewords:25 }}</p>
             <a href="{% url 'companies:detail' item.pk %}" class="stretched-link">Подробнее</a>
         </div>
     </div>

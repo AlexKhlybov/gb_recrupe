@@ -1,7 +1,5 @@
-# from django.contrib.auth.forms import AuthenticationForm
-# from django.contrib.auth.forms import UserChangeForm
 from django import forms
-# from .models import ShopUserProfile
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.core.validators import validate_email
 from django.contrib.auth.forms import (UserChangeForm, UserCreationForm,
                                        AuthenticationForm, PasswordChangeForm,
@@ -9,9 +7,8 @@ from django.contrib.auth.forms import (UserChangeForm, UserCreationForm,
                                        UserChangeForm, UserCreationForm)
 from apps.companies.models import Company
 
+# from .models import ShopUserProfile
 from .models import EmployeeProfile, User
-
-# import random, hashlib
 
 
 class UserRegisterForm(UserCreationForm):

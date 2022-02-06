@@ -73,63 +73,11 @@
 
         </div>
         <div class="w-100">
-
-            <div class="mb-5">
-                <div class="d-flex bg-light sticky-top justify-content-between p-3">
-                    <form class=" flex-grow-1" id="form" method="get">
-                        <div class=" d-flex flex-rows">
-                            <input id="find" class="input-group form-control" type="search" name="find" value="{{find}}" placeholder="Поиск по названию">
-                            <div class="position-relative mt-1" style="left:-33px;">
-                                <a><img onclick="myFunction()" style="height:27px" src="{% static '/sliders.svg' %}" alt=""/></a>
-                            </div>
-                            <button class="btn btn-primary "  style="min-width: 200px;" type="submit">Поиск</button>
-                        </div>
-
-                    </form>
-                </div>
-
-                {% for item in object_list %}
-                    <div class="col-md-12 border p-3">
-                        <div class="d-flex justify-content-between">
-                            <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
-                                <h5 class="mb-0">{{ item.name }}</h5>
-                            </a>
-                            <p class="fs-5 mb-0">{{ item.price }}</p>
-                        </div>
-                        <div class="mb-1">
-                            <a href="{% url 'companies:detail' item.company.pk %}"
-                            class="mb-auto text-muted text-decoration-none">{{item.company }}</a>
-                            <p class="mb-auto text-muted">{{ item.company.city }}</p>
-                        </div>
-                        <div>
-                            {% for desc in item.split_description_to_lines|slice:":2" %}<p class="m-0">{{ desc }}</p>{% endfor %}
-                        </div>
-                        <div class="d-flex justify-content-between mt-3">
-                            <div>
-                                {% if not request.user.role == 1 %}
-                                <button onclick="void(0)" class="btn  btn-primary">Откликнуться</button>
-                                {% if item.id in my_favorites %}
-                                <button id="{{ item.id }}"
-                                        class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-success">
-                                    В избранном
-                                </button>
-                                {% else %}
-                                <button id="{{ item.id }}"
-                                        class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-primary">
-                                    В избранное
-                                </button>
-                                {% endif %}
-                                {% else %}
-                                <button onclick="void(0)" class="btn  btn-primary">Проверить</button>
-                                {% endif %}
-                            </div>
-                            <div class="mb-1 text-muted">{{ item.created_at|date:'d.m.Y' }}</div>
-                        </div>
-                    </div>
-                {% empty %}
-                    <strong class="mb-3">Нет активных вакансий</strong>
-                {% endfor %}
-            </div>
+            {% for item in object_list %}
+                {% include 'vacancies/includes/vacancy_list_item.html' %}
+            {% empty %}
+                <strong class="mb-3">Нет активных вакансий</strong>
+            {% endfor %}
         </div>
     </div>
 </div>
