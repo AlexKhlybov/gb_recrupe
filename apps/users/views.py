@@ -7,11 +7,15 @@ from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.urls.base import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
 
 from apps.companies.models import Company
+from apps.users.models import User
 from apps.users.forms import (CompanyProfileEditForm, EmployeeProfileEditForm,
-                              UserEditForm, UserRegisterForm)
+                              UserEditForm, UserRegisterForm, UserPasswordChangeForm)
 from apps.notify.models import Notify, NOTIFY_EVENT, TYPE
 from apps.log.logging import logger
 
@@ -55,15 +59,19 @@ def registration(request):
         if register_form.is_valid():
             register_form.save()
             try:
-                Notify.send(
-                    event=NOTIFY_EVENT.REGISTRATION_EVENT,
-                    type=TYPE.EMAIL,
-                    context={},
-                    email=request.POST["email"],
-                )
+                # Отправляем приветственное сообщение после регистрации в ЛК
+                Notify.send(event=NOTIFY_EVENT.REGISTRATION_EVENT, type=TYPE.MESSAGE,
+                            context={}, email=request.POST["email"],)
+                if request.POST["receiving_messages"]:
+                    try:
+                        # Отправялем EMAIL
+                        Notify.send(event=NOTIFY_EVENT.REGISTRATION_EVENT, type=TYPE.EMAIL,
+                                    context={}, email=request.POST["email"],)
+                    except Exception as err:
+                        logger.error(f"Ошибка отправки сообщения - {err}")
+                    return HttpResponseRedirect(reverse('user:login'))
             except Exception as err:
-                logger.error(f"Ошибка отправки сообщения - {err}")
-            return HttpResponseRedirect(reverse('user:login'))
+                logger.error(f"Пользователь не хочет получать email!")
         else:
             logger.error(f"Ошибка валидации при регистрации - {register_form.errors}")
             messages.add_message(request, messages.ERROR, register_form.errors)
@@ -171,3 +179,36 @@ def edit_moderator(request):
     # content = {'title': title, 'edit_form': edit_form, 'profile_form': profile_form}
     #
     # return render(request, 'authapp/edit.html', content)
+    
+    
+class UserPwdChangeView(LoginRequiredMixin, PasswordChangeView):
+    template_name = "users/pwd_change.html"
+    success_url = reverse_lazy("users:pwd_change_done")
+    form_class = UserPasswordChangeForm
+    
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests: instantiate a form instance with the passed
+        POST variables and then check if it's valid.
+        """
+        form = self.get_form()
+        if form.is_valid():
+            user = User.objects.get(id=request.user.id)
+            try:
+                # Отправляем сообщение в личный кабинет!
+                Notify.send(user=user, event=NOTIFY_EVENT.CHANGE_PWD_EVENT,
+                                type=TYPE.MESSAGE, context={},)
+                # Проверяем готов ли пользователь принимать сообщения
+                if user.receiving_messages:
+                    # Отправляет сообщение на почту
+                    Notify.send(user=user, event=NOTIFY_EVENT.CHANGE_PWD_EVENT,
+                                type=TYPE.EMAIL, context={},)
+            except Exception as err:
+                logger.error(f"Ошибка отправки сообщения - {err}")
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+    
+    
+class UserPwdChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):
+    template_name="users/pwd_change_done.html"

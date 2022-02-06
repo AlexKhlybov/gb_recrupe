@@ -42,7 +42,11 @@
             {% for message in messages %}
                 <p class="col-auto mb-3 text-danger">{{ message }}</p>
             {% endfor %}
-    
+
+            <div class="pb-5">
+                <a href="{% url 'users:pwd_change' %}"
+                    class="col  text-right  text-decoration-none">Изменить пароль</a>
+            </div>
             <div class="col-auto mb-3">
                 <button type="submit" class="btn btn-primary">Сохранить</button>
             </div>

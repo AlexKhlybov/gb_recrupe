@@ -9,6 +9,7 @@ from django.template import Context, Template
 from django.utils.timezone import now
 
 from apps.log.logging import logger
+from apps.users.models import User
 
 #     Notify.send(
 #         user=user,
@@ -63,12 +64,16 @@ class TYPE:
 class NOTIFY_EVENT:
     # notify events
     REGISTRATION_EVENT = 1
-    FEEDBACK_EVENT = 2
-    MESSAGE = 3
+    CHANGE_PWD_EVENT = 2
+    RESET_PWD_EVENT = 3
+    RESPONCE_EVENT = 4
+    MESSAGE = 5
 
     CHOICES_NOTIFY_EVENT = {
         REGISTRATION_EVENT: {"title": "Register",},
-        FEEDBACK_EVENT: {"title": "Feeback",},
+        CHANGE_PWD_EVENT: {"title": "Change",},
+        RESET_PWD_EVENT: {"title": "Reset",},
+        RESPONCE_EVENT: {"title": "Responce",},
         MESSAGE: {"title": "Message",},
     }
 
@@ -198,12 +203,12 @@ class Notify(models.Model):
             logger.error(err)
 
     def send_message(self):
-
         if self.user is None:
             logger.error("Нет такого пользователя!")
-            self.save()
             return
-
+        if not self.sender_email:
+            if self.event in [1, 2, 3]:
+                self.sender_email = "moderator@mail.ru"
         self.sent_at = now()
         self.save()
 
@@ -212,6 +217,8 @@ class Notify(models.Model):
 
         if user:
             email = user.email if not email else email
+        if email:
+            user = User.get_user_by_email(email)
 
         # Для выбора шаблонов в action'е
         template = NotifyTemplate.objects.get(event=event, type=type, is_active=True)

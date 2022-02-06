@@ -1,10 +1,12 @@
 # from django.contrib.auth.forms import AuthenticationForm
 # from django.contrib.auth.forms import UserChangeForm
 from django import forms
-from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 # from .models import ShopUserProfile
 from django.core.validators import validate_email
-
+from django.contrib.auth.forms import (UserChangeForm, UserCreationForm,
+                                       AuthenticationForm, PasswordChangeForm,
+                                       PasswordResetForm, SetPasswordForm,
+                                       UserChangeForm, UserCreationForm)
 from apps.companies.models import Company
 
 from .models import EmployeeProfile, User
@@ -136,3 +138,23 @@ class CompanyProfileEditForm(UserChangeForm):
     #     if "yandex" in data:
     #         raise forms.ValidationError("Никто не любит яндекс! =(")
     #     return data
+
+
+class UserPasswordChangeForm(PasswordChangeForm):
+    field_name = ["old_password", "new_password1", "new_password2"]
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Настройка полей ввода
+
+        for field_name, field in self.fields.items():
+            if field_name == 'old_password':
+                field.label = 'Старый пароль'
+            if field_name == 'new_password1':
+                field.label = 'Новый пароль'
+            if field_name == 'new_password2':
+                field.label = 'Подтверждение пароля'
+
+            field.widget.attrs['class'] = 'form-control'
+            field.help_text = ''
+    
