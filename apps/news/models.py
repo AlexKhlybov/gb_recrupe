@@ -1,6 +1,7 @@
 import os
 from uuid import uuid4
 
+from ckeditor.fields import RichTextField
 from django.db import models
 
 
@@ -21,15 +22,12 @@ class News(models.Model):
     title = models.CharField(max_length=128, verbose_name='Заголовок')
     image = models.FileField(max_length=64, verbose_name='Картинка', upload_to=upload_to_news)
     short_text = models.CharField(max_length=255, verbose_name='Краткое описание')
-    text = models.TextField(max_length=10000, verbose_name='Текст новости')
+    text = RichTextField(max_length=10000, verbose_name='Текст новости')
 
     class Meta:
         ordering = ('-created',)
         verbose_name = 'Новости'
         verbose_name_plural = 'Новости'
-
-    def split_text_to_lines(self):
-        return self.text.split('\n')
 
     def __str__(self):
         return self.title
