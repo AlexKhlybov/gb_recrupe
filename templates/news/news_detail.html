@@ -7,9 +7,7 @@
     <div class="mt-4"><strong>{{ object.short_text }}</strong></div>
     <img src="/media/{{ object.image }}" alt="" class="img  my-4" style="object-fit: cover; max-width: 100%;">
     <br>
-    {% for p in object.split_text_to_lines %}
-        <p>{{ p }}</p>
-    {% endfor %}
+    {{ object.text|safe }}
     <div class="mb-5 pb-5"></div>
 </div>
 {% endblock %}

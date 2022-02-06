@@ -25,9 +25,7 @@
     </div>
     <hr>
     <div>
-        {% for item in object.split_description_to_lines %}
-            <p>{{ item }}</p>
-        {% endfor %}
+        {{ object.description|safe }}
     </div>
 
     {% if object.skills|length %}<h3 class="mt-5">Ключевые навыки</h3>{% endif %}

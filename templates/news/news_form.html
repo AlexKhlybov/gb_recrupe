@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
-
 {% load crispy_forms_tags %}
+{% load static %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+{% endblock %}
 
 {% block content %}
 <div class="container">

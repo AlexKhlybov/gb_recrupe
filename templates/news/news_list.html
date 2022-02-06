@@ -19,7 +19,7 @@
                 <div class="col p-4 d-flex flex-column position-static">
                     <div class="mb-1 text-muted">{{ item.created|date:'d.m.Y' }}</div>
                     <h3 class="mb-2">{{ item.title }}</h3>
-                    <p class="card-text mb-auto">{{ item.short_text }}</p>
+                    <p class="card-text mb-auto">{{ item.text|safe|striptags|truncatewords:40 }}</p>
                     <div class="d-flex">
                         <div><a href="{% url 'news:detail_news' item.pk %}" class="mx-3">Подробнее</a></div>
                         {% if request.user.role == 1 %}

@@ -131,7 +131,8 @@ class VacancyCompanyListView(LoginRequiredMixin, ListView):
     model = Vacancy
 
     def get_queryset(self):
-        company_id = self.kwargs['company_id']
+        # company_id = self.kwargs['company_id']
+        company_id = Company.objects.get(user=self.request.user)
         return Vacancy.objects.filter(company_id=company_id)
 
 
