@@ -1,10 +1,19 @@
+from webbrowser import get
 from django import forms
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.core.validators import validate_email
-
+from django.contrib.auth.forms import (UserChangeForm, UserCreationForm,
+                                       AuthenticationForm, PasswordChangeForm,
+                                       PasswordResetForm, SetPasswordForm,
+                                       UserChangeForm, UserCreationForm)
 from apps.companies.models import Company
 
+# from .models import ShopUserProfile
 from .models import EmployeeProfile, User
+from apps.notify.models import Notify, NOTIFY_EVENT, TYPE
+from apps.log.logging import logger
+
+from django.contrib.auth.tokens import default_token_generator
 
 
 class UserRegisterForm(UserCreationForm):
@@ -131,3 +140,96 @@ class CompanyProfileEditForm(UserChangeForm):
     #     if "yandex" in data:
     #         raise forms.ValidationError("Никто не любит яндекс! =(")
     #     return data
+
+
+class UserPasswordChangeForm(PasswordChangeForm):
+    field_name = ['old_password', 'new_password1', 'new_password2']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Настройка полей ввода
+
+        for field_name, field in self.fields.items():
+            if field_name == 'old_password':
+                field.label = 'Старый пароль'
+            if field_name == 'new_password1':
+                field.label = 'Новый пароль'
+            if field_name == 'new_password2':
+                field.label = 'Подтверждение пароля'
+
+            field.widget.attrs['class'] = 'form-control'
+            field.help_text = ''
+    
+class UserPwdResetForm(PasswordResetForm):
+    field_name = ['email']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Настройка полей ввода
+
+        for field_name, field in self.fields.items():
+            if field_name == 'email':
+                field.label = 'E-mail'
+
+            field.widget.attrs['class'] = 'form-control'
+            field.help_text = ''
+    
+    def send_mail(self, context):
+        """
+        Отправка сообщений за счет своего класса Notify
+        """
+        try:
+            # # Отправляем сообщение в личный кабинет! (Для тестов, чтоб Gmail не грузить)
+            # Notify.send(user=context['user'], 
+            #             event=NOTIFY_EVENT.RESET_PWD_EVENT,
+            #             type=TYPE.MESSAGE,
+            #             context={"reset_key_link": context['password_reset_key']},)
+            # Проверяем готов ли пользователь принимать сообщения
+            if context['user'].receiving_messages:
+                # Отправляет сообщение на почту
+                Notify.send(user=context['user'],
+                            event=NOTIFY_EVENT.RESET_PWD_EVENT,
+                            type=TYPE.EMAIL,
+                            context={"reset_key_link": context['password_reset_key']},)
+        except Exception as err:
+            logger.error(f"Ошибка отправки сообщения - {err}")
+    
+    def save(self, domain_override=None, use_https=False, token_generator=default_token_generator,
+             request=None, extra_email_context=None, from_email=None, email_template_name=None, subject_template_name=None,
+             html_email_template_name=None):
+        """
+        Generate a one-use only link for resetting password and send it to the
+        user.
+        """
+        email = self.cleaned_data["email"]
+        try:
+            user = User.get_user_by_email(email)
+        except Exception as err:
+            logger.error(f'Пользователя с таким E-mail не зарегистрирован!')
+        user.generate_link(request)
+    
+        context = {
+            'email': email,
+            'user': user,
+            'password_reset_key': user.password_reset_key,
+            **(extra_email_context or {}),
+        }
+        self.send_mail(context)
+        
+        
+class UserPwdSetForm(SetPasswordForm):
+    field_name = ['new_password1', 'new_password2']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Настройка полей ввода
+
+        for field_name, field in self.fields.items():
+            if field_name == 'new_password1':
+                field.label = 'Новый пароль'
+            if field_name == 'new_password2':
+                field.label = 'Подтверждение пароля'
+
+            field.widget.attrs['class'] = 'form-control'
+            field.help_text = ''
+    

@@ -2,8 +2,8 @@
 <header class="blog-header">
     <div class="my-2 row flex-nowrap justify-content-between align-items-center">
         <div class="col-6  pt-2  d-flex  align-items-center">
-            <p><a class="link-secondary" href="/"><img class="logo__img" src="{% static 'logo_new.png' %}" alt="Recrupe"></a></p>
-            <p class="mx-4  logo__text">Работа найдется для каждого</p>
+            <p><a class="link-secondary" href="/"><img class="logo__img" src="{{ site_config.get_absolute_url }}" alt="Recrupe"></a></p>
+            <p class="mx-4  logo__text">{{ site_config.tagline }}</p>
         </div>
         <div class="col-6 gap-2 d-flex justify-content-end align-items-center">
             {% if user.is_authenticated %}
@@ -30,6 +30,7 @@
                             <li><a class="dropdown-item" href="{% url 'moderation:companies' %}">Проверить компании</a></li>
                             <li><a class="dropdown-item" href="{% url 'moderation:resume' %}">Проверить резюме</a></li>
                             <li><a class="dropdown-item" href="{% url 'moderation:vacancy' %}">Проверить вакансии</a></li>
+                            <li><a class="dropdown-item" href="{% url 'admin:index' %}">Админка</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{% url 'user:editmoderator' %}">Профиль</a></li>
                         </ul>
