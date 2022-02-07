@@ -17,6 +17,6 @@ urlpatterns = [
     # reset password urls
     path('password-reset/',users.UserPwdResetView.as_view(), name="pwd_reset",),
     path('password-reset/done/', users.UserPwdResetDoneView.as_view(), name="pwd_reset_done",),
-    re_path(r'^reset/$', users.UserPwdResetConfirmView.as_view(), name="pwd_reset_confirm",),
+    path('reset/', users.UserPwdResetConfirmView.as_view(), name="pwd_reset_confirm",),
     path('reset/complete/', users.UserPwdResetCompleteView.as_view(), name="pwd_reset_complete",),
 ]

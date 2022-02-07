@@ -209,7 +209,7 @@ class Notify(models.Model):
             logger.error("Нет такого пользователя!")
             return
         if not self.sender_email:
-            if self.event in [1, 2, 3]:
+            if self.event in [1, 2, 3, 4]:
                 self.sender_email = "moderator@mail.ru"
         self.sent_at = now()
         self.save()
