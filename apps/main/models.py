@@ -59,6 +59,9 @@ class SiteConfiguration(SingletonModel):
 
     def delete(self, *args, **kwargs):
         return super().delete(*args, **kwargs)
+    
+    def get_site(self):
+        return f'{self.site}'
 
     class Meta:
         verbose_name = "Настройки сайта"

@@ -66,13 +66,15 @@ class NOTIFY_EVENT:
     REGISTRATION_EVENT = 1
     CHANGE_PWD_EVENT = 2
     RESET_PWD_EVENT = 3
-    RESPONCE_EVENT = 4
-    MESSAGE = 5
+    RESET_PWD_DONE_EVENT = 4
+    RESPONCE_EVENT = 5
+    MESSAGE = 6
 
     CHOICES_NOTIFY_EVENT = {
         REGISTRATION_EVENT: {"title": "Register",},
         CHANGE_PWD_EVENT: {"title": "Change",},
         RESET_PWD_EVENT: {"title": "Reset",},
+        RESET_PWD_DONE_EVENT: {"title": "Done reset",},
         RESPONCE_EVENT: {"title": "Responce",},
         MESSAGE: {"title": "Message",},
     }

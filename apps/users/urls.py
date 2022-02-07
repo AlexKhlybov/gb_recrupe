@@ -12,40 +12,11 @@ urlpatterns = [
     path('editcompany/', users.edit_company, name='editcompany'),
     path('editmoderator/', users.edit_moderator, name='editmoderator'),
     # change password urls
-    path("password-change/", users.UserPwdChangeView.as_view(), name="pwd_change",),
-    path("password-change/done/", users.UserPwdChangeDoneView.as_view(), name="pwd_change_done"),
+    path('password-change/', users.UserPwdChangeView.as_view(), name="pwd_change",),
+    path('password-change/done/', users.UserPwdChangeDoneView.as_view(), name="pwd_change_done"),
     # reset password urls
-    # re_path(
-    #     r"^password-reset/$",
-    #     PasswordResetView.as_view(
-    #         template_name="authnapp/password_reset.html",
-    #         email_template_name="authnapp/password_reset_email.html",
-    #         success_url=reverse_lazy("auth:password_reset_done"),
-    #         form_class=MyPassResetForm,
-    #     ),
-    #     name="password_reset",
-    # ),
-    # re_path(
-    #     r"^password-reset/done/$",
-    #     PasswordResetDoneView.as_view(
-    #         template_name="authnapp/password_reset_done.html",
-    #     ),
-    #     name="password_reset_done",
-    # ),
-    # re_path(
-    #     r"^password-reset/confirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$",
-    #     PasswordResetConfirmView.as_view(
-    #         template_name="authnapp/password_reset_confirm.html",
-    #         success_url=reverse_lazy("auth:password_reset_complete"),
-    #         form_class=MyPassSetForm,
-    #     ),
-    #     name="password_reset_confirm",
-    # ),
-    # re_path(
-    #     r"^password-reset/complete/$",
-    #     PasswordResetCompleteView.as_view(
-    #         template_name="authnapp/password_reset_complete.html",
-    #     ),
-    #     name="password_reset_complete",
-    # ),
+    path('password-reset/',users.UserPwdResetView.as_view(), name="pwd_reset",),
+    path('password-reset/done/', users.UserPwdResetDoneView.as_view(), name="pwd_reset_done",),
+    re_path(r'^reset/$', users.UserPwdResetConfirmView.as_view(), name="pwd_reset_confirm",),
+    path('reset/complete/', users.UserPwdResetCompleteView.as_view(), name="pwd_reset_complete",),
 ]

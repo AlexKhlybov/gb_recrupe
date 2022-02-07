@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <div class="form__signin  d-flex  mt-5 flex-column align-items-center">
+            <div class="icon__succesful">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="green" class="bi bi-check2-circle" viewBox="0 0 16 16">
+                    <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
+                    <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
+                  </svg>
+            </div>
+            <h2 class="mt-3">Новый пароль успешно установлен!</h2>
+            <div class="mt-5">
+                <a class="btn btn-primary" href="{% url 'users:login' %}" role="button">Вход</a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

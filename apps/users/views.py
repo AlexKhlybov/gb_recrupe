@@ -4,18 +4,22 @@ import uuid
 from django.conf import settings
 from django.contrib import auth, messages
 from django.contrib.auth import get_user_model
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.urls.base import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
+from django.views.decorators.debug import sensitive_post_parameters
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
+from django.contrib.auth.views import (PasswordChangeView, PasswordChangeDoneView, PasswordResetView,
+                                       PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView)
 
 from apps.companies.models import Company
 from apps.users.models import User
-from apps.users.forms import (CompanyProfileEditForm, EmployeeProfileEditForm,
-                              UserEditForm, UserRegisterForm, UserPasswordChangeForm)
+from apps.users.forms import (CompanyProfileEditForm, EmployeeProfileEditForm, UserPwdSetForm,
+                              UserEditForm, UserRegisterForm, UserPasswordChangeForm, UserPwdResetForm)
 from apps.notify.models import Notify, NOTIFY_EVENT, TYPE
 from apps.log.logging import logger
 
@@ -212,3 +216,68 @@ class UserPwdChangeView(LoginRequiredMixin, PasswordChangeView):
     
 class UserPwdChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):
     template_name="users/pwd_change_done.html"
+    
+    
+class UserPwdResetView(PasswordResetView):
+    template_name = 'users/pwd_reset.html'
+    # email_template_name = "authnapp/password_reset_email.html'
+    success_url = reverse_lazy('users:pwd_reset_done')
+    form_class = UserPwdResetForm
+    
+    
+class UserPwdResetDoneView(PasswordResetDoneView):
+    template_name="users/pwd_reset_done.html"
+
+
+class UserPwdResetConfirmView(PasswordResetConfirmView):
+    template_name = 'users/pwd_reset_confirm.html'
+    success_url = reverse_lazy('users:pwd_reset_complete')
+    form_class = UserPwdSetForm
+    
+    @method_decorator(sensitive_post_parameters())
+    @method_decorator(never_cache)
+    def dispatch(self, *args, **kwargs):
+        path = self.request.get_full_path()
+        host = self.request.get_host()
+        reset_link = f'http://{host}{path}'
+        self.user = User.objects.filter(password_reset_key=reset_link).first()
+        
+        if self.request.method == 'POST':
+            form = self.get_form()
+            if form.is_valid():
+                return self.form_valid(form)
+            else:
+                return self.form_invalid(form)
+        else:
+            if not reset_link:
+                return HttpResponse('Нет ссылки для сброса.', status=400)
+            if not self.user:
+                return HttpResponse('Пользователь не существует', status=400)
+            if self.user is not None:
+                self.validlink = True
+                return self.render_to_response(self.get_context_data())
+            # Display the "Password reset unsuccessful" page.
+            return self.render_to_response(self.get_context_data())
+
+    def form_valid(self, form):
+        form.save()
+        try:
+            # Отправляем сообщение в личный кабинет!
+            Notify.send(user=self.user, 
+                        event=NOTIFY_EVENT.RESET_PWD_DONE_EVENT,
+                        type=TYPE.MESSAGE,
+                        context={},)
+            # Проверяем готов ли пользователь принимать сообщения
+            if self.user.receiving_messages:
+                # Отправляет сообщение на почту
+                Notify.send(user=self.user,
+                            event=NOTIFY_EVENT.RESET_PWD_DONE_EVENT,
+                            type=TYPE.EMAIL,
+                            context={},)
+        except Exception as err:
+            logger.error(f"Ошибка отправки сообщения - {err}")
+        return HttpResponseRedirect(self.get_success_url())
+     
+
+class UserPwdResetCompleteView(PasswordResetCompleteView):
+    template_name = 'users/pwd_reset_complete.html'
