@@ -19,6 +19,7 @@
     <div class="d-flex justify-content-between mb-2">
         <div class="d-flex gap-2">
             <button type="button" class="btn btn-primary">Откликнуться</button>
+            <button class="btn btn-warning btn-messages-new" style="outline: none;" id="createMessageResume" type="button" aria-current="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Сообщение</button>
             {% if is_favorite %}
                 <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-success btn--resume">В избранном</button>
             {% else %}

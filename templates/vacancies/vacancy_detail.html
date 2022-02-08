@@ -43,7 +43,7 @@
         <div class="mb-4">
             <h3 class="mb-2">Контакты</h3>
             <ol class="list-unstyled mb-4">
-                {% if object.company.user.email %}<li>e-mail: <a href="mailto:{{ object.company.user.email }}" target="_blank">{{ object.company.user.email }}</a></li> {% endif %}
+                {% if object.company.user.email %}<li>e-mail: <a href="mailto:{{ object.company.user.email }}" target="_blank" id="staticBackdropSender">{{ object.company.user.email }}</a></li> {% endif %}
                 {% if object.company.user.phone %}<li>Телефон: <a href="tel:{{ object.company.user.phone }}" target="_blank">{{ object.company.user.phone }}</a></li> {% endif %}
             </ol>
         </div>
@@ -52,4 +52,5 @@
     <hr>
     <p class="fst-italic mb-5">Вакансия опубликована {{ object.created_at|date:'d.m.Y' }} в {{ object.company.city }}</p>
 </div>
+{% include 'notify/include/modal_resume_msg.html' %}
 {% endblock %}
