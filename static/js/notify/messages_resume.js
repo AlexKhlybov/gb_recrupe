@@ -17,7 +17,6 @@ async function getModalMessage(args) {
     const url = {
         detail: `${window.location.href}detail/`,
         create: `${window.location.href}create/`,
-        resume: `/notify/create/`,
     }
     const alert = {
         succesfull: {
@@ -65,16 +64,12 @@ async function getModalMessage(args) {
                 resumeData.email = document.querySelector('#sendMessage').value
                 resumeData.subject = document.querySelector('#messageInput').value
                 resumeData.text = document.querySelector('#messageTextarea').value
-                request.url = url.resume;  //TODO Временно поставил resume вместо create
+                request.url = url.create;
     
                 parceData(resumeData);
                 requestServer();
             }
             break;
-        case 'resume':
-
-            break;
-
     }
 
     // Парсит данные с формы и возвращает объект -> {'csrf': token, 'body': body}
@@ -243,7 +238,8 @@ document.querySelectorAll("#btnMessageDetail").forEach(el => {
 //Ловим событие кнопок "Ответить", "Отправить", "Новое сообщение"
 document.addEventListener('click', event => {
     if (event.target.id == 'btnAnswerGetForm') {
-        const emailSender = document.getElementById('staticBackdropSender').getAttribute('value');
+        const emailSender = document.getElementById('staticBackdropSender')
+        const valuee = emailSender.getAttribute('value');
         getModalMessage({event: event, action: 'answer', sender: emailSender}).then();
     } else if (event.target.id == 'createNewMessage') {
         getModalMessage({event: event, action: 'new'}).then();
@@ -252,12 +248,6 @@ document.addEventListener('click', event => {
         getModalMessage({event: event, action: 'send', form: formID}).then();
     } else if (event.target.id == 'btnMessageSend') {
         const formID = 'formNewMessage';
-        getModalMessage({event: event, action: 'send', form: formID}).then();
-    } else if (event.target.id == 'createMessageResume') {
-        const emailSender = document.getElementById('staticBackdropSender').text;
-        getModalMessage({event: event, action: 'answer', sender: emailSender}).then();
-    } else if (event.target.id == 'btnMessageResume') {
-        const formID = 'formAnswerMessage'
         getModalMessage({event: event, action: 'send', form: formID}).then();
     };
 })
