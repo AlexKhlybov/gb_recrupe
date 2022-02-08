@@ -14,9 +14,10 @@
             <a href="{% url 'companies:detail' object.company.pk %}" class="text-decoration-none"><h4>{{ object.company }}</h4></a>
             <p class="mb-2">{{ object.company.address }}</p>
 
-            {% include 'vacancies/includes/communication.html' %}
             <p>Требуемый опыт работы: {{ object.get_experience_display }}</p>
+            {% include 'vacancies/includes/communication.html' %}
         </div>
+
         <div class="col-md-3">
             <div class="col-auto d-none d-lg-block">
                 <img src="/media/{{ object.company.logo }}" style="object-fit: scale-down" width="100%" alt="{{ object.name }}">

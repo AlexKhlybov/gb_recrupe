@@ -55,6 +55,8 @@ class Vacancy(models.Model):
     price_max = models.IntegerField(verbose_name="Зарплата до", db_index=True, null=True, blank=True)
     favorites = models.ManyToManyField(User, related_name="favorites_vacancy", through="VacancyFavorites",
                                        through_fields=("vacancy", "user"))
+    # answers = models.ManyToManyField(User, related_name="answers_vacancy", through="VacancyAnswers",
+    #                                    through_fields=("vacancy", "user"))
     status = models.IntegerField(choices=STATUS, db_index=True, default=STATUS_PUBLIC, verbose_name='Статус')
 
     objects = models.Manager()
@@ -133,4 +135,5 @@ class VacancyFavorites(models.Model):
     @classmethod
     def get_number_favorite(cls, user):
         return VacancyFavorites.objects.filter(user=user).count()
+
 

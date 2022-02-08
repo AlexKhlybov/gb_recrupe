@@ -12,6 +12,8 @@ from apps.resume.forms import ResumeForm, get_resume_data, save_resume_data
 from apps.main.models import City
 from apps.resume.models import Resume, ResumeFavorites, Education
 from apps.users.models import User
+from apps.vacancies.models import Vacancy
+from apps.companies.models import Company
 
 from apps.resume.models import ResumeSkills
 
@@ -44,6 +46,8 @@ class ResumeListView(LoginRequiredMixin, ListView):
         if experience is not None and experience != '':
             context['experience_search'] = experience
         context["my_favorites_list_id"] = ResumeFavorites.get_favorite_vacancy_list(self.request.user.id)
+        context["my_vacancies"] = Vacancy.objects.filter(
+            company=Company.objects.filter(user__pk=self.request.user.pk)[0]).order_by("name")
         return context
 
     def get_queryset(self):
@@ -123,6 +127,8 @@ class FavoritesResumeListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["favorites"] = Resume.get_favorite_resume(self.request.user.id)
+        context["my_vacancies"] = Vacancy.objects.filter(
+            company=Company.objects.filter(user__pk=self.request.user.pk)[0]).order_by("name")
         return context
     
 
@@ -154,6 +160,8 @@ class ResumeDetailView(LoginRequiredMixin, DetailView):
         if not self.request.user.is_anonymous:
             context["is_favorite"] = ResumeFavorites.objects.filter(
                 user=self.request.user, resume_id=self.kwargs['pk']).exists()
+            context["my_vacancies"] = Vacancy.objects.filter(
+                company=Company.objects.filter(user__pk=self.request.user.pk)[0]).order_by("name")
         return context
 
 

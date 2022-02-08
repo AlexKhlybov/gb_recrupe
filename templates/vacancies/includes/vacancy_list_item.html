@@ -26,18 +26,20 @@
             {% if request.user.role == 1 %}  {# Модератор #}
                 <a href="{% url 'vacancies:detail' item.pk %}" class="btn  btn-primary">Проверить</a>
             {% elif request.user.role == 2 %}  {# Соискатель #}
-                <button onclick="void(0)" class="btn  btn-primary">Откликнуться</button>
+                {{ item.id }}
                 {% if item.id in my_favorites %}
                     <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-success">В избранном</button>
                 {% else %}
                     <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-primary">В избранное</button>
                 {% endif %}
+            {% include 'vacancies/includes/answer_menu.html' %}
             {% elif request.user.role == 3 %}  {# Работодатель #}
                 {% if item.company.user_id == request.user.pk %}
                     <a class="btn btn-primary" href="{% url 'vacancies:edit' item.pk %}" role="button">Изменить</a>
                 {% endif %}
             {% endif %}
         </div>
+
         <div class="mb-1 text-muted">{{ item.created_at|date:'d.m.Y' }}</div>
     </div>
 </div>

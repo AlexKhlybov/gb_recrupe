@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'apps.resume',
     'apps.notify',
     'apps.moderation',
+    'apps.answers',
 
     'crispy_forms',
 ]

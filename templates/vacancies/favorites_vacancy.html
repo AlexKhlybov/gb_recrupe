@@ -21,9 +21,12 @@
             </div>
             <div class="d-flex justify-content-between mt-3">
                 <div>
-                    <button onclick="void(0)" class="btn btn-primary">Откликнуться</button>
                     <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-success">В избранном</button>
                 </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-3">
+                {% include 'vacancies/includes/answer_menu.html' %}
                 <div class="mb-1 text-muted">{{ item.created_at|date:'d.m.Y' }}</div>
             </div>
         </div>

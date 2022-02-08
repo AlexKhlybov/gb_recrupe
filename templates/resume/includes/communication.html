@@ -18,7 +18,7 @@
 {% elif request.user.role == 3 %}  {# Работодатель #}
     <div class="d-flex justify-content-between mb-2">
         <div class="d-flex gap-2">
-            <button type="button" class="btn btn-primary">Откликнуться</button>
+
             {% if is_favorite %}
                 <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-success btn--resume">В избранном</button>
             {% else %}
@@ -26,5 +26,8 @@
             {% endif %}
         </div>
         <button type="button" class="btn btn-outline-danger complaint_resume" data-id="{{ object.id }}" {% if object.status >= 3 %}disabled{% endif %}>Пожаловаться</button>
+    </div>
+    <div>
+        {% include 'resume/includes/invite_menu.html' %}
     </div>
 {% endif %}
