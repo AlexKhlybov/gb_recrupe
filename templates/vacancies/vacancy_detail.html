@@ -35,8 +35,19 @@
             <a href="{% url 'companies:detail' object.company.pk %}" class="text-decoration-none"><h4>{{ object.company }}</h4></a>
             <p class="mb-2">{{ object.company.address }}</p>
 
-            <p>Требуемый опыт работы: {{ object.get_experience_display }}</p>
+            {% if object.company.user.email or object.company.user.phone %}
+                <div class="mb-4">
+                    <h3 class="mt-4 mb-2">Контакты</h3>
+                    <ol class="list-unstyled mb-4">
+                        {% if object.company.user.email %}<li>e-mail: <a href="mailto:{{ object.company.user.email }}" target="_blank" id="staticBackdropSender">{{ object.company.user.email }}</a></li> {% endif %}
+                        {% if object.company.user.phone %}<li>Телефон: <a href="tel:{{ object.company.user.phone }}" target="_blank">{{ object.company.user.phone }}</a></li> {% endif %}
+                    </ol>
+                </div>
+            {% endif %}
+
             {% include 'vacancies/includes/communication.html' %}
+
+            <p>Требуемый опыт работы: {{ object.get_experience_display }}</p>
         </div>
 
         <div class="col-md-3">
@@ -61,16 +72,6 @@
             <button onclick="void(0)" class="btn btn-success">Откликнуться</button>
         </div>
     {% endif %}
-    {% if object.company.user.email or object.company.user.phone %}
-        <div class="mb-4">
-            <h3 class="mb-2">Контакты</h3>
-            <ol class="list-unstyled mb-4">
-                {% if object.company.user.email %}<li>e-mail: <a href="mailto:{{ object.company.user.email }}" target="_blank" id="staticBackdropSender">{{ object.company.user.email }}</a></li> {% endif %}
-                {% if object.company.user.phone %}<li>Телефон: <a href="tel:{{ object.company.user.phone }}" target="_blank">{{ object.company.user.phone }}</a></li> {% endif %}
-            </ol>
-        </div>
-    {% endif %}
-
     <hr>
     <p class="fst-italic mb-5">Вакансия опубликована {{ object.created_at|date:'d.m.Y' }} в {{ object.company.city }}</p>
 </div>

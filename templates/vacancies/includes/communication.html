@@ -16,18 +16,18 @@
         </div>
     </div>
 {% elif request.user.role == 2 %}  {# Соискатель #}
-    <div class="d-flex justify-content-between mb-2">
-        <div class="d-flex gap-2">
-            <button type="button" class="btn btn-primary">Откликнуться</button>
-            <button class="btn btn-warning btn-messages-new" style="outline: none;" id="createMessageResume" type="button" aria-current="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Сообщение</button>
+    <div class="d-flex flex-column justify-content-between mb-3">
+        <div class=" gap-2">
+            <button class="btn btn-outline-warning text-black btn-messages-new" style="outline: none;" id="createMessageResume" type="button" aria-current="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Написать сообщение</button>
         </div>
-        {% if object.status < 3 %}
-            <button type="button" class="btn btn-outline-danger complaint_vacancy" data-id="{{ object.id }}" {% if object.status >= 3 %}disabled{% endif %}>Пожаловаться</button>
-        {% endif %}
+        <div class="d-flex justify-content-between mt-5">
+            {% include 'vacancies/includes/answer_menu.html' %}
+            {% if object.status < 3 %}
+                <button type="button" class="btn btn-outline-danger complaint_vacancy" data-id="{{ object.id }}" {% if object.status >= 3 %}disabled{% endif %}>Пожаловаться</button>
+            {% endif %}
+        </div>
     </div>
-    <div class="d-flex justify-content-between mt-3">
-        {% include 'vacancies/includes/answer_menu.html' %}
-    </div>
+    
         <br>
 {% elif request.user.role == 3 %}  {# Работодатель #}
 {% endif %}

@@ -48,7 +48,7 @@ class VacancyListView(LoginRequiredMixin, ListView):
         if city_search is not None:
             context['city_search'] = city_search
 
-        context["my_favorites"] = VacancyFavorites.get_favorite_vacancy_list(self.request.user.id)
+        context["my_favorites_list_id"] = VacancyFavorites.get_favorite_vacancy_list(self.request.user.id)
         context["my_resume"] = Resume.objects.filter(user__pk=self.request.user.pk).order_by("name")
         return context
 

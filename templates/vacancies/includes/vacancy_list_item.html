@@ -1,15 +1,32 @@
+{% load static %}
+
 <div class="col-md-12 border p-3">
     <div class="d-flex justify-content-between">
-        <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
-            <div class="d-flex">
+        <div class="d-flex justify-content-start">
+            <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none d-flex align-items-center">
                 <h5 class="mb-0">{{ item.name }}</h5>
-                {% if request.user.is_staff or item.company.user_id == request.user.pk %}
-                    {% if item.status != 2 %}
-                        <span class="mx-2 {% if item.status == 3 %}text-warning{% elif item.status == 4 %}text-danger{% else %}text-muted{% endif %}">({{ item.get_status_display }})</span>
-                    {% endif %}
+            </a>
+            {% if request.user.is_staff or item.company.user_id == request.user.pk %}
+                {% if item.status != 2 %}
+                    <span class="mx-2 {% if item.status == 3 %}text-warning{% elif item.status == 4 %}text-danger{% else %}text-muted{% endif %}">({{ item.get_status_display }})</span>
                 {% endif %}
-            </div>
-        </a>
+            {% endif %}
+            {% if user.role == 2 %}  {# Работодатель #}
+                {% if item.id in my_favorites_list_id %}
+                    <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-warning btn--vacancy">
+                        <svg class="bi" width="20" height="20" fill="currentColor">
+                            <use id="use-favorite" xlink:href="{% static '/bootstrap/icons/favorite.svg' %}#favorite-fill"></use>
+                        </svg>
+                    </button>
+                {% else %}
+                    <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-secondary btn--vacancy">
+                        <svg class="bi" width="20" height="20" fill="currentColor">
+                            <use use="use-favorite-fill" xlink:href="{% static '/bootstrap/icons/favorite.svg' %}#favorite"></use>
+                        </svg>
+                    </button>
+                {% endif %}
+            {% endif %}
+        </div>
         <p class="fs-5 mb-0">{{ item.price }}</p>
     </div>
     <div class="mb-1">
@@ -26,12 +43,7 @@
             {% if request.user.role == 1 %}  {# Модератор #}
                 <a href="{% url 'vacancies:detail' item.pk %}" class="btn  btn-primary">Проверить</a>
             {% elif request.user.role == 2 %}  {# Соискатель #}
-                {% if item.id in my_favorites %}
-                    <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-success">В избранном</button>
-                {% else %}
-                    <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-primary">В избранное</button>
-                {% endif %}
-            {% include 'vacancies/includes/answer_menu.html' %}
+                {% include 'vacancies/includes/answer_menu.html' %}
             {% elif request.user.role == 3 %}  {# Работодатель #}
                 {% if item.company.user_id == request.user.pk %}
                     <a class="btn btn-primary" href="{% url 'vacancies:edit' item.pk %}" role="button">Изменить</a>
