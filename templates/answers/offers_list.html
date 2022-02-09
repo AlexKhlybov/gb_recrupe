@@ -1,12 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="container">
+    <h5 class="mb-3 ms-5">Отклики и предложения</h5>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in company_offers %}
+                <tr>
+                    <th scope="row">{{ item.id }}</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+    
+{% endblock content %}
+    
+
 <body>
     Список предложений от компании.
-        <p>{{title}}</p>
         <p>{{company_offers}}</p>
         <p>Найдено предложений о работе от нашей компании: {{company_offers_count}}</p>
 </body>
