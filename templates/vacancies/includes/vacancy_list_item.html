@@ -26,7 +26,6 @@
             {% if request.user.role == 1 %}  {# Модератор #}
                 <a href="{% url 'vacancies:detail' item.pk %}" class="btn  btn-primary">Проверить</a>
             {% elif request.user.role == 2 %}  {# Соискатель #}
-                {{ item.id }}
                 {% if item.id in my_favorites %}
                     <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-success">В избранном</button>
                 {% else %}

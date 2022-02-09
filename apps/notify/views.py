@@ -9,7 +9,7 @@ from apps.notify.forms import ContactForm
 from apps.notify.models import NOTIFY_EVENT, TYPE, Notify
 from apps.users.models import User
 
-from log.logging import logger
+from apps.log.logging import logger
 
 class MessagesListView(LoginRequiredMixin, ListView):
     model = Notify

@@ -36,7 +36,6 @@
                     <a class="btn btn-primary" href="{% url 'resume:edit' item.pk %}" role="button">Изменить</a>
                 {% endif %}
             {% elif request.user.role == 3 %}  {# Работодатель #}
-            {{ item.id }}
                 {% if item.id in my_favorites_list_id %}
                     <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-success">В избранном</button>
                 {% else %}
