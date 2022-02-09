@@ -5,15 +5,17 @@
 {% block content %}
 
 <div class="container">
-    <h5 class="mb-3 ms-5">Отклики и предложения</h5>
+    <h2 class="mb-3 ms-5">Отклики (приглашения)</h2>
+    <p class="ms-5  fst-italic"> На ваши вакансии откликнулись <span class="fw-bolder">{{ company_answers_count }}</span> раза! </p>
 
     <table class="table table-hover">
         <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Статус</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">Вакансия</th>
+                <th scope="col">Резюме</th>
+                <th scope="col">Дата</th>
             </tr>
         </thead>
         <tbody>
@@ -21,8 +23,9 @@
                 <tr>
                     <th scope="row">{{ item.id }}</th>
                     <td>{{ item.get_status_display }}</td>
-                    <td>{{ item.vacancy }}</td>
-                    <td>{{ item.resume }}</td>
+                    <td><a href="{% url 'vacancies:detail' item.vacancy.id %}">{{ item.vacancy }}</a></td>
+                    <td><a href="{% url 'resume:detail' item.resume.id %}">{{ item.resume.name }}</a></td>
+                    <td>{{ item.created_at }}</td>
                 </tr>
             {% endfor %}
         </tbody>

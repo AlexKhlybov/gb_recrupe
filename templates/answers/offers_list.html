@@ -5,24 +5,28 @@
 {% block content %}
 
 <div class="container">
-    <h5 class="mb-3 ms-5">Отклики и предложения</h5>
+    <h2 class="mb-3 ms-5">Отклики (приглашения)</h2>
+    <p class="ms-5  fst-italic"> Вы отправили <span class="fw-bolder">{{ company_offers_count }}</span> приглашений! </p>
 
     <table class="table table-hover">
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Вакансия</th>
+                <th scope="col">Резюме</th>
+                <th scope="col">Дата</th>
             </tr>
         </thead>
         <tbody>
             {% for item in company_offers %}
                 <tr>
                     <th scope="row">{{ item.id }}</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                    <td>{{ item.get_status_display }}</td>
+                    <td><a href="{% url 'resume:detail' item.resume.id %}">{{ item.resume }}</a></td>
+                    <td><a href="{% url 'vacancies:detail' item.vacancy.id %}">{{ item.vacancy }}</a></td>
+
+                    <td>{{ item.created_at }}</td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -30,11 +34,3 @@
 </div>
     
 {% endblock content %}
-    
-
-<body>
-    Список предложений от компании.
-        <p>{{company_offers}}</p>
-        <p>Найдено предложений о работе от нашей компании: {{company_offers_count}}</p>
-</body>
-</html>
