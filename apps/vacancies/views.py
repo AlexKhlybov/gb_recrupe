@@ -154,6 +154,7 @@ class FavoritesVacancyListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["my_favorites"] = VacancyFavorites.get_favorite_vacancy_list(self.request.user.id)
         context["favorites"] = Vacancy.get_favorite_vacancy(self.request.user.id)
         context["my_resume"] = Resume.objects.filter(user__pk=self.request.user.pk).order_by("name")
         return context

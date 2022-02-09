@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container">
@@ -7,9 +8,26 @@
     {% for item in favorites %}
         <div class="col-md-12 border p-3">
             <div class="d-flex justify-content-between">
-                <a href="{% url 'vacancies:detail' item.pk %}" class="text-decoration-none">
-                    <h5 class="mb-0">{{ item.name }}</h5>
-                </a>
+                <div class="d-flex justify-content-start">
+                    <a href="{% url 'vacancies:detail' item.pk %}" class="d-flex align-items-center text-decoration-none">
+                        <h5 class="mb-0">{{ item.name }}</h5>
+                    </a>
+                    {% if user.role == 2 %}  {# Соискатель #}
+                        {% if item.id in my_favorites %}
+                            <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-warning btn--vacancy">
+                                <svg class="bi" width="20" height="20" fill="currentColor">
+                                    <use id="use-favorite" xlink:href="{% static '/bootstrap/icons/favorite.svg' %}#favorite-fill"></use>
+                                </svg>
+                            </button>
+                        {% else %}
+                            <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-secondary btn--vacancy">
+                                <svg class="bi" width="20" height="20" fill="currentColor">
+                                    <use use="use-favorite-fill" xlink:href="{% static '/bootstrap/icons/favorite.svg' %}#favorite"></use>
+                                </svg>
+                            </button>
+                        {% endif %}
+                    {% endif %}
+                </div>
                 <p class="fs-5 mb-0">{{ item.price }}</p>
             </div>
             <div class="mb-1">
@@ -18,11 +36,6 @@
             </div>
             <div>
                 {% for desc in item.split_description_to_lines|slice:":2" %}<p class="m-0">{{ desc }}</p>{% endfor %}
-            </div>
-            <div class="d-flex justify-content-between mt-3">
-                <div>
-                    <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--vacancy  text-success">В избранном</button>
-                </div>
             </div>
 
             <div class="d-flex justify-content-between mt-3">
