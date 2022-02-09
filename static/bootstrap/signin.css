@@ -40,3 +40,12 @@
 .form__signin-form {
     width: 100%;
 }
+
+.icon__succesful {
+    height: 100px;
+}
+
+.icon__footer {
+    height: 20px;
+    fill: rgb(116, 115, 115);
+}

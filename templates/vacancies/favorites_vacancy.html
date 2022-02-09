@@ -30,6 +30,9 @@
                 <div class="mb-1 text-muted">{{ item.created_at|date:'d.m.Y' }}</div>
             </div>
         </div>
+        {% comment %}
+        {% include 'vacancies/includes/vacancy_list_item.html' %}
+        {% endcomment %}
     {% empty %}
         <strong class="mb-3">Нет избранных вакансий</strong>
     {% endfor %}

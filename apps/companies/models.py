@@ -1,6 +1,8 @@
 import os
 from uuid import uuid4
 
+from ckeditor.fields import RichTextField
+# from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -18,7 +20,7 @@ def upload_to_company(instance, filename):
         except (OSError, FileNotFoundError) as _:
             pass
     ext = filename.split('.')[-1]
-    return os.path.join('news', f'{uuid4()}.{ext}')
+    return os.path.join('companies', f'{uuid4()}.{ext}')
 
 
 class CompanyManager(models.Manager):
@@ -49,7 +51,7 @@ class Company(models.Model):
     url = models.URLField(max_length=64, null=True, verbose_name='Сайт компании', blank=True)
     city = models.ForeignKey(City, null=True, db_index=True, verbose_name='Город', blank=True, on_delete=models.CASCADE)
     address = models.CharField(max_length=64, null=True, verbose_name='Адрес организации', blank=True)
-    description = models.TextField(max_length=5000, null=True, verbose_name='Описание организации', blank=True)
+    description = RichTextField(max_length=5000, null=True, verbose_name='Описание организации', blank=True)
     status = models.IntegerField(choices=STATUS, db_index=True, default=STATUS_MODERATION, verbose_name='Статус')
 
     @receiver(post_save, sender=User)
@@ -75,10 +77,3 @@ class Company(models.Model):
 
     def __str__(self):
         return self.name
-
-    @property
-    def short_description(self):
-        return ' '.join(self.description.split()[:11]) + '...'
-
-    def split_description_to_lines(self):
-        return self.description.split('\n')

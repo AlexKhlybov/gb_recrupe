@@ -3,12 +3,13 @@ from django.core.mail import BadHeaderError
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
-from django.views.generic import CreateView, DetailView, ListView
+from django.views.generic import CreateView, ListView
 
 from apps.notify.forms import ContactForm
 from apps.notify.models import NOTIFY_EVENT, TYPE, Notify
 from apps.users.models import User
 
+from log.logging import logger
 
 class MessagesListView(LoginRequiredMixin, ListView):
     model = Notify
@@ -54,9 +55,13 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
                 )
                 if recipient.receiving_messages:
                     # Отправляем уведомление на почту о получении сообщении.
-                    Notify.send(
-                        event=NOTIFY_EVENT.MESSAGE, type=TYPE.EMAIL, context={}, email=body["email"],
-                    )
+                    try:
+                        Notify.send(event=NOTIFY_EVENT.MESSAGE,
+                                    type=TYPE.EMAIL,
+                                    context={},
+                                    email=body["email"],)
+                    except Exception as err:
+                        logger.error(f"Ошибка отправки сообщения - {err}")
                 return JsonResponse({"detail": "Ok"}, status=200)
 
 

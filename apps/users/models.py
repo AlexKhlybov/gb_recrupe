@@ -1,10 +1,14 @@
 import os
+import string
 from uuid import uuid4
 
 from django.contrib.auth.models import AbstractUser
+from django.contrib.sites.shortcuts import get_current_site
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
+from apps.log.logging import logger
 
 
 def upload_to_employee_profile(instance, filename):
@@ -16,7 +20,7 @@ def upload_to_employee_profile(instance, filename):
         except (OSError, FileNotFoundError) as _:
             pass
     ext = filename.split('.')[-1]
-    return os.path.join('news', f'{uuid4()}.{ext}')
+    return os.path.join('users', f'{uuid4()}.{ext}')
 
 
 class User(AbstractUser):
@@ -41,6 +45,8 @@ class User(AbstractUser):
     phone = models.CharField(max_length=16, blank=True, verbose_name='Номер телефона')
     role = models.PositiveSmallIntegerField(choices=USER_TYPE, default=USER_TYPE_MODERATOR, verbose_name='Роль')
     receiving_messages = models.BooleanField(default=False, verbose_name='Получать уведомления на e-mail')
+    password_reset_key = models.CharField(max_length=216, default="", verbose_name="Ссылка для сброса пароля",
+                                          blank=True)
 
     class Meta:
         verbose_name = 'Пользователь'
@@ -62,6 +68,15 @@ class User(AbstractUser):
     @staticmethod
     def get_user_by_email(email):
         return User.objects.get(email=email)
+    
+    def generate_link(self, request):
+        site_url = get_current_site(request)
+        import random
+        letters = string.ascii_letters
+        result = f'http://{site_url}/users/reset/?reset_code=' + ''.join(random.choice(letters) for i in range(64)) + '/'
+        self.password_reset_key = result.replace(" ", "")
+        self.save()
+        return self.password_reset_key
 
       
 class EmployeeProfile(models.Model):
@@ -84,16 +99,11 @@ class EmployeeProfile(models.Model):
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
-        # print(f'sender: {created}')
-        # print(f'instance: {instance.__dict__}')
-        # print(f'instance: {instance.role}')
-        # User.objects.filter(username=instance)
         if created:
-            if instance.role == 2:
+            if instance.role == User.USER_TYPE_EMPLOYEE:
                 EmployeeProfile.objects.create(user=instance)
 
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
-        if instance.role == 2:
-            # print(f'instance_1111: {instance.employeeprofile}')
+        if instance.role == User.USER_TYPE_EMPLOYEE:
             instance.employeeprofile.save()

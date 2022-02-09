@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+{% endblock %}
 
 {% block content %}
 <div class="container">
-    <div class="registration-form  mb-5">
+    <div class="registration-form  my-5">
         <form method="post" action="{% url 'users:editcompany' %}" enctype="multipart/form-data">
             <h1 class="mb-3">Редактирование профиля компании
                 {% if company.status != 3 %}
@@ -24,11 +30,17 @@
     
             {% for field in profile_form %}
                 <div class="row mb-2">
-                    {% if field.label != "" and field.label != "Password"%}
+                    {% if field.label != "" and field.label != "Пароль"%}
                         <label class="col-sm-4 col-form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
-                        <div class="col-sm-8">
-                            {{ field }}
-                        </div>
+                        {% if field.name == 'description' %}
+                            <div class="col-sm-8">
+                                {{ field }}
+                            </div>
+                        {% else %}
+                            <div class="col-sm-8">
+                                {{ field }}
+                            </div>
+                        {% endif %}
                     {% else %}
                     {% endif %}
                 </div>
@@ -48,7 +60,10 @@
             {% for message in messages %}
                 <p class="col-auto mb-3 text-danger">{{ message }}</p>
             {% endfor %}
-    
+            <div class="pb-5">
+                <a href="{% url 'users:pwd_change' %}"
+                    class="col  text-right  text-decoration-none">Изменить пароль</a>
+            </div>
             <div class="col-auto mb-3">
                 <button type="submit" class="btn btn-primary">Сохранить</button>
             </div>

@@ -1,5 +1,6 @@
 import json
 
+from ckeditor.widgets import CKEditorWidget
 from django import forms
 
 from apps.vacancies.models import Vacancy, VacancySkills
@@ -15,8 +16,10 @@ class VacancyForm(forms.ModelForm):
                                    widget=forms.Select(attrs={'class': 'form-select'}))
     price_min = forms.IntegerField(required=False, label='от')
     price_max = forms.IntegerField(required=False, label='до')
+    # description = forms.CharField(max_length=5000, label='Описание вакансии',
+    #                               widget=forms.Textarea(attrs={'class': '', 'rows': 15}))
     description = forms.CharField(max_length=5000, label='Описание вакансии',
-                                  widget=forms.Textarea(attrs={'class': '', 'rows': 15}))
+                                  widget=CKEditorWidget(attrs={'class': '', 'rows': 15, 'style': 'width: 100%;'}))
     # company = forms.IntegerField(required=False, widget=forms.HiddenInput, label='Организация')
     skills = forms.CharField(required=False, label='Ключевые навыки', widget=forms.Textarea)
 

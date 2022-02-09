@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <div class="form__signin  d-flex  mt-5">
+            <form class="form__signin-form" method="post">
+                {% csrf_token %}
+                <h1 class="h3 mb-3  fw-normal  text-center">Сброс пароля</h1>
+                {% for field in form %}
+                    <div class="form-floating  mb-4">
+                        {{ field }}
+                        <label for="username">{{ field.label }}</label>
+                    </div>
+                {% endfor %}
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Изменить</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

@@ -14,7 +14,13 @@ urlpatterns = [
     path('notify/', include('apps.notify.urls', namespace='notify')),
     path('moderation/', include('apps.moderation.urls', namespace='moderation')),
     path('answers/', include('apps.answers.urls', namespace='answers')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
+
+
+def get_ckeditor_filename(filename, request):
+    return filename.upper()
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
