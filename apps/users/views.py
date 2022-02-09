@@ -68,14 +68,14 @@ def registration(request):
                             context={}, email=request.POST["email"],)
             except Exception as err:
                 logger.error(f"Пользователь не хочет получать email!")
-            if request.POST["receiving_messages"]:
+            if request.POST.get("receiving_messages", False):
                 try:
                     # Отправялем EMAIL
                     Notify.send(event=NOTIFY_EVENT.REGISTRATION_EVENT, type=TYPE.EMAIL,
                                 context={}, email=request.POST["email"],)
                 except Exception as err:
                     logger.error(f"Ошибка отправки сообщения - {err}")
-                return HttpResponseRedirect(reverse('user:login'))
+            return HttpResponseRedirect(reverse('user:login'))
         else:
             logger.error(f"Ошибка валидации при регистрации - {register_form.errors}")
             messages.add_message(request, messages.ERROR, register_form.errors)
