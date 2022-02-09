@@ -1,5 +1,6 @@
 {% if my_vacancies|length  %}
     <div class="d-flex  justify-content-start">
+        {% if item is not None %}
         <button id="offer_{{ item.id }}" class="btn btn-primary btn--resume-answer me-3">Пригласить</button>
         <div class="dropdown  d-flex  justify-content-start  align-items-center">
             <p class="mb-0 me-2">Вакансия для приглашения:</p>
@@ -14,6 +15,22 @@
                 </ul>
             </div>
         </div>
+        {% else %}
+        <button id="vac_{{ object.id }}" class="btn btn-primary btn--resume-answer me-3">Пригласить</button>
+        <div class="dropdown  d-flex  justify-content-start  align-items-center">
+            <p class="mb-0 me-2">Вакансия для приглашения:</p>
+            <div>
+                <button id="vac_{{ item.id }}" class="btn btn-sm btn-outline-secondary dropdown-toggle btn---vac-list" type="button" id="dropdownResumeMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ my_vacancies.0 }}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
+                    {% for my_vac in my_vacancies %}
+                    <li class="dropdown-item" >{{my_vac}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
     </div>
 {% else %}
     <p>Чтобы иметь возможность пригласить сотрудника на работу, опубликуйте хотя бы одно резюме.</p>
