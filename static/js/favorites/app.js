@@ -6,6 +6,9 @@ class Favorites {
 
         this.favorite_id;
 
+        this.target;
+        this.currentTarget;
+
         document.querySelectorAll('.btn--vacancy').forEach(elem => {
             elem.addEventListener('click', e => this._onAddRemoveFavorites(e))
         })
@@ -16,13 +19,15 @@ class Favorites {
 
     // Слушает кнопку "Избранное"
     _onAddRemoveFavorites(e) {
-        if (e.target.attributes.id === undefined) return;
+        this.target = e.target;
+        this.currentTarget = e.currentTarget;
+        if (this.currentTarget.attributes.id === undefined) return;
 
-        this.favorites_id = e.target.attributes.id.value;
-        if (e.target.classList.contains('btn--vacancy')) {
+        this.favorites_id = this.currentTarget.attributes.id.value;
+        if (this.currentTarget.classList.contains('btn--vacancy')) {
             let api_url = `${this.url_vacancy}/${this.favorites_id}/`
             this.fethFavorites(api_url);
-        } else if (e.target.classList.contains('btn--resume')) {
+        } else if (this.currentTarget.classList.contains('btn--resume')) {
             let api_url = `${this.url_resume}/${this.favorites_id}/`
             this.fethFavorites(api_url);
         };
@@ -40,15 +45,19 @@ class Favorites {
         })
         .then((data) => {
             let element = document.getElementById(`${this.favorites_id}`);
+            // let use = document.getElementById()
             console.log(this.favorites_id);
+            let chield = this.currentTarget.children[0].children[0];
             if (!data['delete']) {
-                element.classList.remove("text-primary");
-                element.classList.add("text-success");
-                element.innerText = "В избранном";
+                element.classList.add("text-warning");
+                element.classList.remove("text-secondary");
+
+                chield.setAttribute('href', "/static/bootstrap/icons/favorite.svg#favorite-fill");
             } else {
-                element.classList.add("text-primary");
-                element.classList.remove("text-success");
-                element.innerText = "В избранное";
+                element.classList.add("text-secondary");
+                element.classList.remove("text-warning");
+
+                chield.setAttribute('href', "/static/bootstrap/icons/favorite.svg#favorite");
             };
         })
         .catch((error) => {

@@ -9,7 +9,28 @@
 <div class="container">
     <div class="row g-5">
         <div class="col-md-9">
-            <h3><strong>{{ object.name }}</strong></h3>
+            <div class="d-flex">
+                {% if request.user.role == 1 %}
+                <h3><strong>{{ object.name }}</strong> <span class="text-muted">({{ object.get_status_display }})</span></h3>
+                {% else %}
+                    <h3 class="align-middle d-flex align-items-center"><strong>{{ object.name }}</strong></h3>
+                    {% if user.role == 2 %}  {# Соискатель #}
+                        {% if is_favorite %}
+                            <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-warning btn--vacancy">
+                                <svg class="bi" width="20" height="20" fill="currentColor">
+                                    <use id="use-favorite" xlink:href="{% static '/bootstrap/icons/favorite.svg' %}#favorite-fill"></use>
+                                </svg>
+                            </button>
+                        {% else %}
+                            <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-secondary btn--vacancy">
+                                <svg class="bi" width="20" height="20" fill="currentColor">
+                                    <use use="use-favorite-fill" xlink:href="{% static '/bootstrap/icons/favorite.svg' %}#favorite"></use>
+                                </svg>
+                            </button>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            </div>
             <h5 class="mb-4">{{ object.price }}</h5>
             <a href="{% url 'companies:detail' object.company.pk %}" class="text-decoration-none"><h4>{{ object.company }}</h4></a>
             <p class="mb-2">{{ object.company.address }}</p>

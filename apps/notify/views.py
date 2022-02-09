@@ -9,7 +9,7 @@ from apps.notify.forms import ContactForm
 from apps.notify.models import NOTIFY_EVENT, TYPE, Notify
 from apps.users.models import User
 
-# from log.logging import logger
+from apps.log.logging import logger
 
 class MessagesListView(LoginRequiredMixin, ListView):
     model = Notify
@@ -61,8 +61,7 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
                                     context={},
                                     email=body["email"],)
                     except Exception as err:
-                        pass
-                        # logger.error(f"Ошибка отправки сообщения - {err}")
+                        logger.error(f"Ошибка отправки сообщения - {err}")
                 return JsonResponse({"detail": "Ok"}, status=200)
 
 

@@ -248,7 +248,7 @@ class Courses(models.Model):
 
 
 class ResumeFavorites(models.Model):
-    user = models.ForeignKey(User, related_name="my_response", verbose_name='Работодатель',
+    user = models.ForeignKey(User, related_name="my_favor_resume", verbose_name='Работодатель',
                              on_delete=models.CASCADE)
     resume = models.ForeignKey(Resume, related_name="favorites_resume",  verbose_name='Резюме',
                                on_delete=models.CASCADE)

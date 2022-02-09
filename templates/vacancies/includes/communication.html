@@ -20,12 +20,6 @@
         <div class="d-flex gap-2">
             <button type="button" class="btn btn-primary">Откликнуться</button>
             <button class="btn btn-warning btn-messages-new" style="outline: none;" id="createMessageResume" type="button" aria-current="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Сообщение</button>
-            {% if is_favorite %}
-                <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-success btn--vacancy">В избранном</button>
-            {% else %}
-                <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-primary btn--vacancy">В избранное</button>
-            {% endif %}
-
         </div>
         {% if object.status < 3 %}
             <button type="button" class="btn btn-outline-danger complaint_vacancy" data-id="{{ object.id }}" {% if object.status >= 3 %}disabled{% endif %}>Пожаловаться</button>
@@ -33,7 +27,7 @@
     </div>
     <div class="d-flex justify-content-between mt-3">
         {% include 'vacancies/includes/answer_menu.html' %}
-    <div/>
+    </div>
         <br>
 {% elif request.user.role == 3 %}  {# Работодатель #}
 {% endif %}

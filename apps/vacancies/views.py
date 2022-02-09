@@ -123,7 +123,6 @@ class VacancyDetailView(LoginRequiredMixin, DetailView):
             context["is_favorite"] = VacancyFavorites.objects.filter(
                 user=self.request.user, vacancy_id=self.kwargs['pk']).exists()
             context["my_resume"] = Resume.objects.filter(user__pk=self.request.user.pk).order_by("name")
-            print(f'&&&:{context}')
         return context
 
 
@@ -146,7 +145,6 @@ class MyVacancyCompanyListView(VacancyCompanyListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Recrupe | Мои вакансии"
-        print(f'&&&:{context}')
         return context
 
 
