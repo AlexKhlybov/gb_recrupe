@@ -28,4 +28,7 @@
         </div>
         <button type="button" class="btn btn-outline-danger complaint_resume" data-id="{{ object.id }}" {% if object.status >= 3 %}disabled{% endif %}>Пожаловаться</button>
     </div>
+    <div>
+        {% include 'resume/includes/invite_menu.html' %}
+    </div>
 {% endif %}

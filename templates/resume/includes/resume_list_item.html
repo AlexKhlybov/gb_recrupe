@@ -36,12 +36,15 @@
                     <a class="btn btn-primary" href="{% url 'resume:edit' item.pk %}" role="button">Изменить</a>
                 {% endif %}
             {% elif request.user.role == 3 %}  {# Работодатель #}
-                <button onclick="void(0)" class="btn btn-primary">Откликнуться</button>
+            {{ item.id }}
                 {% if item.id in my_favorites_list_id %}
                     <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-success">В избранном</button>
                 {% else %}
                     <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-primary">В избранное</button>
                 {% endif %}
+                <div>
+                {% include 'resume/includes/invite_menu.html' %}
+                </div>
             {% endif %}
         </div>
         <div class="mb-1 text-muted">Обновлено {{ item.updated_at|date:'d.m.Y' }}</div>
