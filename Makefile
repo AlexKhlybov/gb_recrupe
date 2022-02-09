@@ -10,6 +10,7 @@ cleandb:
 	rm -rf ./apps/resume/migrations/00*
 	rm -rf ./apps/users/migrations/00*
 	rm -rf ./apps/vacancies/migrations/00*
+	rm -rf ./apps/answers/migrations/00*
 
 	rm -rf ./db.sqlite3
 
