@@ -1,4 +1,5 @@
-    {% if my_resume|length  %}
+{% if my_resume|length  %}
+    {% if item is not None %}
     <div>
         <button id="answ_{{ item.id }}" class="btn btn-primary btn--vacancy-answer">Откликнуться</button>
     </div>
@@ -14,7 +15,23 @@
                 {% endfor %}
             </ul>
         </div>
+    {% else %}
+        <div>
+        <button id="answ_{{ object.id }}" class="btn btn-primary btn--vacancy-answer">Откликнуться</button>
+        </div>
 
-        {% else %}
-            Чтобы иметь возможность откликнуться, составьте хотя бы одно резюме.
-        {% endif %}
+        <div class="dropdown">
+            Резюме для отклика:
+            <button id="resume_{{ object.id }}" class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownResumeMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ my_resume.0 }}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
+                {% for my_res in my_resume %}
+                <li class="dropdown-item" >{{my_res}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% else %}
+    Чтобы иметь возможность откликнуться, составьте хотя бы одно резюме.
+{% endif %}

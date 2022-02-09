@@ -1,7 +1,8 @@
 {% if my_vacancies|length  %}
-    <div>
-        <button id="offer_{{ item.id }}" class="btn btn-primary btn--resume-answer">Пригласить</button>
-    </div>
+    {% if item is not None %}
+       <div>
+            <button id="offer_{{ item.id }}" class="btn btn-primary btn--resume-answer">Пригласить</button>
+        </div>
 
         <div class="dropdown">
             Вакансия для приглашения:
@@ -14,6 +15,23 @@
                 {% endfor %}
             </ul>
         </div>
+    {% else %}
+        <div>
+            <button id="offer_{{ object.id }}" class="btn btn-primary btn--resume-answer">Пригласить</button>
+        </div>
+
+        <div class="dropdown">
+            Вакансия для приглашения:
+            <button id="vac_{{ object.id }}" class="btn btn-sm btn-outline-secondary dropdown-toggle btn---vac-list" type="button" id="dropdownResumeMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ my_vacancies.0 }}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
+                {% for my_vac in my_vacancies %}
+                <li class="dropdown-item" >{{my_vac}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 {% else %}
     Чтобы иметь возможность пригласить сотрудника на работу, опубликуйте хотя бы одно резюме.
 {% endif %}
