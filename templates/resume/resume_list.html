@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="container">
-       <h5 class="mb-3 ms-5">Найдено {{object_list.count}} резюме</h5>
+    <h5 class="mb-3 ms-5">Найдено {{object_list.count}} резюме</h5>
     <div class="d-flex  flex-row ">
         <div id="advanSearch" class="d-flex  flex-column p-2 bg-light border position-relative  ">
             <div class="sticky-top">
@@ -57,7 +57,6 @@
             </div>
         </div>
         <div class="w-100">
-
             <div class="mb-5">
                 <div class="d-flex bg-light sticky-top justify-content-between p-3">
                     <form class=" flex-grow-1" id="form" method="get">
@@ -72,12 +71,13 @@
                     </form>
                 </div>
 
-    {% for item in object_list %}
-        {% include 'resume/includes/resume_list_item.html' %}
-    {% empty %}
-        <strong class="mb-3">Нет подходящих резюме</strong>
-    {% endfor %}
+                {% for item in object_list %}
+                    {% include 'resume/includes/resume_list_item.html' %}
+                {% empty %}
+                    <strong class="mb-3">Нет подходящих резюме</strong>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-</div>
-        <script>window.onload = noInput()</script>
+    <script>window.onload = noInput()</script>
 {% endblock %}
