@@ -1,13 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-        Отклики соискателя.
-        <p>{{title}}</p>
-        <p>{{my_answers}}</p>
-        <p>Обнаружено откликов: {{my_answers_count}}</p>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="container">
+    <h2 class="mb-3 ms-5">Отклики</h2>
+    <p class="ms-5  fst-italic"> Вы откликнулись <span class="fw-bolder">{{ my_answers_count }}</span> раз{{ my_answers_count|pluralize:"а" }}! Так держать!</p>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Вакансия</th>
+                <th scope="col">Резюме</th>
+                <th scope="col">Дата</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in my_answers %}
+                <tr>
+                    <th scope="row">{{ item.id }}</th>
+                    <td>{{ item.get_status_display }}</td>
+                    <td><a href="{% url 'vacancies:detail' item.vacancy.id %}">{{ item.vacancy }}</a></td>
+                    <td><a href="{% url 'resume:detail' item.resume.id %}">{{ item.resume.name }}</a></td>
+                    <td>{{ item.created_at }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+    
+{% endblock content %}
