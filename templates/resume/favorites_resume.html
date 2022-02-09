@@ -27,10 +27,10 @@
                     <p class="mb-auto text-muted">{{ item.experience.first.position }}</p>
                 </div>
             {% endif %}
+            <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-success">В избранном</button>
             <div class="d-flex justify-content-between mt-3">
                 <div>
-                    <button onclick="void(0)" class="btn btn-primary">Пригласить</button>
-                    <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-success">В избранном</button>
+                    {% include 'resume/includes/invite_menu.html' %}
                 </div>
                 <div class="mb-1 text-muted">Обновлено {{ item.updated_at|date:'d.m.Y' }}</div>
             </div>

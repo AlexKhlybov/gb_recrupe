@@ -48,6 +48,8 @@ class Resume(models.Model):
     courses = models.ManyToManyField('Courses', db_index=True, blank=True, verbose_name='Курсы')
     favorites = models.ManyToManyField(User, related_name="favorites_resume", through="ResumeFavorites",
                                        through_fields=("resume", "user"))
+    # answers = models.ManyToManyField(User, related_name="answers_resume", through="ResumeAnswers",
+    #                                  through_fields=("resume", "user"))
     status = models.IntegerField(choices=STATUS, db_index=True, default=STATUS_PUBLIC, verbose_name='Статус')
 
     objects = models.Manager()
@@ -246,7 +248,7 @@ class Courses(models.Model):
 
 
 class ResumeFavorites(models.Model):
-    user = models.ForeignKey(User, related_name="my_favor_resume", verbose_name='Работодатель',
+    user = models.ForeignKey(User, related_name="my_response", verbose_name='Работодатель',
                              on_delete=models.CASCADE)
     resume = models.ForeignKey(Resume, related_name="favorites_resume",  verbose_name='Резюме',
                                on_delete=models.CASCADE)

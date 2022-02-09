@@ -40,6 +40,7 @@ class Favorites {
         })
         .then((data) => {
             let element = document.getElementById(`${this.favorites_id}`);
+            console.log(this.favorites_id);
             if (!data['delete']) {
                 element.classList.remove("text-primary");
                 element.classList.add("text-success");

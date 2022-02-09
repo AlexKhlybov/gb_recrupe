@@ -31,6 +31,7 @@ class Command(BaseCommand):
     @staticmethod
     def import_model(model, options):
         name = model.__name__
+        print(name)
         full_file_name = os.path.join(settings.BASE_DIR, 'apps', 'main', 'management', 'json', f'{name}.json')
         if options.get('models') and name.lower() not in options.get('models', []):
             return
