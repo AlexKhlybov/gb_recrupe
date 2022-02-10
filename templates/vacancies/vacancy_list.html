@@ -70,14 +70,28 @@
             </form>
                 <button class="btn  w-100 mt-2 btn-secondary" onclick="cleanerFilterVacancy()" >Очистить</button>
             </div>
-
         </div>
         <div class="w-100">
-            {% for item in object_list %}
-                {% include 'vacancies/includes/vacancy_list_item.html' %}
-            {% empty %}
-                <strong class="mb-3">Нет активных вакансий</strong>
-            {% endfor %}
+            <div class="mb-5">
+                <div class="d-flex bg-light sticky-top justify-content-between p-3">
+                    <form class=" flex-grow-1" id="form" method="get">
+                        <div class=" d-flex flex-rows">
+                            <input id="find" class="input-group form-control" type="text" name="find" value="{{find}}" placeholder="Поиск по названию">
+                            <div class="position-relative mt-1" style="left:-33px;">
+                                <a><img onclick="myFunction()" style="height:27px" src="{% static '/sliders.svg' %}" alt=""/></a>
+                            </div>
+                            <button class="btn btn-primary "  style="min-width: 200px;" type="submit">Поиск</button>
+                        </div>
+
+                    </form>
+                </div>
+
+                {% for item in object_list %}
+                    {% include 'vacancies/includes/vacancy_list_item.html' %}
+                {% empty %}
+                    <strong class="mb-3">Нет активных вакансий</strong>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>

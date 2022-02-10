@@ -1,9 +1,28 @@
+{% load static %}
+
 <div class="col-md-12 border p-3">
     <div class="d-flex justify-content-between">
         <div class="d-flex">
-            <a href="{% url 'resume:detail' item.pk %}" class="text-decoration-none">
-                <h5 class="mb-0">{{ item.name }}</h5>
-            </a>
+            <div class="d-flex">
+                <a href="{% url 'resume:detail' item.pk %}" class="text-decoration-none d-flex align-items-center">
+                    <h5 class="mb-0">{{ item.name }}</h5>
+                </a>
+                {% if user.role == 3 %}  {# Работодатель #}
+                    {% if item.id in my_favorites_list_id %}
+                        <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-warning btn--resume">
+                            <svg class="bi" width="20" height="20" fill="currentColor">
+                                <use id="use-favorite" xlink:href="{% static '/bootstrap/icons/favorite.svg' %}#favorite-fill"></use>
+                            </svg>
+                        </button>
+                    {% else %}
+                        <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-secondary btn--resume">
+                            <svg class="bi" width="20" height="20" fill="currentColor">
+                                <use use="use-favorite-fill" xlink:href="{% static '/bootstrap/icons/favorite.svg' %}#favorite"></use>
+                            </svg>
+                        </button>
+                    {% endif %}
+                {% endif %}
+            </div>
             {% if request.user.is_staff or item.user_id == request.user.pk %}
                 {% if item.status != 2 %}
                     <span class="mx-2 {% if item.status == 3 %}text-warning{% elif item.status == 4 %}text-danger{% else %}text-muted{% endif %}">{{ item.get_status_display }}</span>
@@ -36,14 +55,7 @@
                     <a class="btn btn-primary" href="{% url 'resume:edit' item.pk %}" role="button">Изменить</a>
                 {% endif %}
             {% elif request.user.role == 3 %}  {# Работодатель #}
-                {% if item.id in my_favorites_list_id %}
-                    <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-success">В избранном</button>
-                {% else %}
-                    <button id="{{ item.id }}" class="btn  btn-link  shadow-none  text-decoration-none  btn--resume  text-primary">В избранное</button>
-                {% endif %}
-                <div>
                 {% include 'resume/includes/invite_menu.html' %}
-                </div>
             {% endif %}
         </div>
         <div class="mb-1 text-muted">Обновлено {{ item.updated_at|date:'d.m.Y' }}</div>

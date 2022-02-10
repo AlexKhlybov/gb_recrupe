@@ -48,7 +48,7 @@ class VacancyListView(LoginRequiredMixin, ListView):
         if city_search is not None:
             context['city_search'] = city_search
 
-        context["my_favorites"] = VacancyFavorites.get_favorite_vacancy_list(self.request.user.id)
+        context["my_favorites_list_id"] = VacancyFavorites.get_favorite_vacancy_list(self.request.user.id)
         context["my_resume"] = Resume.objects.filter(user__pk=self.request.user.pk).order_by("name")
         return context
 
@@ -123,7 +123,6 @@ class VacancyDetailView(LoginRequiredMixin, DetailView):
             context["is_favorite"] = VacancyFavorites.objects.filter(
                 user=self.request.user, vacancy_id=self.kwargs['pk']).exists()
             context["my_resume"] = Resume.objects.filter(user__pk=self.request.user.pk).order_by("name")
-            print(f'&&&:{context}')
         return context
 
 
@@ -135,8 +134,11 @@ class VacancyCompanyListView(LoginRequiredMixin, ListView):
     model = Vacancy
 
     def get_queryset(self):
-        # company_id = self.kwargs['company_id']
-        company_id = Company.objects.get(user=self.request.user)
+        company_id = self.kwargs['company_id']
+        
+        # TODO нижни код не работает, т.к. если мы заходим от соискателя, и проваливаемся в активные вакансии
+        # self.request.user - там лежит юзер == Соискатель
+        # company_id = Company.objects.get(user=self.request.user)
         return Vacancy.objects.filter(company_id=company_id)
 
 
@@ -146,7 +148,6 @@ class MyVacancyCompanyListView(VacancyCompanyListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Recrupe | Мои вакансии"
-        print(f'&&&:{context}')
         return context
 
 
@@ -156,6 +157,7 @@ class FavoritesVacancyListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["my_favorites"] = VacancyFavorites.get_favorite_vacancy_list(self.request.user.id)
         context["favorites"] = Vacancy.get_favorite_vacancy(self.request.user.id)
         context["my_resume"] = Resume.objects.filter(user__pk=self.request.user.pk).order_by("name")
         return context

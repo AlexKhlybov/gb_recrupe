@@ -19,9 +19,10 @@
                     <a class="p-3 link-secondary  link__top-menu" href="{% url 'answers:company_offers' user.company.id %}">Мои предложения</a>
                     <a class="p-3 link-secondary  link__top-menu" href="{% url 'answers:company_answers' user.company.id %}">Отклики</a>
                 {% endif %}
+            {% else %}
+            <a class="p-3 link-secondary  link__top-menu" href="{% url 'companies:all' %}">Партнеры</a>
+            <a class="p-3 link-secondary  link__top-menu" href="{% url 'news:all' %}">Новости</a>
             {% endif %}
-            <a class="p-3  link-secondary  link__top-menu" href="{% url 'companies:all' %}">Партнеры</a>
-            <a class="p-3  link-secondary  link__top-menu" href="{% url 'news:all' %}">Новости</a>
         </div>
     </nav>
 </div>

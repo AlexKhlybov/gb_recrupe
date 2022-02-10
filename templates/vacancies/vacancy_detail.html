@@ -9,13 +9,45 @@
 <div class="container">
     <div class="row g-5">
         <div class="col-md-9">
-            <h3><strong>{{ object.name }}</strong></h3>
+            <div class="d-flex">
+                {% if request.user.role == 1 %}
+                <h3><strong>{{ object.name }}</strong> <span class="text-muted">({{ object.get_status_display }})</span></h3>
+                {% else %}
+                    <h3 class="align-middle d-flex align-items-center"><strong>{{ object.name }}</strong></h3>
+                    {% if user.role == 2 %}  {# Соискатель #}
+                        {% if is_favorite %}
+                            <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-warning btn--vacancy">
+                                <svg class="bi" width="20" height="20" fill="currentColor">
+                                    <use id="use-favorite" xlink:href="{% static '/bootstrap/icons/favorite.svg' %}#favorite-fill"></use>
+                                </svg>
+                            </button>
+                        {% else %}
+                            <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-secondary btn--vacancy">
+                                <svg class="bi" width="20" height="20" fill="currentColor">
+                                    <use use="use-favorite-fill" xlink:href="{% static '/bootstrap/icons/favorite.svg' %}#favorite"></use>
+                                </svg>
+                            </button>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            </div>
             <h5 class="mb-4">{{ object.price }}</h5>
             <a href="{% url 'companies:detail' object.company.pk %}" class="text-decoration-none"><h4>{{ object.company }}</h4></a>
             <p class="mb-2">{{ object.company.address }}</p>
 
-            <p>Требуемый опыт работы: {{ object.get_experience_display }}</p>
+            {% if object.company.user.email or object.company.user.phone %}
+                <div class="mb-4">
+                    <h3 class="mt-4 mb-2">Контакты</h3>
+                    <ol class="list-unstyled mb-4">
+                        {% if object.company.user.email %}<li>e-mail: <a href="mailto:{{ object.company.user.email }}" target="_blank" id="staticBackdropSender">{{ object.company.user.email }}</a></li> {% endif %}
+                        {% if object.company.user.phone %}<li>Телефон: <a href="tel:{{ object.company.user.phone }}" target="_blank">{{ object.company.user.phone }}</a></li> {% endif %}
+                    </ol>
+                </div>
+            {% endif %}
+
             {% include 'vacancies/includes/communication.html' %}
+
+            <p>Требуемый опыт работы: {{ object.get_experience_display }}</p>
         </div>
 
         <div class="col-md-3">
@@ -40,16 +72,6 @@
             <button onclick="void(0)" class="btn btn-success">Откликнуться</button>
         </div>
     {% endif %}
-    {% if object.company.user.email or object.company.user.phone %}
-        <div class="mb-4">
-            <h3 class="mb-2">Контакты</h3>
-            <ol class="list-unstyled mb-4">
-                {% if object.company.user.email %}<li>e-mail: <a href="mailto:{{ object.company.user.email }}" target="_blank" id="staticBackdropSender">{{ object.company.user.email }}</a></li> {% endif %}
-                {% if object.company.user.phone %}<li>Телефон: <a href="tel:{{ object.company.user.phone }}" target="_blank">{{ object.company.user.phone }}</a></li> {% endif %}
-            </ol>
-        </div>
-    {% endif %}
-
     <hr>
     <p class="fst-italic mb-5">Вакансия опубликована {{ object.created_at|date:'d.m.Y' }} в {{ object.company.city }}</p>
 </div>

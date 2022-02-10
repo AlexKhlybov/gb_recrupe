@@ -1,3 +1,4 @@
+from itertools import count
 from ckeditor.fields import RichTextField
 from django.db import models
 from django.db.models import Q
@@ -63,6 +64,10 @@ class Vacancy(models.Model):
     objects = models.Manager()
     public = VacancyPublicManager()
 
+
+    def __str__(self):
+            return f"{self.name}"
+
     @property
     def price(self):
         value = f'от {self.price_min}' if self.price_min else ''
@@ -87,9 +92,10 @@ class Vacancy(models.Model):
     def delete(self, using=None, keep_parents=False):
         VacancySkills.objects.filter(vacancy=self).delete()
         super().delete(using, keep_parents)
-
-    def __str__(self):
-        return f"{self.name}"
+    
+    @staticmethod
+    def get_complaint():
+        return Vacancy.objects.filter(status=3).count()
 
 
 class VacancySkills(models.Model):

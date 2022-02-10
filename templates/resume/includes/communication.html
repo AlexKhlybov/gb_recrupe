@@ -16,19 +16,13 @@
         </div>
     </div>
 {% elif request.user.role == 3 %}  {# Работодатель #}
-    <div class="d-flex justify-content-between mb-2">
-        <div class="d-flex gap-2">
-            <button type="button" class="btn btn-primary">Откликнуться</button>
-            <button class="btn btn-warning btn-messages-new" style="outline: none;" id="createMessageResume" type="button" aria-current="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Сообщение</button>
-            {% if is_favorite %}
-                <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-success btn--resume">В избранном</button>
-            {% else %}
-                <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-primary btn--resume">В избранное</button>
-            {% endif %}
+    <div class="d-flex  flex-column  justify-content-between mb-3">
+        <div class="gap-2">
+            <button class="btn btn-outline-warning text-black btn-messages-new" style="outline: none;" id="createMessageResume" type="button" aria-current="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Написать сообщение</button>
         </div>
-        <button type="button" class="btn btn-outline-danger complaint_resume" data-id="{{ object.id }}" {% if object.status >= 3 %}disabled{% endif %}>Пожаловаться</button>
-    </div>
-    <div>
-        {% include 'resume/includes/invite_menu.html' %}
+        <div class="d-flex  justify-content-between  mt-5">
+            {% include 'resume/includes/invite_menu.html' %}
+            <button type="button" class="btn btn-outline-danger complaint_resume" data-id="{{ object.id }}" {% if object.status >= 3 %}disabled{% endif %}>Пожаловаться</button>
+        </div>
     </div>
 {% endif %}

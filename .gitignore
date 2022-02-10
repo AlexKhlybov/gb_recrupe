@@ -161,6 +161,7 @@ dumps/
 /apps/resume/migrations/*.py
 /apps/users/migrations/*.py
 /apps/vacancies/migrations/*.py
+/apps/answers/migrations/*.py
 
 # Temp file
 tmp/

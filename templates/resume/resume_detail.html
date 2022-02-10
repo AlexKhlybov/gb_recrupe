@@ -8,11 +8,28 @@
 {% block content %}
 <div class="container">
     <div class="d-flex justify-content-between">
-        {% if request.user.role == 1 %}
+        <div class="d-flex">
+            {% if request.user.role == 1 %}
             <h3><strong>{{ object.name }}</strong> <span class="text-muted">({{ object.get_status_display }})</span></h3>
-        {% else %}
-            <h3><strong>{{ object.name }}</strong></h3>
-        {% endif %}
+            {% else %}
+                <h3 class="align-middle d-flex align-items-center"><strong>{{ object.name }}</strong></h3>
+                {% if user.role == 3 %}  {# Работодатель #}
+                    {% if is_favorite %}
+                        <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-warning btn--resume">
+                            <svg class="bi" width="20" height="20" fill="currentColor">
+                                <use id="use-favorite" xlink:href="{% static '/bootstrap/icons/favorite.svg' %}#favorite-fill"></use>
+                            </svg>
+                        </button>
+                    {% else %}
+                        <button id="{{ object.id }}" class="btn  btn-link  shadow-none  text-decoration-none  text-secondary btn--resume">
+                            <svg class="bi" width="20" height="20" fill="currentColor">
+                                <use use="use-favorite-fill" xlink:href="{% static '/bootstrap/icons/favorite.svg' %}#favorite"></use>
+                            </svg>
+                        </button>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        </div>
         <h3><strong>{% if object.price %} {{ object.price }} руб. {% else %} з/п не указана {% endif %}</strong></h3>
     </div>
     <p class="mb-0">{{ object.user.last_name }} {{ object.user.first_name }}</p>

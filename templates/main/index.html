@@ -90,7 +90,8 @@
                                                 </div>
                                                 <p class="p-0 m-0">Жалобы</p>
                                             </div>
-                                            <span class="badge bg-primary rounded-pill">14</span>
+                                            {# <span class="badge {% if get_all_complaint %}bg-primary text-white{% else %} text-black {% endif %} rounded-pill">{{ get_all_complaint }}</span> #}
+                                            <span class="badge {% if True %}bg-primary text-white{% else %} text-black {% endif %} rounded-pill">14</span>
                                         </div>
                                     </a>
                                 </li>
@@ -106,7 +107,7 @@
                                                 </div>
                                                 <p class="p-0 m-0">Отклики и предложения</p>
                                             </div>
-                                            <span class="badge bg-primary rounded-pill">14</span>
+                                            <span class="badge {% if my_answers_count %}bg-primary text-white{% else %} text-black {% endif %} rounded-pill">{{ my_answers_count }}</span>
                                         </div>
                                     </a>
                                 </li>
@@ -137,7 +138,7 @@
                                                 </div>
                                                 <p class="p-0 m-0">Отклики и предложения</p>
                                             </div>
-                                            <span class="badge bg-primary rounded-pill">14</span>
+                                            <span class="badge {% if company_answers_count %}bg-primary text-white{% else %} text-black {% endif %} rounded-pill">{{ company_answers_count }}</span>
                                         </div>
                                     </a>
                                 </li>
@@ -152,7 +153,7 @@
                                                 </div>
                                                 <p class="p-0 m-0">Избранные резюме</p>
                                             </div>
-                                            <span class="badge {% if favorite_vacancy %}bg-primary text-white{% else %} text-black {% endif %} rounded-pill">{{ favorite_vacancy }}</span>
+                                            <span class="badge {% if favorite_resume %}bg-primary text-white{% else %} text-black {% endif %} rounded-pill">{{ favorite_resume }}</span>
                                         </div>
                                     </a>
                                 </li>
