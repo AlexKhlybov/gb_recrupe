@@ -161,8 +161,9 @@ class ResumeDetailView(LoginRequiredMixin, DetailView):
         if not self.request.user.is_anonymous:
             context["is_favorite"] = ResumeFavorites.objects.filter(
                 user=self.request.user, resume_id=self.kwargs['pk']).exists()
-            context["my_vacancies"] = Vacancy.objects.filter(
-                company=Company.objects.filter(user__pk=self.request.user.pk)[0]).order_by("name")
+            # TODO Коля говорит для выпадашки? Понять логику и подправить!
+            # context["my_vacancies"] = Vacancy.objects.filter(
+            #     company=Company.objects.filter(user__pk=self.request.user.pk)[0]).order_by("name")
         return context
 
 

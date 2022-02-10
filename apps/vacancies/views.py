@@ -134,8 +134,11 @@ class VacancyCompanyListView(LoginRequiredMixin, ListView):
     model = Vacancy
 
     def get_queryset(self):
-        # company_id = self.kwargs['company_id']
-        company_id = Company.objects.get(user=self.request.user)
+        company_id = self.kwargs['company_id']
+        
+        # TODO нижни код не работает, т.к. если мы заходим от соискателя, и проваливаемся в активные вакансии
+        # self.request.user - там лежит юзер == Соискатель
+        # company_id = Company.objects.get(user=self.request.user)
         return Vacancy.objects.filter(company_id=company_id)
 
 
