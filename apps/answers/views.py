@@ -22,7 +22,7 @@ class EmployeeAnswersListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["title"] = "Recrupe | Мои отклики"
         context["my_answers"] = VacancyAnswers.get_employee_answers(self.request.user.id)
-        context["my_answers_count"] = VacancyAnswers.get_number_employee_answers(self.request.user.id)
+        # context["my_answers_count"] = VacancyAnswers.get_number_employee_answers(self.request.user.id)
         return context
 
 class EmployeeOffersListView(LoginRequiredMixin, ListView):
@@ -56,10 +56,8 @@ class CompanyAnswersListView(LoginRequiredMixin, ListView):
         context["title"] = "Recrupe | Отклики на предлоения нашей компании"
         if len(Company.objects.filter(user=self.request.user.id)):
             context["company_answers"] = VacancyAnswers.get_company_answers(Company.objects.filter(user=self.request.user.id)[0])
-            context["company_answers_count"] = VacancyAnswers.get_number_company_answers(Company.objects.filter(user=self.request.user.id)[0])
         else:
             context["company_answers"] = VacancyAnswers.objects.none()
-            context["company_answers_count"] = 0
         return context
 
 def vacancy_answer_edit(request, resume_name, vacancy, message=""):

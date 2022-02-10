@@ -54,6 +54,9 @@ class Resume(models.Model):
 
     objects = models.Manager()
     public = ResumePublicManager()
+    
+    def __str__(self):
+        return self.name
 
     @property
     def get_experience_text(self):
@@ -111,9 +114,11 @@ class Resume(models.Model):
     def delete(self, using=None, keep_parents=False):
         ResumeSkills.objects.filter(resume=self).delete()
         super().delete(using, keep_parents)
-
-    def __str__(self):
-        return self.name
+    
+    @staticmethod
+    def get_complaint():
+        return Resume.objects.filter(status=3).count() 
+        
 
 
 class ResumeSkills(models.Model):
