@@ -8,16 +8,16 @@
                     <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:all' %}">Резюме</a>
                 {% elif user.role == 2 %}
                     <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:my' %}">Мои резюме</a>
-                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'vacancies:favorites' user.id %}">Избранные вакансии</a>
+                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'vacancies:favorites' %}">Избранные вакансии</a>
                     <a class="p-3 link-secondary  link__top-menu" href="{% url 'vacancies:all' %}">Все вакансии</a>
-                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'answers:my_answers' user.id %}">Мои отклики</a>
-                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'answers:my_offers' user.id %}">Предложения</a>
+                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'answers:my_answers' %}">Мои отклики</a>
+                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'answers:my_offers' %}">Предложения</a>
                 {% elif  user.role == 3 %}
-                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'companies:vacancies' user.company.id %}">Мои вакансии</a>
-                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:favorites' user.id %}">Избранные резюме</a>
+                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'vacancies:my' %}">Мои вакансии</a>
+                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:favorites' %}">Избранные резюме</a>
                     <a class="p-3 link-secondary  link__top-menu" href="{% url 'resume:all' %}">Все резюме</a>
-                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'answers:company_offers' user.company.id %}">Мои предложения</a>
-                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'answers:company_answers' user.company.id %}">Отклики</a>
+                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'answers:company_offers' %}">Мои предложения</a>
+                    <a class="p-3 link-secondary  link__top-menu" href="{% url 'answers:company_answers' %}">Отклики</a>
                 {% endif %}
             {% else %}
             <a class="p-3 link-secondary  link__top-menu" href="{% url 'companies:all' %}">Партнеры</a>

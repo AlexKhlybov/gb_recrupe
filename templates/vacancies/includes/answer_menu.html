@@ -1,38 +1,20 @@
 {% if my_resume|length  %}
-    <div class="d-flex me-3">
-        {% if item is not None %}
-        <div class="d-flex justify-content-start">
-            <div><button id="answ_{{ item.id }}" class="btn btn-primary btn--vacancy-answer me-3">Откликнуться</button></div>
-            <div class="dropdown d-flex  justify-content-start  align-items-center">
-                <p class="mb-0 me-2">Резюме для отклика:</p>
-                <div>
-                    <button id="resume_{{ item.id }}" class="btn btn-sm btn-outline-secondary dropdown-toggle me-3" type="button" id="dropdownResumeMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ my_resume.0 }}
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
-                        {% for my_res in my_resume %}
-                        <li class="dropdown-item" >{{my_res}}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
+    <div class="d-flex  justify-content-start">
+        <div class="dropdown  d-flex  justify-content-start  align-items-center">
+            <div>
+                <button class="btn btn-primary dropdown-toggle me-3" type="button" id="dropdownResumeMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                    Откликнуться
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
+                    {% for my_res in my_resume %}
+                        <li class="btn dropdown-item btn--vacancy-answer {% if my_res.id in item.get_answer_resume %}text-success{% endif %}"
+                            data-resume-id="{{ my_res.id }}"
+                            data-vacancy-id="{% if item %}{{ item.id }}{% else %}{{ object.id }}{% endif %}"
+                        >{{my_res}}</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
-        {% else %}
-            <button id="answ_{{ object.id }}" class="btn btn-primary btn--vacancy-answer me-3">Откликнуться</button>
-            <div class="dropdown  d-flex  justify-content-start  align-items-center">
-                <p class="mb-0 me-2">Резюме для отклика:</p>
-                <div>
-                    <button id="resume_{{ object.id }}" class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownResumeMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ my_resume.0 }}
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
-                        {% for my_res in my_resume %}
-                        <li class="dropdown-item" >{{my_res}}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        {% endif %}
     </div>
 {% else %}
     Чтобы иметь возможность откликнуться, составьте хотя бы одно резюме.

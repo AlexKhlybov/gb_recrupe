@@ -16,16 +16,34 @@
                 <th scope="col">Вакансия</th>
                 <th scope="col">Резюме</th>
                 <th scope="col">Дата</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             {% for item in my_offers %}
                 <tr>
-                    <th scope="row">{{ item.id }}</th>
+                    <th scope="row">{{ forloop.counter }}</th>
                     <td>{{ item.get_status_display }}</td>
                     <td><a href="{% url 'vacancies:detail' item.vacancy.id %}">{{ item.vacancy }}</a></td>
                     <td><a href="{% url 'resume:detail' item.resume.id %}">{{ item.resume.name }}</a></td>
                     <td>{{ item.created_at }}</td>
+                    <td>
+                        {% if item.status == 1 %}  {# Отправлено #}
+                            <div class="d-flex justify-content-end gap-2">
+                                <a href="javascript:return false" class="answer-resume-change-accept" data-id="{{ item.pk }}">Принять</a>
+                                <a href="javascript:return false" class="answer-resume-change-cancel" data-id="{{ item.pk }}">Отклонить</a>
+                            </div>
+                        {% elif item.status == 2 %}  {# Предложение принято #}
+                            <div class="d-flex justify-content-end gap-2">
+                                <a href="javascript:return false" class="answer-resume-change-send" data-id="{{ item.pk }}">Отменить</a>
+{#                                <a href="javascript:return false" class="" data-id="{{ item.pk }}">Сообщение</a>#}
+                            </div>
+                        {% elif item.status == 3 %}  {# Предложение отклонено #}
+                            <div class="d-flex justify-content-end gap-2">
+                                <a href="javascript:return false" class="answer-resume-change-send" data-id="{{ item.pk }}">Отменить</a>
+                            </div>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

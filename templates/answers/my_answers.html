@@ -16,16 +16,18 @@
                 <th scope="col">Вакансия</th>
                 <th scope="col">Резюме</th>
                 <th scope="col">Дата</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             {% for item in my_answers %}
                 <tr>
-                    <th scope="row">{{ item.id }}</th>
+                    <th scope="row">{{ forloop.counter }}</th>
                     <td>{{ item.get_status_display }}</td>
                     <td><a href="{% url 'vacancies:detail' item.vacancy.id %}">{{ item.vacancy }}</a></td>
                     <td><a href="{% url 'resume:detail' item.resume.id %}">{{ item.resume.name }}</a></td>
                     <td>{{ item.created_at }}</td>
+                    <td><a href="javascript:return false;" class="btn--vacancy-answer" data-resume-id="{{ item.resume.id }}" data-vacancy-id="{{ item.vacancy.id }}">Отменить</a></td>
                 </tr>
             {% endfor %}
         </tbody>

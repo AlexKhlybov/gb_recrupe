@@ -9,7 +9,6 @@ from django.views.generic import DetailView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from apps.resume.forms import ResumeForm, get_resume_data, save_resume_data
-from apps.main.models import City
 from apps.resume.models import Resume, ResumeFavorites, Education
 from apps.users.models import User
 from apps.vacancies.models import Vacancy
@@ -47,7 +46,8 @@ class ResumeListView(LoginRequiredMixin, ListView):
             context['experience_search'] = experience
         context["my_favorites_list_id"] = ResumeFavorites.get_favorite_vacancy_list(self.request.user.id)
         context["my_vacancies"] = Vacancy.objects.filter(
-            company=Company.objects.filter(user__pk=self.request.user.pk)[0]).order_by("name")
+            company=Company.public.get(user=self.request.user)
+        ).order_by("name")
         return context
 
     def get_queryset(self):
@@ -129,7 +129,8 @@ class FavoritesResumeListView(LoginRequiredMixin, ListView):
         context["my_favorites_list_id"] = ResumeFavorites.get_favorite_vacancy_list(self.request.user.id)
         context["favorites"] = Resume.get_favorite_resume(self.request.user.id)
         context["my_vacancies"] = Vacancy.objects.filter(
-            company=Company.objects.filter(user__pk=self.request.user.pk)[0]).order_by("name")
+            company=Company.objects.get(user=self.request.user)
+        ).order_by("name")
         return context
     
 
@@ -161,9 +162,9 @@ class ResumeDetailView(LoginRequiredMixin, DetailView):
         if not self.request.user.is_anonymous:
             context["is_favorite"] = ResumeFavorites.objects.filter(
                 user=self.request.user, resume_id=self.kwargs['pk']).exists()
-            # TODO Коля говорит для выпадашки? Понять логику и подправить!
-            # context["my_vacancies"] = Vacancy.objects.filter(
-            #     company=Company.objects.filter(user__pk=self.request.user.pk)[0]).order_by("name")
+            context["my_vacancies"] = Vacancy.objects.filter(
+                company=Company.public.get(user=self.request.user)
+            ).order_by("name")
         return context
 
 

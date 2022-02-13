@@ -1,66 +1,60 @@
 class Answers {
     constructor() {
-//        console.log("?????");
-        this.url_vacancy_answer = "/answers/edit-vacancy-answer";
-        this.url_resume_answer = "/answers/edit-resume-answer";
-
-        this.answer_id;
+        this.url_vacancy_answer = "/answers/vacancy";
+        this.url_resume_answer = "/answers/resume";
 
         document.querySelectorAll('.btn--vacancy-answer').forEach(elem => {
-            elem.addEventListener('click', e => this._onAddRemoveAnswer(e))
+            elem.addEventListener('click', e => this.onAddOrRemoveAnswer(e))
         })
         document.querySelectorAll('.btn--resume-answer').forEach(elem => {
-            elem.addEventListener('click', e => this._onAddRemoveAnswer(e))
+            elem.addEventListener('click', e => this.onAddOrRemoveAnswer(e))
         })
-//        console.log(document);
-//        console.log(document.querySelectorAll('.btn--resume-answer'));
+
+        document.querySelectorAll('[class^="answer-vacancy-change-"]').forEach(elem => {
+            elem.addEventListener('click', e => this.onChangeVacancyAnswerStatus(e))
+        })
+        document.querySelectorAll('[class^="answer-resume-change-"]').forEach(elem => {
+            elem.addEventListener('click', e => this.onChangeResumeAnswerStatus(e))
+        })
     };
 
-    // Слушает кнопку "Избранное"
-    _onAddRemoveAnswer(e) {
-        if (e.target.attributes.id === undefined) return;
+    onAddOrRemoveAnswer(e) {
+        const target = e.target
+        const vacancyId = target.dataset.vacancyId
+        const resumeId = target.dataset.resumeId
 
-        this.answer_id = e.target.attributes.id.value;
-//        console.log(e.target.attributes.id);
         if (e.target.classList.contains('btn--vacancy-answer')) {
-            let resume_name = document.getElementById("resume_" + this.answer_id.replace("answ_", "")).textContent.trim()
-//            console.log(resume_name)
-            let api_url = `${this.url_vacancy_answer}/${this.answer_id.replace("answ_", "")}/${resume_name}`
-            this.fethFavorites(api_url);
+            const api_url = `${this.url_vacancy_answer}/${vacancyId}/${resumeId}/`
+            fetch(api_url).then(() => location.reload())
         } else if (e.target.classList.contains('btn--resume-answer')) {
-            let vac_name = document.getElementById("vac_" + this.answer_id.replace("offer_", "")).textContent.trim()
-//            console.log(vac_name)
-            let api_url = `${this.url_resume_answer}/${this.answer_id.replace("offer_", "")}/${vac_name}`
-            this.fethFavorites(api_url);
-        };
-    };
+            const api_url = `${this.url_resume_answer}/${resumeId}/${vacancyId}/`
+            fetch(api_url).then(() => location.reload())
+        }
+    }
 
-    fethFavorites(url) {
-        fetch(`${url}`)
-        // fetch(
-        //     url = `${url}`,
-        //     headers = {
-        //         "X-Requested-With": "XMLHttpRequest"
-        //     })
-//        .then((response) => {
-//            return response.json();
-//        })
-//        .then((data) => {
-//            let element = document.getElementById(`${this.favorites_id}`);
-//            if (!data['delete']) {
-//                element.classList.remove("text-primary");
-//                element.classList.add("text-success");
-//                element.innerText = "В избранном";
-//            } else {
-//                element.classList.add("text-primary");
-//                element.classList.remove("text-success");
-//                element.innerText = "В избранное";
-//            };
-//        })
-//        .catch((error) => {
-//            console.log(error.text);
-//        });
-    };
-};
+    onChangeVacancyAnswerStatus(e) {
+        const base_url = '/answers/change/vacancy'
+        const id = e.target.dataset.id
+        let api_url = `${base_url}/${id}/1/`
+        if (e.target.classList.contains('answer-vacancy-change-accept')) {
+            api_url = `${base_url}/${id}/2/`
+        } else if (e.target.classList.contains('answer-vacancy-change-cancel')) {
+            api_url = `${base_url}/${id}/3/`
+        }
+        fetch(api_url).then(() => location.reload())
+    }
+
+    onChangeResumeAnswerStatus(e) {
+        const base_url = '/answers/change/resume'
+        const id = e.target.dataset.id
+        let api_url = `${base_url}/${id}/1/`
+        if (e.target.classList.contains('answer-resume-change-accept')) {
+            api_url = `${base_url}/${id}/2/`
+        } else if (e.target.classList.contains('answer-resume-change-cancel')) {
+            api_url = `${base_url}/${id}/3/`
+        }
+        fetch(api_url).then(() => location.reload())
+    }
+}
 
 const answers = new Answers();
