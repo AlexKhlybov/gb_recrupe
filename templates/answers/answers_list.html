@@ -11,7 +11,7 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th scope="col"></th>
+                <th scope="col">#</th>
                 <th scope="col">Статус</th>
                 <th scope="col">Вакансия</th>
                 <th scope="col">Резюме</th>
@@ -21,7 +21,7 @@
         <tbody>
             {% for item in company_answers %}
                 <tr>
-                    <th scope="row">{{ item.id }}</th>
+                    <th scope="row">{{ forloop.counter }}</th>
                     <td>{{ item.get_status_display }}</td>
                     <td><a href="{% url 'vacancies:detail' item.vacancy.id %}">{{ item.vacancy }}</a></td>
                     <td><a href="{% url 'resume:detail' item.resume.id %}">{{ item.resume.name }}</a></td>

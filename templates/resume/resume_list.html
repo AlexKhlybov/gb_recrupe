@@ -2,82 +2,83 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
-    <h5 class="mb-3 ms-5">Найдено {{object_list.count}} резюме</h5>
-    <div class="d-flex  flex-row ">
-        <div id="advanSearch" class="d-flex  flex-column p-2 bg-light border position-relative  ">
-            <div class="sticky-top">
-                <form class="" >
-                <div class="d-flex justify-content-center mt-3  mb-4"><h5 class="">Фильтр</h5></div>
-                <div class="d-flex flex-column  justify-content-centr" style="width: 250px;">
-                    <input id ="from_salary" class=" form-control" type="number"  form="form" name="from_salary" value="{{from_salary}}" placeholder="Зарплата от">
-                    <input id ="to_salary" class=" form-control mt-1" type="number" form="form" name="to_salary" value="{{to_salary}}" placeholder="Зарплата до">
-                    <div>
-                        <input id="zero_salary" class="mb-2 mt-3 ms-2" onclick="noInput()" form="form" type="checkbox" {% if zero_salary %} checked {% endif %}
-                               name="zero_salary"> <label>з/п не указана</label>
-                    </div>
-                    <br>
-                    <div>
-                        <input id="resume_skills" form="form" autocomplete="off" class="w-100 mb-2  form-control" type="text"
-                               name="resume_skills" value="{{resume_skills}}" placeholder="Ключевой навык"
-                                onclick="visibleFilterList('resume_skills_list')" onkeyup="filterFunction('resume_skills','myDropdownResumeskills')">
-                        <div id="resume_skills_list" class=" shadow overflow-auto d-none  p-3  w-100 bg-white rounded position-absolute"
-                             style=" max-height: 150px;" >
-                            <ul class="" id="myDropdownResumeskills">
-                                {% for i in resume_skills_list %}
-                                <li class="" onclick="addItem('resume_skills','{{i.name}}','resume_skills_list')">{{i.name}}</li>
-                                {% endfor %}
-                            </ul>
-
-                        </div>
-                    </div>
-                     <br>
-                    <div>
-
-                        <input id="experience_search" autocomplete="off" class="  form-control" form="form" style="max-width: 250px;" type="text"
-                               name="experience_search" value="{{experience_search}}"
-                               placeholder="Опыт работы"  onclick="visibleFilterList('experience_list')" >
-
-                        <div id="experience_list" class="overflow-auto d-none shadow p-3  w-100 bg-white rounded position-absolute"
-                             style=" max-height: 150px;" >
-                            <ul id="myDropdownExperience">
-                                <li  onclick="addItem('experience_search','Не имеет значения','experience_list')">Не имеет значения</li>
-                                <li  onclick="addItem('experience_search','от 1 года до 3 лет','experience_list')">от 1 года до 3 лет</li>
-                                <li  onclick="addItem('experience_search','от 3 до 6 лет','experience_list')">от 3 до 6 лет</li>
-                                <li  onclick="addItem('experience_search','более 6 лет','experience_list')">более 6 лет</li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <br>
-                    <button id="clickSubmit" class="btn btn-primary " form="form" style="min-width: 200px;" type="submit">Применить</button>
-                </div>
-            </form>
-                <button class="btn  w-100 mt-2 btn-secondary" onclick="cleanerFilterResume()" >Очистить</button>
-            </div>
-        </div>
-        <div class="w-100">
-            <div class="mb-5">
-                <div class="d-flex bg-light sticky-top justify-content-between p-3">
-                    <form class=" flex-grow-1" id="form" method="get">
-                        <div class=" d-flex flex-rows">
-                            <input id="find" class="input-group form-control" type="text" name="find" value="{{find}}" placeholder="Поиск по названию">
-                            <div class="position-relative mt-1" style="left:-33px;">
-                                <a><img onclick="myFunction()" style="height:27px" src="{% static '/sliders.svg' %}" alt=""/></a>
+    <div class="container">
+        <h5 class="mb-3 ms-5">Найдено {{object_list.count}} резюме</h5>
+        <div class="d-flex  flex-row ">
+            <div id="advanSearch" class="d-flex  flex-column p-2 bg-light border position-relative  ">
+                <div class="sticky-top">
+                    <form class="" >
+                        <div class="d-flex justify-content-center mt-3  mb-4"><h5 class="">Фильтр</h5></div>
+                        <div class="d-flex flex-column  justify-content-centr" style="width: 250px;">
+                            <input id ="from_salary" class=" form-control" type="number"  form="form" name="from_salary" value="{{from_salary}}" placeholder="Зарплата от">
+                            <input id ="to_salary" class=" form-control mt-1" type="number" form="form" name="to_salary" value="{{to_salary}}" placeholder="Зарплата до">
+                            <div>
+                                <input id="zero_salary" class="mb-2 mt-3 ms-2" onclick="noInput()" form="form" type="checkbox" {% if zero_salary %} checked {% endif %}
+                                       name="zero_salary"> <label>з/п не указана</label>
                             </div>
-                            <button class="btn btn-primary "  style="min-width: 200px;" type="submit">Поиск</button>
+                            <br>
+                            <div>
+                                <input id="resume_skills" form="form" autocomplete="off" class="w-100 mb-2  form-control" type="text"
+                                       name="resume_skills" value="{{resume_skills}}" placeholder="Ключевой навык"
+                                       onclick="visibleFilterList('resume_skills_list')" onkeyup="filterFunction('resume_skills','myDropdownResumeskills')">
+                                <div id="resume_skills_list" class=" shadow overflow-auto d-none  p-3  w-100 bg-white rounded position-absolute"
+                                     style=" max-height: 150px;" >
+                                    <ul class="" id="myDropdownResumeskills">
+                                        {% for i in resume_skills_list %}
+                                            <li class="" onclick="addItem('resume_skills','{{i.name}}','resume_skills_list')">{{i.name}}</li>
+                                        {% endfor %}
+                                    </ul>
+
+                                </div>
+                            </div>
+                            <br>
+                            <div>
+
+                                <input id="experience_search" autocomplete="off" class="  form-control" form="form" style="max-width: 250px;" type="text"
+                                       name="experience_search" value="{{experience_search}}"
+                                       placeholder="Опыт работы"  onclick="visibleFilterList('experience_list')" >
+
+                                <div id="experience_list" class="overflow-auto d-none shadow p-3  w-100 bg-white rounded position-absolute"
+                                     style=" max-height: 150px;" >
+                                    <ul id="myDropdownExperience">
+                                        <li  onclick="addItem('experience_search','Не имеет значения','experience_list')">Не имеет значения</li>
+                                        <li  onclick="addItem('experience_search','от 1 года до 3 лет','experience_list')">от 1 года до 3 лет</li>
+                                        <li  onclick="addItem('experience_search','от 3 до 6 лет','experience_list')">от 3 до 6 лет</li>
+                                        <li  onclick="addItem('experience_search','более 6 лет','experience_list')">более 6 лет</li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <br>
+                            <button id="clickSubmit" class="btn btn-primary " form="form" style="min-width: 200px;" type="submit">Применить</button>
                         </div>
-
                     </form>
+                    <button class="btn  w-100 mt-2 btn-secondary" onclick="cleanerFilterResume()" >Очистить</button>
                 </div>
+            </div>
+            <div class="w-100">
+                <div class="mb-5">
+                    <div class="d-flex bg-light sticky-top justify-content-between p-3">
+                        <form class=" flex-grow-1" id="form" method="get">
+                            <div class=" d-flex flex-rows">
+                                <input id="find" class="input-group form-control" type="text" name="find" value="{{find}}" placeholder="Поиск по названию">
+                                <div class="position-relative mt-1" style="left:-33px;">
+                                    <a><img onclick="myFunction()" style="height:27px" src="{% static '/sliders.svg' %}" alt=""/></a>
+                                </div>
+                                <button class="btn btn-primary "  style="min-width: 200px;" type="submit">Поиск</button>
+                            </div>
 
-                {% for item in object_list %}
-                    {% include 'resume/includes/resume_list_item.html' %}
-                {% empty %}
-                    <strong class="mb-3">Нет подходящих резюме</strong>
-                {% endfor %}
+                        </form>
+                    </div>
+
+                    {% for item in object_list %}
+                        {% include 'resume/includes/resume_list_item.html' %}
+                    {% empty %}
+                        <strong class="mb-3">Нет подходящих резюме</strong>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
-    <script>window.onload = noInput()</script>
+    <script>window.addEventListener('load', noInput)</script>
 {% endblock %}

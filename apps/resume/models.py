@@ -32,7 +32,7 @@ class Resume(models.Model):
         (STATUS_DRAFT, 'Черновик'),
         (STATUS_PUBLIC, 'Опубликовано'),
         (STATUS_COMPLAINT, 'Жалоба'),
-        (STATUS_CLAIM, 'Претензия'),
+        (STATUS_CLAIM, 'Заблокировано'),
     )
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=True, on_delete=models.CASCADE,
@@ -107,6 +107,11 @@ class Resume(models.Model):
         user = User.objects.get(id=user)
         return user.favorites_resume.all()
 
+    def get_answer_vacancy(self):
+        """ Возвращает все отклики на резюме """
+        from apps.answers.models import ResumeAnswers
+        return [x.vacancy_id for x in ResumeAnswers.objects.filter(resume=self)]
+
     @property
     def about_me_lines(self):
         return self.about_me.split('\n')
@@ -119,7 +124,6 @@ class Resume(models.Model):
     def get_complaint():
         return Resume.objects.filter(status=3).count() 
         
-
 
 class ResumeSkills(models.Model):
     class Meta:

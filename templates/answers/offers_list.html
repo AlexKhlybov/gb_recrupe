@@ -5,7 +5,7 @@
 {% block content %}
 
 <div class="container">
-    <h2 class="mb-3 ms-5">Отклики (приглашения)</h2>
+    <h2 class="mb-3 ms-5">Мои предложения</h2>
     <p class="ms-5  fst-italic"> Вы отправили <span class="fw-bolder">{{ company_offers_count }}</span> приглашений! </p>
 
     <table class="table table-hover">
@@ -13,20 +13,21 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Статус</th>
-                <th scope="col">Вакансия</th>
                 <th scope="col">Резюме</th>
+                <th scope="col">Вакансия</th>
                 <th scope="col">Дата</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             {% for item in company_offers %}
                 <tr>
-                    <th scope="row">{{ item.id }}</th>
+                    <th scope="row">{{ forloop.counter }}</th>
                     <td>{{ item.get_status_display }}</td>
                     <td><a href="{% url 'resume:detail' item.resume.id %}">{{ item.resume }}</a></td>
                     <td><a href="{% url 'vacancies:detail' item.vacancy.id %}">{{ item.vacancy }}</a></td>
-
                     <td>{{ item.created_at }}</td>
+                    <td><a href="javascript:return false;" class="btn--resume-answer" data-resume-id="{{ item.resume.id }}" data-vacancy-id="{{ item.vacancy.id }}">Отменить</a></td>
                 </tr>
             {% endfor %}
         </tbody>

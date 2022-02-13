@@ -5,10 +5,10 @@ from apps.answers import views as answers
 app_name = 'answers'
 
 urlpatterns = [
-    path('company_offers/<pk>/', answers.CompanyOffersListView.as_view(), name='company_offers'),
-    path('my_offers/<pk>/', answers.EmployeeOffersListView.as_view(), name='my_offers'),
-    path('company_answers/<pk>/', answers.CompanyAnswersListView.as_view(), name='company_answers'),
-    path('my_answers/<pk>/', answers.EmployeeAnswersListView.as_view(), name='my_answers'),
-    path('edit-vacancy-answer/<int:vacancy>/<str:resume_name>/', answers.vacancy_answer_edit, name='vacancy-answer-edit'),
-    path('edit-resume-answer/<int:resume>/<str:vacancy_name>/', answers.resume_answer_edit, name='resume-answer-edit'),
+    path('company_offers/', answers.CompanyOffersListView.as_view(), name='company_offers'),
+    path('my_offers/', answers.EmployeeOffersListView.as_view(), name='my_offers'),
+    path('company_answers/', answers.CompanyAnswersListView.as_view(), name='company_answers'),
+    path('my_answers/', answers.EmployeeAnswersListView.as_view(), name='my_answers'),
+    path('vacancy/<int:vacancy_id>/<int:resume_id>/', answers.vacancy_answer, name='vacancy-answer-edit'),
+    path('resume/<int:resume_id>/<int:vacancy_id>/', answers.resume_answer, name='resume'),
 ]

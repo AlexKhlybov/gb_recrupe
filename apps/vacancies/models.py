@@ -1,4 +1,3 @@
-from itertools import count
 from ckeditor.fields import RichTextField
 from django.db import models
 from django.db.models import Q
@@ -30,7 +29,7 @@ class Vacancy(models.Model):
         # (STATUS_DRAFT, 'Черновик'),
         (STATUS_PUBLIC, 'Опубликовано'),
         (STATUS_COMPLAINT, 'Жалоба'),
-        (STATUS_CLAIM, 'Претензия'),
+        (STATUS_CLAIM, 'Заблокировано'),
     )
 
     EXPERIENCE_NONE = 1
@@ -64,9 +63,8 @@ class Vacancy(models.Model):
     objects = models.Manager()
     public = VacancyPublicManager()
 
-
     def __str__(self):
-            return f"{self.name}"
+        return f"{self.name}"
 
     @property
     def price(self):
@@ -88,7 +86,12 @@ class Vacancy(models.Model):
         """Возвращает через пользователя (м2м) все избранные им вакансии"""
         user = User.objects.get(id=user)
         return user.favorites_vacancy.all()
-    
+
+    def get_answer_resume(self):
+        """ Возвращает все отклики на вакансию """
+        from apps.answers.models import VacancyAnswers
+        return [x.resume_id for x in VacancyAnswers.objects.filter(vacancy=self)]
+
     def delete(self, using=None, keep_parents=False):
         VacancySkills.objects.filter(vacancy=self).delete()
         super().delete(using, keep_parents)
