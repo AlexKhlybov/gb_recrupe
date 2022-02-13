@@ -10,15 +10,15 @@ from apps.companies.models import Company
 class VacancyAnswers(models.Model):
     STATUS = (
         (1, 'Отправлено'),
-        (2, 'Прочитано'),
-        (3, 'Дан ответ'),
+        (2, 'Предложение принято'),
+        (3, 'Предложение отклонено'),
     )
 
     user = models.ForeignKey(User, related_name="emoloyee_answer", verbose_name='Соискатель', on_delete=models.CASCADE)
     vacancy = models.ForeignKey(Vacancy, related_name="answers_vacancy", verbose_name='Вакансия',
                                 on_delete=models.CASCADE)
     resume = models.ForeignKey(Resume, related_name="attached_resume", verbose_name='Прикрепленное резюме',
-                                on_delete=models.CASCADE)
+                               on_delete=models.CASCADE)
 
     message = models.CharField(max_length=1500, blank=True, verbose_name='Сообщение от соискателя')
 
@@ -57,13 +57,11 @@ class VacancyAnswers(models.Model):
         return final_set
 
 
-
-
 class ResumeAnswers(models.Model):
     STATUS = (
         (1, 'Отправлено'),
-        (2, 'Прочитано'),
-        (3, 'Дан ответ'),
+        (2, 'Предложение принято'),
+        (3, 'Предложение отклонено'),
     )
 
     user = models.ForeignKey(User, related_name="company_answer", verbose_name='Компания', on_delete=models.CASCADE)
@@ -71,7 +69,6 @@ class ResumeAnswers(models.Model):
                                on_delete=models.CASCADE)
     vacancy = models.ForeignKey(Vacancy, related_name="attached_vacancy", verbose_name='Прикрепленная вакансия',
                                 on_delete=models.CASCADE)
-
 
     message = models.CharField(max_length=1500, blank=True, verbose_name='Сообщение от компании')
 
@@ -107,5 +104,3 @@ class ResumeAnswers(models.Model):
     @staticmethod
     def get_company_resume_answers(user):
         return ResumeAnswers.objects.filter(user=user)
-
-

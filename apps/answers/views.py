@@ -80,6 +80,22 @@ def resume_answer(request, resume_id, vacancy_id):
     return JsonResponse({"delete": not created}, status=200)
 
 
+def vacancy_answer_change_status(request, pk, status):
+    """ Изменить статус отклика резюме на вакансию (для работодателя) """
+    obj = get_object_or_404(VacancyAnswers, pk=pk)
+    obj.status = status
+    obj.save()
+    return JsonResponse({"status": status}, status=200)
+
+
+def resume_answer_change_status(request, pk, status):
+    """ Изменить статус отклика вакансии на резюме (для соискателя) """
+    obj = get_object_or_404(ResumeAnswers, pk=pk)
+    obj.status = status
+    obj.save()
+    return JsonResponse({"status": status}, status=200)
+
+
 def vacancy_answer_edit_temp(request, resume_name, vacancy):
     user = User.objects.get(id=request.user.id)
     resume = Resume.objects.get(name=resume_name)

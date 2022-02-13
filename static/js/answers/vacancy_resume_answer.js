@@ -9,6 +9,13 @@ class Answers {
         document.querySelectorAll('.btn--resume-answer').forEach(elem => {
             elem.addEventListener('click', e => this.onAddOrRemoveAnswer(e))
         })
+
+        document.querySelectorAll('[class^="answer-vacancy-change-"]').forEach(elem => {
+            elem.addEventListener('click', e => this.onChangeVacancyAnswerStatus(e))
+        })
+        document.querySelectorAll('[class^="answer-resume-change-"]').forEach(elem => {
+            elem.addEventListener('click', e => this.onChangeResumeAnswerStatus(e))
+        })
     };
 
     onAddOrRemoveAnswer(e) {
@@ -23,6 +30,30 @@ class Answers {
             const api_url = `${this.url_resume_answer}/${resumeId}/${vacancyId}/`
             fetch(api_url).then(() => location.reload())
         }
+    }
+
+    onChangeVacancyAnswerStatus(e) {
+        const base_url = '/answers/change/vacancy'
+        const id = e.target.dataset.id
+        let api_url = `${base_url}/${id}/1/`
+        if (e.target.classList.contains('answer-vacancy-change-accept')) {
+            api_url = `${base_url}/${id}/2/`
+        } else if (e.target.classList.contains('answer-vacancy-change-cancel')) {
+            api_url = `${base_url}/${id}/3/`
+        }
+        fetch(api_url).then(() => location.reload())
+    }
+
+    onChangeResumeAnswerStatus(e) {
+        const base_url = '/answers/change/resume'
+        const id = e.target.dataset.id
+        let api_url = `${base_url}/${id}/1/`
+        if (e.target.classList.contains('answer-resume-change-accept')) {
+            api_url = `${base_url}/${id}/2/`
+        } else if (e.target.classList.contains('answer-resume-change-cancel')) {
+            api_url = `${base_url}/${id}/3/`
+        }
+        fetch(api_url).then(() => location.reload())
     }
 }
 
