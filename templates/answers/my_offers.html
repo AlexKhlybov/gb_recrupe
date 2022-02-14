@@ -23,7 +23,7 @@
             {% for item in my_offers %}
                 <tr>
                     <th scope="row">{{ forloop.counter }}</th>
-                    <td>{{ item.get_status_display }}</td>
+                    <td class="align-middle"><span class="badge text-center {% if item.status == 1 %}bg-light text-dark {% elif item.status == 2 %}bg-success {% elif item.status == 3 %}bg-danger{% endif %}">{{ item.get_status_display }}</span></td>
                     <td><a href="{% url 'vacancies:detail' item.vacancy.id %}">{{ item.vacancy }}</a></td>
                     <td><a href="{% url 'resume:detail' item.resume.id %}">{{ item.resume.name }}</a></td>
                     <td>{{ item.created_at }}</td>
