@@ -212,10 +212,9 @@ async function getModalMessage(args) {
             body: request.body,
         })
 
+        let data = await response.json();
+        modal.textContent = '';
         if (response.ok) {
-            let data = await response.json();
-            modal.textContent = '';
-
             if (action == 'detail') {
                 modal.insertAdjacentHTML('beforeend', renderMsg(data));
             } else if (action == 'send') {
@@ -225,6 +224,9 @@ async function getModalMessage(args) {
             if (action == 'detail') {
                 modal.insertAdjacentHTML('beforeend', renderDoneMsg(alert.errLoad));
             } else if (action == 'send') {
+                if (data.message) {
+                    alert.errSend.text = data.message;
+                }
                 modal.insertAdjacentHTML('beforeend', renderDoneMsg(alert.errSend));
             }
         }

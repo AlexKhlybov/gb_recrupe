@@ -41,28 +41,31 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
                 return JsonResponse(response, status=200)
             else:
                 body = request.POST
-                recipient = User.get_user_by_email(body["email"])
-                Notify.objects.create(
-                    subject=body["subject"],
-                    text=body["text"],
-                    user=recipient,
-                    email=body["email"],
-                    sender_email=request.user.email,
-                    type=TYPE.MESSAGE,
-                    event=NOTIFY_EVENT.MESSAGE,
-                    send_at=timezone.now(),
-                    sent_at=timezone.now(),
-                )
-                if recipient.receiving_messages:
-                    # Отправляем уведомление на почту о получении сообщении.
-                    try:
-                        Notify.send(event=NOTIFY_EVENT.MESSAGE,
-                                    type=TYPE.EMAIL,
-                                    context={},
-                                    email=body["email"],)
-                    except Exception as err:
-                        logger.error(f"Ошибка отправки сообщения - {err}")
-                return JsonResponse({"detail": "Ok"}, status=200)
+                if not body["email"] == request.user.email:
+                    recipient = User.get_user_by_email(body["email"])
+                    Notify.objects.create(
+                        subject=body["subject"],
+                        text=body["text"],
+                        user=recipient,
+                        email=body["email"],
+                        sender_email=request.user.email,
+                        type=TYPE.MESSAGE,
+                        event=NOTIFY_EVENT.MESSAGE,
+                        send_at=timezone.now(),
+                        sent_at=timezone.now(),
+                    )
+                    if recipient.receiving_messages:
+                        # Отправляем уведомление на почту о получении сообщении.
+                        try:
+                            Notify.send(event=NOTIFY_EVENT.MESSAGE,
+                                        type=TYPE.EMAIL,
+                                        context={},
+                                        email=body["email"],)
+                        except Exception as err:
+                            logger.error(f"Ошибка отправки сообщения - {err}")
+                    return JsonResponse({'detail': 'ok', 'message': 'Ваше сообщение успешно отправлено!'}, status=200)
+                else:
+                    return JsonResponse({'detail': 'error', 'message': 'Отправка сообщений себе, запрещена!'}, status=400)
 
 
 def contact_view(request):
