@@ -15,6 +15,8 @@ from apps.vacancies.models import Vacancy
 from apps.companies.models import Company
 
 from apps.resume.models import ResumeSkills
+from apps.notify.models import Notify, TYPE, NOTIFY_EVENT
+from apps.log.logging import logger
 
 
 class ResumeListView(LoginRequiredMixin, ListView):
@@ -204,4 +206,10 @@ def complaint(request, pk):
     resume = get_object_or_404(Resume, pk=pk)
     resume.status = Resume.STATUS_COMPLAINT
     resume.save()
+    # Отправляем уведомления на почту и в ЛК
+    try:
+        Notify.send(event=NOTIFY_EVENT.COMPLAINT, context={}, type=TYPE.MESSAGE)
+        Notify.send(event=NOTIFY_EVENT.COMPLAINT, context={}, type=TYPE.EMAIL)
+    except Exception as err:
+        logger.error(f"Ошибка отправки сообщения - {err}")
     return JsonResponse({"status": resume.status})

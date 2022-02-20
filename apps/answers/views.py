@@ -8,6 +8,8 @@ from apps.answers.models import VacancyAnswers, ResumeAnswers
 from apps.users.models import User
 from apps.vacancies.models import Vacancy
 from apps.companies.models import Company
+from apps.notify.models import Notify, NOTIFY_EVENT, TYPE
+from apps.log.logging import logger
 
 
 class EmployeeAnswersListView(LoginRequiredMixin, ListView):
@@ -65,6 +67,12 @@ def vacancy_answer(request, vacancy_id, resume_id):
     resume = get_object_or_404(Resume, pk=resume_id)
     vacancy = get_object_or_404(Vacancy, pk=vacancy_id)
     obj, created = VacancyAnswers.objects.get_or_create(user=user, resume=resume, vacancy=vacancy, message="")
+    # Отправляем уведомления на почту и в ЛК
+    try:
+        Notify.send(user=vacancy.company.user, event=NOTIFY_EVENT.ANSWER_EVENT, context={}, type=TYPE.MESSAGE)
+        Notify.send(user=vacancy.company.user, event=NOTIFY_EVENT.ANSWER_EVENT, context={}, type=TYPE.EMAIL)
+    except Exception as err:
+        logger.error(f"Ошибка отправки сообщения - {err}")
     if not created:
         obj.delete()
     return JsonResponse({"delete": not created}, status=200)
@@ -75,6 +83,12 @@ def resume_answer(request, resume_id, vacancy_id):
     resume = get_object_or_404(Resume, pk=resume_id)
     vacancy = get_object_or_404(Vacancy, pk=vacancy_id)
     obj, created = ResumeAnswers.objects.get_or_create(user=user, resume=resume, vacancy=vacancy, message="")
+    # Отправляем уведомления на почту и в ЛК
+    try:
+        Notify.send(user=resume.user, event=NOTIFY_EVENT.ANSWER_EVENT, context={}, type=TYPE.MESSAGE)
+        Notify.send(user=resume.user, event=NOTIFY_EVENT.ANSWER_EVENT, context={}, type=TYPE.EMAIL)
+    except Exception as err:
+        logger.error(f"Ошибка отправки сообщения - {err}")
     if not created:
         obj.delete()
     return JsonResponse({"delete": not created}, status=200)
@@ -85,6 +99,12 @@ def vacancy_answer_change_status(request, pk, status):
     obj = get_object_or_404(VacancyAnswers, pk=pk)
     obj.status = status
     obj.save()
+    # Отправляем уведомления на почту и в ЛК
+    try:
+        Notify.send(user=obj.user, event=NOTIFY_EVENT.ANSWER_STATUS_EVENT, context={}, type=TYPE.MESSAGE)
+        Notify.send(user=obj.user, event=NOTIFY_EVENT.ANSWER_STATUS_EVENT, context={}, type=TYPE.EMAIL)
+    except Exception as err:
+        logger.error(f"Ошибка отправки сообщения - {err}")
     return JsonResponse({"status": status}, status=200)
 
 
@@ -93,6 +113,12 @@ def resume_answer_change_status(request, pk, status):
     obj = get_object_or_404(ResumeAnswers, pk=pk)
     obj.status = status
     obj.save()
+    # Отправляем уведомления на почту и в ЛК
+    try:
+        Notify.send(user=obj.user, event=NOTIFY_EVENT.ANSWER_STATUS_EVENT, context={}, type=TYPE.MESSAGE)
+        Notify.send(user=obj.user, event=NOTIFY_EVENT.ANSWER_STATUS_EVENT, context={}, type=TYPE.EMAIL)
+    except Exception as err:
+        logger.error(f"Ошибка отправки сообщения - {err}")
     return JsonResponse({"status": status}, status=200)
 
 

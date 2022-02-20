@@ -12,6 +12,8 @@ from apps.vacancies.models import Vacancy, VacancyFavorites
 
 from apps.companies.models import Company
 from apps.resume.models import Resume
+from apps.notify.models import Notify, TYPE, NOTIFY_EVENT
+from apps.log.logging import logger
 
 
 class VacancyListView(LoginRequiredMixin, ListView):
@@ -208,4 +210,10 @@ def complaint(request, pk):
     vacancy = get_object_or_404(Vacancy, pk=pk)
     vacancy.status = Vacancy.STATUS_COMPLAINT
     vacancy.save()
+    # Отправляем уведомления на почту и в ЛК
+    try:
+        Notify.send(event=NOTIFY_EVENT.COMPLAINT, context={}, type=TYPE.MESSAGE)
+        Notify.send(event=NOTIFY_EVENT.COMPLAINT, context={}, type=TYPE.EMAIL)
+    except Exception as err:
+        logger.error(f"Ошибка отправки сообщения - {err}")
     return JsonResponse({"status": vacancy.status})

@@ -11,13 +11,6 @@ from django.utils.timezone import now
 from apps.log.logging import logger
 from apps.users.models import User
 
-#     Notify.send(
-#         user=user,
-#         event=settings.NOTIFY_EVENT_RESTORE_PASSWORD,
-#         context={'password_reset_key': user.password_reset_key},
-#         email=email,
-#     )
-
 
 class SMTPAccount(models.Model):
     host = models.CharField(default="smtp.yandex.ru", max_length=255, verbose_name="Хост")
@@ -67,16 +60,22 @@ class NOTIFY_EVENT:
     CHANGE_PWD_EVENT = 2
     RESET_PWD_EVENT = 3
     RESET_PWD_DONE_EVENT = 4
-    RESPONCE_EVENT = 5
+    ANSWER_EVENT = 5
     MESSAGE = 6
+    COMPLAINT = 7
+    ANSWER_STATUS_EVENT = 8
+    
 
     CHOICES_NOTIFY_EVENT = {
         REGISTRATION_EVENT: {"title": "Register",},
         CHANGE_PWD_EVENT: {"title": "Change",},
         RESET_PWD_EVENT: {"title": "Reset",},
         RESET_PWD_DONE_EVENT: {"title": "Done reset",},
-        RESPONCE_EVENT: {"title": "Responce",},
+        ANSWER_EVENT: {"title": "Answer",},
         MESSAGE: {"title": "Message",},
+        COMPLAINT: {'title': 'Сomplaint',},
+        ANSWER_STATUS_EVENT : {"title": "Change status Ans",},
+        
     }
 
     CHOICES = [(k, v["title"]) for k, v in CHOICES_NOTIFY_EVENT.items()]
@@ -209,7 +208,7 @@ class Notify(models.Model):
             logger.error("Нет такого пользователя!")
             return
         if not self.sender_email:
-            if self.event in [1, 2, 3, 4]:
+            if not self.event in [6,]:
                 self.sender_email = "moderator@mail.ru"
         self.sent_at = now()
         self.save()
