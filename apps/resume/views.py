@@ -162,9 +162,10 @@ class ResumeDetailView(LoginRequiredMixin, DetailView):
         if not self.request.user.is_anonymous:
             context["is_favorite"] = ResumeFavorites.objects.filter(
                 user=self.request.user, resume_id=self.kwargs['pk']).exists()
-            context["my_vacancies"] = Vacancy.objects.filter(
-                company=Company.public.get(user=self.request.user)
-            ).order_by("name")
+            if self.request.user.role == 3:
+                context["my_vacancies"] = Vacancy.objects.filter(
+                    company=Company.public.get(user=self.request.user)
+                ).order_by("name")
         return context
 
 

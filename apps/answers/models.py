@@ -10,8 +10,8 @@ from apps.companies.models import Company
 class VacancyAnswers(models.Model):
     STATUS = (
         (1, 'Отправлено'),
-        (2, 'Предложение принято'),
-        (3, 'Предложение отклонено'),
+        (2, 'Принято'),
+        (3, 'Отклонено'),
     )
 
     user = models.ForeignKey(User, related_name="emoloyee_answer", verbose_name='Соискатель', on_delete=models.CASCADE)
@@ -60,8 +60,8 @@ class VacancyAnswers(models.Model):
 class ResumeAnswers(models.Model):
     STATUS = (
         (1, 'Отправлено'),
-        (2, 'Предложение принято'),
-        (3, 'Предложение отклонено'),
+        (2, 'Принято'),
+        (3, 'Отклонено'),
     )
 
     user = models.ForeignKey(User, related_name="company_answer", verbose_name='Компания', on_delete=models.CASCADE)
