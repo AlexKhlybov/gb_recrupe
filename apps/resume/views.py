@@ -47,9 +47,10 @@ class ResumeListView(LoginRequiredMixin, ListView):
         if experience is not None and experience != '':
             context['experience_search'] = experience
         context["my_favorites_list_id"] = ResumeFavorites.get_favorite_vacancy_list(self.request.user.id)
-        context["my_vacancies"] = Vacancy.objects.filter(
-            company=Company.public.get(user=self.request.user)
-        ).order_by("name")
+        if self.request.user.role != 1:
+            context["my_vacancies"] = Vacancy.objects.filter(
+                company=Company.public.get(user=self.request.user)
+            ).order_by("name")
         return context
 
     def get_queryset(self):
