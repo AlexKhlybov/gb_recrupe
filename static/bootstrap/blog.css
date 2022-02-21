@@ -67,6 +67,15 @@ a {
   text-decoration: none;
 }
 
+.moderation_active {
+  font-weight: 600;
+  border-bottom: 1px solid !important;
+}
+
+.top-menu_active {
+  font-weight: 600;
+}
+
 
 .blog-header {
   line-height: 1;

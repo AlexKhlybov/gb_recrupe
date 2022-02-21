@@ -1,12 +1,17 @@
 {% extends 'moderation/base_moderation.html' %}
 
+<div class="container">
+    {% block submenu %}
+        {% include 'moderation/includes/moderation_nav.html' %}
+    {% endblock submenu %}
+</div>
+
 {% block content %}
-
-
-<form class="lign-items-center" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-
-    <input class="btn btn-success " type="submit" value="Обновить">
-</form>
+    <div class="container">
+        <form class="lign-items-center" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input class="btn btn-success " type="submit" value="Обновить">
+        </form>
+    </div>
 {% endblock %}

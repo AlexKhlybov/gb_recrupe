@@ -33,7 +33,10 @@
 <div class="container">
     {% get_solo 'main.SiteConfiguration' as site_config %}
     {% include 'main/includes/user_block.html' %}
-    {% include 'main/includes/top_menu.html' %}
+    {% block menu %}
+        {% include 'main/includes/top_menu.html' %}
+    {% endblock menu %}
+    {% block submenu %}{% endblock submenu %}
 </div>
 
 <main class="content">

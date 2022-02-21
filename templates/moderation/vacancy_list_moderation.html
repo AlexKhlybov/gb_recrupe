@@ -1,14 +1,17 @@
-{% extends 'moderation/base_moderation.html' %}
+{% extends 'base.html' %}
+
+<div class="container">
+  {% block submenu %}
+      {% include 'moderation/includes/moderation_nav.html' %}
+  {% endblock submenu %}
+</div>
 
 {% block content %}
-
-    <form  method="get">
-      <input class="input-group mb-3" type="text" name="find" placeholder="Поиск">
-    </form>
-
+  <div class="container">
     <div class="row mb-2">
     {% for item in vacancy_list %}
         {% include 'vacancies/includes/vacancy_list_item.html' %}
     {% endfor %}
     </div>
+  </div>
 {% endblock %}

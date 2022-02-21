@@ -1,0 +1,16 @@
+<div class="py-1 mb-2 mt-4">
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <h2>Модерация</h3>
+            <div class="nav__links  d-flex  justify-content-start align-items-center">
+                <a class="fs-5 nav-link {% if request.resolver_match.url_name == 'companies' %}moderation_active{% endif %}" href="{% url 'moderation:companies' %}"><p class="m-0">Компании</p></a>
+                <a class="fs-5 nav-link {% if request.resolver_match.url_name == 'resume' %}moderation_active{% endif %}" href="{% url 'moderation:resume' %}"><p class="m-0">Резюме</p></a>
+                <a class="fs-5 nav-link {% if request.resolver_match.url_name == 'vacancy' %}moderation_active{% endif %}" href="{% url 'moderation:vacancy' %}"><p class="m-0">Вакансии</p></a>
+            </div>
+            <form method="get" class="d-flex">
+                <input class="form-control me-2" type="search" name="find" placeholder="Поиск" aria-label="Search">
+                <button class="btn btn-outline-primary" type="submit">Поиск</button>
+            </form>
+        </div>
+      </nav>
+</div>
